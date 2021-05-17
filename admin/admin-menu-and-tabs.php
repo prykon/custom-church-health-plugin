@@ -2,22 +2,22 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
 
 /**
- * Class Disciple_Tools_Plugin_Starter_Template_Menu
+ * Class Custom_Church_Health_Tile_Menu
  */
-class Disciple_Tools_Plugin_Starter_Template_Menu {
+class Custom_Church_Health_Tile_Menu {
 
-    public $token = 'disciple_tools_plugin_starter_template';
+    public $token = 'custom_church_health_tile';
 
     private static $_instance = null;
 
     /**
-     * Disciple_Tools_Plugin_Starter_Template_Menu Instance
+     * Custom_Church_Health_Tile_Menu Instance
      *
-     * Ensures only one instance of Disciple_Tools_Plugin_Starter_Template_Menu is loaded or can be loaded.
+     * Ensures only one instance of Custom_Church_Health_Tile_Menu is loaded or can be loaded.
      *
      * @since 0.1.0
      * @static
-     * @return Disciple_Tools_Plugin_Starter_Template_Menu instance
+     * @return Custom_Church_Health_Tile_Menu instance
      */
     public static function instance() {
         if ( is_null( self::$_instance ) ) {
@@ -44,7 +44,7 @@ class Disciple_Tools_Plugin_Starter_Template_Menu {
      * @since 0.1
      */
     public function register_menu() {
-        add_submenu_page( 'dt_extensions', 'Plugin Starter Template', 'Plugin Starter Template', 'manage_dt', $this->token, [ $this, 'content' ] );
+        add_submenu_page( 'dt_extensions', 'Custom Church Health Tile', 'Custom Church Health Tile', 'manage_dt', $this->token, [ $this, 'content' ] );
     }
 
     /**
@@ -72,21 +72,21 @@ class Disciple_Tools_Plugin_Starter_Template_Menu {
 
         ?>
         <div class="wrap">
-            <h2>Plugin Starter Template</h2>
+            <h2>Custom Church Health Tile</h2>
             <h2 class="nav-tab-wrapper">
                 <a href="<?php echo esc_attr( $link ) . 'general' ?>"
                    class="nav-tab <?php echo esc_html( ( $tab == 'general' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">General</a>
-                <a href="<?php echo esc_attr( $link ) . 'second' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'second' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Second</a>
+                <a href="<?php echo esc_attr( $link ) . 'help' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'help' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Help</a>
             </h2>
 
             <?php
             switch ($tab) {
                 case "general":
-                    $object = new Disciple_Tools_Plugin_Starter_Template_Tab_General();
+                    $object = new Custom_Church_Health_Tile_Tab_General();
                     $object->content();
                     break;
-                case "second":
-                    $object = new Disciple_Tools_Plugin_Starter_Template_Tab_Second();
+                case "help":
+                    $object = new Custom_Church_Health_Tile_Tab_Help();
                     $object->content();
                     break;
                 default:
@@ -99,12 +99,12 @@ class Disciple_Tools_Plugin_Starter_Template_Menu {
         <?php
     }
 }
-Disciple_Tools_Plugin_Starter_Template_Menu::instance();
+Custom_Church_Health_Tile_Menu::instance();
 
 /**
- * Class Disciple_Tools_Plugin_Starter_Template_Tab_General
+ * Class Custom_Church_Health_Tile_Tab_General
  */
-class Disciple_Tools_Plugin_Starter_Template_Tab_General {
+class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu_Base {
     public function content() {
         ?>
         <div class="wrap">
@@ -132,23 +132,170 @@ class Disciple_Tools_Plugin_Starter_Template_Tab_General {
         <?php
     }
 
-    public function main_column() {
+    private function show_tiles() {
         ?>
-        <!-- Box -->
-        <table class="widefat striped">
-            <thead>
+        <form method="post">
+            <table>
+        <?php
+            $icons = get_option( 'custom_church_health_icons', null );
+            if ( !empty( $icons ) ) {
+                foreach( $icons as $icon ) :
+                    ?>
+                    <tr>
+                        <td><?php echo esc_html( $icon['icon'] ); ?></td>
+                        <td><?php echo esc_html( $icon['label'] ); ?></td>
+                        <td><?php echo esc_html( $icon['description'] ); ?></td>
+                        <td>
+                            <button type="submit" class="button" name="delete_key" value="<?php echo esc_html( $icon['key'] ); ?>"><?php esc_html_e( 'Delete', 'disciple_tools' ) ?></button>
+                        </td>
+                    </tr>
+                    <?php
+                endforeach;
+            } else {
+                ?>
                 <tr>
-                    <th>Header</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        Content
+                    <td align="center">
+                        <i><?php echo esc_html_e( 'No custom icons yet...', 'disciple_tools' ); ?></i>
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                <?php
+            }
+        ?>
+            </table>
+        </form>
+        <?php
+    }
+
+    private function create_new_icon() {
+        ?>
+        <form method="post">
+            <table>
+                <tr>
+                    <th>Icon</th>
+                    <th>Label</th>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="new_icon">
+                    </td>
+                    <td>
+                        <input type="text" name="new_label">
+                    </td>
+                    <td>
+                        <input type="text" name="new_description">
+                    </td>
+                    <td>
+                        <button type="submit" class="button" name="add_icon"><?php esc_html_e( 'Add', 'disciple_tools' ) ?></button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <?php
+    }
+
+    private function add_new_church_health_icons(){
+        ?>
+        <form method="post">
+            <table>
+                <tr>
+                    <td style="vertical-align: middle">
+                        <label for="tile-select"><?php esc_html_e( 'Create new Church Health Icon', 'disciple_tools' ) ?></label>
+                    </td>
+                    <td>
+                        <button type="submit" class="button" name="show_add_new_icon"><?php esc_html_e( 'Create', 'disciple_tools' ) ?></button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <?php
+    }
+
+    private function process_add_icon() {
+        if ( !empty( $_POST['new_icon'] ) ) {
+            $new_icon = sanitize_text_field( wp_unslash( $_POST['new_icon'] ) );
+        } else {
+            self::admin_notice( __( 'Error: Item image missing. Item was not created', 'disciple_tools' ), 'error' );    
+        }
+
+        if ( !empty( $_POST['new_label'] ) ) {
+            $new_label = sanitize_text_field( wp_unslash( $_POST['new_label'] ) );
+        } else {
+            self::admin_notice( __( 'Error: Item label missing. Item was not created', 'disciple_tools' ), 'error' );
+        } 
+
+        if ( !empty( $_POST['new_description'] ) ) {
+            $new_description = sanitize_text_field( wp_unslash( $_POST['new_description'] ) );
+        } else {
+            self::admin_notice( __( 'Error: Item description missing. Item was not created', 'disciple_tools' ), 'error' );
+        } 
+
+        $new_key = sanitize_key( strtolower( str_replace( ' ', '_', $new_label ) ) );
+
+        //add option
+        $all_items = get_option( 'custom_church_health_icons', null );
+
+        $new_item = array(
+            'key' => $new_key,
+            'icon' => $new_icon,
+            'label' => $new_label,
+            'description' => $new_description
+        );
+
+        $all_items[] = $new_item;
+
+        update_option( 'custom_church_health_icons', $all_items );
+        
+        self::admin_notice( __( 'Icon created successfully', 'disciple_tools' ), 'success' );
+    }
+
+
+    private function process_delete_icon() {
+        if ( !empty( $_POST['delete_key'] ) ) {
+            $delete_key = sanitize_text_field( wp_unslash( $_POST['delete_key'] ) );
+            $all_items = get_option( 'custom_church_health_icons', null );
+            
+            if ( is_array( $all_items ) ) {
+                foreach ( $all_items as $item ) {
+                    if ( $item['key'] == $delete_key ) {
+                        $delete_index = array_search( $item, $all_items);
+                        unset( $all_items[$delete_index] );
+                        update_option( 'custom_church_health_icons', $all_items );
+                        self::admin_notice( __( 'Icon deleted successfully', 'disciple_tools' ), 'success' );
+                    }
+                }
+            }
+        }
+    }
+
+    public function main_column() {
+        if ( isset( $_POST['add_icon'] ) ) {
+            self::process_add_icon();
+        }
+
+        else if ( isset( $_POST['delete_key'] ) ) {
+            self::process_delete_icon();
+        }
+        ?>
+        <!-- Box -->
+        <form method="post">
+            <?php
+                // Load tiles
+                $this->box( 'top', __( 'Manage Custom Church Health Tiles' ) );
+                $this->show_tiles();
+                $this->box( 'bottom' );
+
+                $this->box( 'top', __( 'Add new Church Health Icons' ) );
+                $this->add_new_church_health_icons();
+                $this->box( 'bottom' );
+            
+            // Show add tile module
+            if ( isset( $_POST['show_add_new_icon'] ) ) {
+                $this->box( 'top', __( 'Create new icon', 'disciple_tools' ) );
+                $this->create_new_icon();
+                $this->box( 'bottom' );
+            }
+            ?>
+        </form>
         <br>
         <!-- End Box -->
         <?php
@@ -175,13 +322,26 @@ class Disciple_Tools_Plugin_Starter_Template_Tab_General {
         <!-- End Box -->
         <?php
     }
+
+    /**
+     * Display admin notice
+     * @param $notice string
+     * @param $type string error|success|warning
+     */
+    public static function admin_notice( string $notice, string $type ) {
+        ?>
+        <div class="notice notice-<?php echo esc_attr( $type ) ?> is-dismissible">
+            <p><?php echo esc_html( $notice ) ?></p>
+        </div>
+        <?php
+    }
 }
 
 
 /**
- * Class Disciple_Tools_Plugin_Starter_Template_Tab_Second
+ * Class Custom_Church_Health_Tile_Tab_Help
  */
-class Disciple_Tools_Plugin_Starter_Template_Tab_Second {
+class Custom_Church_Health_Tile_Tab_Help {
     public function content() {
         ?>
         <div class="wrap">
@@ -215,13 +375,13 @@ class Disciple_Tools_Plugin_Starter_Template_Tab_Second {
         <table class="widefat striped">
             <thead>
                 <tr>
-                    <th>Header</th>
+                    <th>Help</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>
-                        Content
+                        In order to bla bla bla
                     </td>
                 </tr>
             </tbody>

@@ -2,4 +2,4 @@
 {translation-domain}-{localisation}.po
 
 ex:
-disciple-tools-plugin-starter-template-fr_FR.po
+custom-church-health-tile-fr_FR.po

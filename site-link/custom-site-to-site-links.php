@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
  * Configures the site link system for the network reporting
  */
 
-class Disciple_Tools_Plugin_Starter_Template_Site_Links {
-    public $type = 'disciple_tools_plugin_starter_template';
+class Custom_Church_Health_Tile_Site_Links {
+    public $type = 'custom_church_health_tile';
 
     private static $_instance = null;
     public static function instance() {
@@ -33,9 +33,9 @@ class Disciple_Tools_Plugin_Starter_Template_Site_Links {
     }
 
     public function site_link_type( $type ) {
-        $type[$this->type] = __( 'Plugin Starter Template' );
+        $type[$this->type] = __( 'Custom Church Health Tile' );
         return $type;
     }
 }
-Disciple_Tools_Plugin_Starter_Template_Site_Links::instance();
+Custom_Church_Health_Tile_Site_Links::instance();
 
