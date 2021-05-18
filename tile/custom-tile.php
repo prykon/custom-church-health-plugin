@@ -40,86 +40,90 @@ class Custom_Church_Health_Tile_Tile
      */
     private function display_item_divs() {
         $items = get_option('custom_church_health_icons', null );
-        $items = array_values( $items );
         if ( empty( $items ) ) {
-            $grid_template = [1];
-        }
-
-        $item_count = count( $items );
-        
-        switch ( $item_count ) {
-            case 1:
-                $grid_template = [1];
-                break;
-            case 2:
-                $grid_template = [
-                    0,0,0,
-                    1,0,1,
-                    0,0,0,
-                ];
-                break;
-            case 3:
-                $grid_template = [
-                    0,1,0,
-                    1,0,1,
-                ];
-                break;
-            case 4:
-                $grid_template = [
-                    1,1,
-                    1,1,
-                ];
-                break;
-            case 5:
-                $grid_template = [
-                    1,0,1,
-                    0,1,0,
-                    1,0,1,
-                ];
-                break;
-            case 6:
-                $grid_template = [
-                    1,0,1,
-                    1,0,1,
-                    1,0,1,
-                ];
-                break;
-            case 7:
-                $grid_template = [
-                    1,0,1,
-                    1,1,1,
-                    1,0,1,
-                ];
-                break;
-            case 8:
-                $grid_template = [
-                    1,1,1,
-                    1,0,1,
-                    1,1,1,
-                ];
-                break;
-            case 9:
-                $grid_template = [
-                    1,1,1,
-                    1,1,1,
-                    1,1,1,
-                ];
-                break;
+            $grid_template = [
+                0,0,0,
+                0,1,0,
+                0,0,0,
+            ];
+        } else {
+            $items = array_values( $items );
+            $item_count = count( $items );
+            
+            switch ( $item_count ) {
+                case 1:
+                    $grid_template = [1];
+                    break;
+                case 2:
+                    $grid_template = [
+                        0,0,0,
+                        1,0,1,
+                        0,0,0,
+                    ];
+                    break;
+                case 3:
+                    $grid_template = [
+                        0,1,0,
+                        1,0,1,
+                    ];
+                    break;
+                case 4:
+                    $grid_template = [
+                        1,1,
+                        1,1,
+                    ];
+                    break;
+                case 5:
+                    $grid_template = [
+                        1,0,1,
+                        0,1,0,
+                        1,0,1,
+                    ];
+                    break;
+                case 6:
+                    $grid_template = [
+                        1,0,1,
+                        1,0,1,
+                        1,0,1,
+                    ];
+                    break;
+                case 7:
+                    $grid_template = [
+                        1,0,1,
+                        1,1,1,
+                        1,0,1,
+                    ];
+                    break;
+                case 8:
+                    $grid_template = [
+                        1,1,1,
+                        1,0,1,
+                        1,1,1,
+                    ];
+                    break;
+                case 9:
+                    $grid_template = [
+                        1,1,1,
+                        1,1,1,
+                        1,1,1,
+                    ];
+                    break;
+            }
         }
 
         $i = 0;
         $output = '';
-        $plugin_base_url = self::get_plugin_base_url();        
+        $plugin_base_url = self::get_plugin_base_url();
 
         foreach ( $grid_template as $grid_item ) {
             if ( $grid_item === 0 ) {
                 $output .= '<div class="custom-church-health-item"></div>';
             } else if ( $grid_item === 1 ) {
-                if ( !empty( $items ) ) {
+                if ( $items ) {
                     $output .= '<div class="custom-church-health-item" title="' . esc_attr( $items[$i]['label'] ) . '"><img src="' . esc_attr( $plugin_base_url . '/assets/' . $items[$i]['icon'] . '.svg' ) . '"></div>';
                     $i++;
                 } else {
-                    $output .= '<div class="custom-church-health-item">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
+                    $output .= '<div class="custom-church-health-item"><img src="' . esc_attr( $plugin_base_url . '/assets/warning.svg' ) . '">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
                 }
             }
         }
@@ -136,26 +140,27 @@ class Custom_Church_Health_Tile_Tile
     }
 
     private function display_item_css() {
-        $item_count = count( get_option( 'custom_church_health_icons', null ) );
+        $items = get_option( 'custom_church_health_icons', null );
+        if ( !empty( $items) ) {
+            $item_count = count( $items );
+        } else {
+            $item_count = 0;
+        }
 
         $output = 'display:grid;';
 
-        if ( empty( $item_count ) ) {
-            $output .= 'grid-template-columns:auto;';
-        } else {
-            switch ( $item_count ) {
-                case 1:
-                    $output .= 'grid-template-columns:auto;';
-                    break;
+        switch ( $item_count ) {
+            case 1:
+                $output .= 'grid-template-columns:auto;';
+                break;
 
-                case 4:
-                    $output .= 'grid-template-columns:auto auto;';
-                    break;            
+            case 4:
+                $output .= 'grid-template-columns:auto auto;';
+                break;            
 
-                default:
-                    $output .= 'grid-template-columns:auto auto auto;';
-                    break;
-            }
+            default:
+                $output .= 'grid-template-columns:auto auto auto;';
+                break;
         }
 
         $output .= 'justify-content: space-evenly;';
@@ -163,9 +168,13 @@ class Custom_Church_Health_Tile_Tile
     }
 
     public function display_item_overview() {
-        $items = get_option('custom_church_health_icons', null );
-        $items = array_values( $items );
         $plugin_base_url = self::get_plugin_base_url(); 
+        $items = get_option('custom_church_health_icons', null );
+        if ( empty( $items ) ) {        
+            return;
+        }
+
+        $items = array_values( $items );
 
         foreach ( $items as $item ) : ?>
             <div style="display:inline;">
@@ -190,7 +199,7 @@ class Custom_Church_Health_Tile_Tile
                 width:65px;
                 border-radius: 100%;
                 font-size: 16px;
-                color: lightgray;
+                color: black;
                 text-align: center;
                 font-style: italic;
             }

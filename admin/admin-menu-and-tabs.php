@@ -156,7 +156,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
                 ?>
                 <tr>
                     <td align="center">
-                        <i><?php echo esc_html_e( 'No custom items yet...', 'disciple_tools' ); ?></i>
+                        <i><?php esc_html_e( 'No custom items yet...', 'disciple_tools' ); ?></i>
                     </td>
                 </tr>
                 <?php
@@ -240,6 +240,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
             [ 'file_name' => 'video-call', 'name' => 'Video Call', ],
             [ 'file_name' => 'covid', 'name' => 'Covid', ],
             [ 'file_name' => 'lightsaber', 'name' => 'Lightsaber', ],
+            [ 'file_name' => 'warning', 'name' => 'Warning Sign', ],
         ];
 
         foreach ( $icons as $icon ):
