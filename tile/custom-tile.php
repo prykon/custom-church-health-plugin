@@ -162,6 +162,21 @@ class Custom_Church_Health_Tile_Tile
         echo $output;
     }
 
+    public function display_item_overview() {
+        $items = get_option('custom_church_health_icons', null );
+        $items = array_values( $items );
+        $plugin_base_url = self::get_plugin_base_url(); 
+
+        foreach ( $items as $item ) : ?>
+            <div style="display:inline;">
+                <div class="summary-icons" title="<?php esc_attr_e( $item['description'] ); ?>">
+                    <img src="<?php echo esc_attr( $plugin_base_url . '/assets/'. $item['icon'] . '.svg' ); ?>">
+                </div>
+                    <div><?php esc_html_e( $item['label'] ); ?></div>
+            </div>
+        <?php endforeach;
+    }
+
     public function dt_add_section( $section, $post_type ) {
         if ( $section === 'custom_church_health_tile' ): ?>
         <style>
@@ -198,6 +213,15 @@ class Custom_Church_Health_Tile_Tile
                 margin-right: auto;
                 <?php self::display_item_css(); ?>
             }
+
+            .summary-icons {
+                height: 50px;
+                width: 50px;
+                display: grid;
+                grid-template-columns:auto auto auto;
+                text-align: center;
+                color: darkgray;
+            }
         </style>
         <div>
             <div class="custom-church-health-circle">
@@ -205,6 +229,9 @@ class Custom_Church_Health_Tile_Tile
                     <?php self::display_item_divs(); ?>
                 </div>
             </div>
+        </div>
+        <div>
+            <?php self::display_item_overview(); ?>
         </div>
     <?php endif; ?>
                 
