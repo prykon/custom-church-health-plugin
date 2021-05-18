@@ -133,6 +133,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
     }
 
     private function show_tiles() {
+        $plugin_base_url = self::get_plugin_base_url();
         ?>
         <form method="post">
             <table>
@@ -142,10 +143,10 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
                 foreach( $icons as $icon ) :
                     ?>
                     <tr>
-                        <td><?php echo esc_html( $icon['icon'] ); ?></td>
-                        <td><?php echo esc_html( $icon['label'] ); ?></td>
-                        <td><?php echo esc_html( $icon['description'] ); ?></td>
-                        <td>
+                        <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/' . $icon['icon'] . '.svg' ); ?>" width="35px" height="35px"></td>
+                        <td style="vertical-align:middle;"><?php echo esc_html( $icon['label'] ); ?></td>
+                        <td style="vertical-align:middle;"><?php echo esc_html( $icon['description'] ); ?></td>
+                        <td style="vertical-align:middle;">
                             <button type="submit" class="button" name="delete_key" value="<?php echo esc_html( $icon['key'] ); ?>"><?php esc_html_e( 'Delete', 'disciple_tools' ) ?></button>
                         </td>
                     </tr>
@@ -155,7 +156,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
                 ?>
                 <tr>
                     <td align="center">
-                        <i><?php echo esc_html_e( 'No custom icons yet...', 'disciple_tools' ); ?></i>
+                        <i><?php echo esc_html_e( 'No custom items yet...', 'disciple_tools' ); ?></i>
                     </td>
                 </tr>
                 <?php
@@ -168,16 +169,33 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
 
     private function create_new_icon() {
         ?>
+        <style>
+            .image_icon {
+                height: 35px;
+                width: 35px;
+                margin: auto;
+            }
+            .custom_icon {
+                height: 50px;
+                width: 50px;
+                border: none;
+                background-color: transparent;
+                display: inline-grid;
+            }
+            .selected{
+                border: 1px solid black;
+            }
+            .custom_icon:hover{
+                background-color: lightgray;
+            };
+        </style>
         <form method="post">
             <table>
                 <tr>
-                    <th>Icon</th>
                     <th>Label</th>
+                    <th>Description</th>
                 </tr>
                 <tr>
-                    <td>
-                        <input type="text" name="new_icon">
-                    </td>
                     <td>
                         <input type="text" name="new_label">
                     </td>
@@ -185,11 +203,62 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
                         <input type="text" name="new_description">
                     </td>
                     <td>
-                        <button type="submit" class="button" name="add_icon"><?php esc_html_e( 'Add', 'disciple_tools' ) ?></button>
+                        <input type="hidden" id="new_icon" name="new_icon">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Icon</th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <?php self::show_icons(); ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        <button type="submit" class="button" name="add_icon"><?php esc_html_e( 'Add', 'disciple_tools' ); ?></button>
                     </td>
                 </tr>
             </table>
         </form>
+        <?php
+    }
+
+    private function get_plugin_base_url(){
+        // Remove '/admin/' subdirectory from plugin base url
+        $plugin_base_url = untrailingslashit( plugin_dir_url( __FILE__ ) );
+        $plugin_base_url = explode( '/', $plugin_base_url );
+        array_pop( $plugin_base_url );
+        $plugin_base_url = implode( '/', $plugin_base_url );
+        return $plugin_base_url;
+    }
+
+    private function show_icons() {
+        $plugin_base_url = self::get_plugin_base_url();        
+
+        $icons = [
+            [ 'file_name' => 'video-call', 'name' => 'Video Call', ],
+            [ 'file_name' => 'covid', 'name' => 'Covid', ],
+            [ 'file_name' => 'lightsaber', 'name' => 'Lightsaber', ],
+        ];
+
+        foreach ( $icons as $icon ):
+        ?>
+        <div class="custom_icon" title="<?php esc_attr_e( $icon['name'] ); ?>" data-name="<?php esc_attr_e( $icon['file_name'] ); ?>">
+            <img src="<?php echo esc_attr( trailingslashit( $plugin_base_url ) ) . 'assets/' . esc_attr( $icon['file_name'] ) . '.svg'; ?>" class="image_icon">
+        </div>
+        <?php
+            endforeach;
+        ?>
+        <script type="text/javascript">
+            jQuery( '.custom_icon' ).on( 'click', function() {
+                jQuery( '.custom_icon' ).each( function( i, v ) {
+                    jQuery(v).removeClass( 'selected' );
+                });
+                jQuery( this ).addClass( 'selected' );
+                jQuery( '#new_icon' ).val( jQuery( this ).data( 'name' ) );
+            });
+        </script>
         <?php
     }
 
@@ -290,7 +359,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
             
             // Show add tile module
             if ( isset( $_POST['show_add_new_icon'] ) ) {
-                $this->box( 'top', __( 'Create new icon', 'disciple_tools' ) );
+                $this->box( 'top', __( 'Create new item', 'disciple_tools' ) );
                 $this->create_new_icon();
                 $this->box( 'bottom' );
             }

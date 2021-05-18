@@ -13,7 +13,6 @@ class Custom_Church_Health_Tile_Tile
 
     public function __construct(){
         add_filter( 'dt_details_additional_tiles', [ $this, "dt_details_additional_tiles" ], 10, 2 );
-        add_filter( "dt_custom_fields_settings", [ $this, "dt_custom_fields" ], 1, 2 );
         add_action( "dt_details_additional_section", [ $this, "dt_add_section" ], 30, 2 );
     }
 
@@ -39,44 +38,14 @@ class Custom_Church_Health_Tile_Tile
      * @param string $post_type
      * @return array
      */
-    public function dt_custom_fields( array $fields, string $post_type = "" ) {
-        /**
-         * @todo set the post type
-         */
-        if ( $post_type === "groups" ){
-            /**
-             * @todo Add the fields that you want to include in your tile.
-             *
-             * Examples for creating the $fields array
-             * Contacts
-             * @link https://github.com/DiscipleTools/disciple-tools-theme/blob/256c9d8510998e77694a824accb75522c9b6ed06/dt-contacts/base-setup.php#L108
-             *
-             * Groups
-             * @link https://github.com/DiscipleTools/disciple-tools-theme/blob/256c9d8510998e77694a824accb75522c9b6ed06/dt-groups/base-setup.php#L83
-             */
-
-            $custom_items = get_option( 'custom_church_health_icons', null );
-
-            $fields["custom_church_health_tile_multiselect"] = [
-                'name' => __( 'Custom Church Health', 'disciple_tools' ),
-                'description' => _x( "Track the progress and health of a group/church.", 'Optional Documentation', 'disciple_tools' ),
-                'default' => [],
-                'tile' => 'custom_church_health_tile',
-                'type' => 'multi_select',
-                'hidden' => false,
-                'icon' => get_template_directory_uri() . '/dt-assets/images/edit.svg',
-            ];
-            
-            foreach ( $custom_items as $item ) {
-                $fields['custom_church_health_tile_multiselect']['default'][ $item['key'] ]['label'] = $item['label'];
-            }
-        }
-        return $fields;
-    }
-
     private function display_item_divs() {
         $items = get_option('custom_church_health_icons', null );
-        $item_count = count( $items ) - 2;
+        $items = array_values( $items );
+        if ( empty( $items ) ) {
+            $grid_template = [1];
+        }
+
+        $item_count = count( $items );
         
         switch ( $item_count ) {
             case 1:
@@ -138,36 +107,57 @@ class Custom_Church_Health_Tile_Tile
                 break;
         }
 
-        $i = 1;
+        $i = 0;
         $output = '';
+        $plugin_base_url = self::get_plugin_base_url();        
+
         foreach ( $grid_template as $grid_item ) {
             if ( $grid_item === 0 ) {
                 $output .= '<div class="custom-church-health-item"></div>';
             } else if ( $grid_item === 1 ) {
-                $output .= '<div class="custom-church-health-item" style="background-color:rgba(200, 200, 200, 0.8);border:1px solid rgba(0, 0, 0, 0.8);">' . $i . '</div>';
-                $i++;
+                if ( !empty( $items ) ) {
+                    $output .= '<div class="custom-church-health-item" title="' . esc_attr( $items[$i]['label'] ) . '"><img src="' . esc_attr( $plugin_base_url . '/assets/' . $items[$i]['icon'] . '.svg' ) . '"></div>';
+                    $i++;
+                } else {
+                    $output .= '<div class="custom-church-health-item">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
+                }
             }
         }
         echo $output;
     }
 
+    private function get_plugin_base_url(){
+        // Remove '/admin/' subdirectory from plugin base url
+        $plugin_base_url = untrailingslashit( plugin_dir_url( __FILE__ ) );
+        $plugin_base_url = explode( '/', $plugin_base_url );
+        array_pop( $plugin_base_url );
+        $plugin_base_url = implode( '/', $plugin_base_url );
+        return $plugin_base_url;
+    }
+
     private function display_item_css() {
-        $item_count = count( get_option( 'custom_church_health_icons', null ) ) - 2;
+        $item_count = count( get_option( 'custom_church_health_icons', null ) );
 
         $output = 'display:grid;';
-        switch ( $item_count ) {
-            case 1:
-                $output .= 'grid-template-columns:auto;';
-                break;
 
-            case 4:
-                $output .= 'grid-template-columns:auto auto;';
-                break;            
+        if ( empty( $item_count ) ) {
+            $output .= 'grid-template-columns:auto;';
+        } else {
+            switch ( $item_count ) {
+                case 1:
+                    $output .= 'grid-template-columns:auto;';
+                    break;
 
-            default:
-                $output .= 'grid-template-columns:auto auto auto;';
-                break;
+                case 4:
+                    $output .= 'grid-template-columns:auto auto;';
+                    break;            
+
+                default:
+                    $output .= 'grid-template-columns:auto auto auto;';
+                    break;
+            }
         }
+
         $output .= 'justify-content: space-evenly;';
         echo $output;
     }
@@ -175,13 +165,19 @@ class Custom_Church_Health_Tile_Tile
     public function dt_add_section( $section, $post_type ) {
         if ( $section === 'custom_church_health_tile' ): ?>
         <style>
+            .practicing {
+                filter: none !important;
+            }
             .custom-church-health-item {
+                filter: opacity(0.35);
                 margin: auto;
-                height:75px;
-                width:75px;
+                height:65px;
+                width:65px;
                 border-radius: 100%;
-                font-size: 30px;
+                font-size: 16px;
+                color: lightgray;
                 text-align: center;
+                font-style: italic;
             }
 
             .custom-church-health-circle {
@@ -211,18 +207,7 @@ class Custom_Church_Health_Tile_Tile
             </div>
         </div>
     <?php endif; ?>
-                <!--
-                <div style="display:flex;flex-wrap:wrap;margin-top:10px" class=" js-progress-bordered-box half-opacity">
-                    <?php foreach ( $fields['custom_church_health_tile_multiselect']['default'] as $key => $option ) : ?>
-                        <div class="group-progress-button-wrapper">
-                            <button  class="group-progress-button" id="<?php echo esc_html( $key ) ?>">
-                                <img src="<?php echo esc_html( $option['icon'] ?? "" ) ?>">
-                            </button>
-                            <p><?php echo esc_html( $option['label'] ) ?> </p>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-                -->
+                
         <?php
     }
 }
