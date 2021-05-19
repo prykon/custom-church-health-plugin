@@ -39,116 +39,21 @@ class Custom_Church_Health_Tile_Tile
      * @return array
      */
     private function display_item_divs() {
+        $plugin_base_url = self::get_plugin_base_url();
         $items = get_option('custom_church_health_icons', null );
         if ( empty( $items ) ) {
-            $grid_template = [
-                0,0,0,
-                0,1,0,
-                0,0,0,
-            ];
-        } else {
-            $items = array_values( $items );
-            $item_count = count( $items );
-            
-            switch ( $item_count ) {
-                case 1:
-                    $grid_template = [1];
-                    break;
-                case 2:
-                    $grid_template = [
-                        0,0,0,
-                        1,0,1,
-                        0,0,0,
-                    ];
-                    break;
-                case 3:
-                    $grid_template = [
-                        0,1,0,
-                        1,0,1,
-                    ];
-                    break;
-                case 4:
-                    $grid_template = [
-                        1,1,
-                        1,1,
-                    ];
-                    break;
-                case 5:
-                    $grid_template = [
-                        1,0,1,
-                        0,1,0,
-                        1,0,1,
-                    ];
-                    break;
-                case 6:
-                    $grid_template = [
-                        1,1,1,
-                        1,1,1,
-                    ];
-                    break;
-                case 7:
-                    $grid_template = [
-                        1,0,1,
-                        1,1,1,
-                        1,0,1,
-                    ];
-                    break;
-                case 8:
-                    $grid_template = [
-                        1,1,1,1,
-                        1,1,1,1,
-                    ];
-                    break;
-                case 9:
-                    $grid_template = [
-                        1,1,1,
-                        1,1,1,
-                        1,1,1,
-                    ];
-                    break;
-                case 10:
-                    $grid_template = [
-                        1,1,1,
-                        1,1,1,
-                        1,1,1,
-                        0,1,0,
-                    ];
-                    break;
-                case 11:
-                    $grid_template = [
-                        1,1,1,
-                        1,1,1,
-                        1,1,1,
-                        1,0,1,
-                    ];
-                    break;
-                case 12:
-                    $grid_template = [
-                        1,1,1,
-                        1,1,1,
-                        1,1,1,
-                        1,1,1,
-                    ];
-                    break;
-            }
+            echo '<div class="custom-church-health-item"><img src="' . esc_attr( $plugin_base_url . '/assets/images/warning.svg' ) . '">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
+            return;
         }
 
         $i = 0;
         $output = '';
         $plugin_base_url = self::get_plugin_base_url();
 
-        foreach ( $grid_template as $grid_item ) {
-            if ( $grid_item === 0 ) {
-                $output .= '<div class="custom-church-health-item"></div>';
-            } else if ( $grid_item === 1 ) {
-                if ( $items ) {
-                    $output .= '<div class="custom-church-health-item" title="' . esc_attr( $items[$i]['label'] ) . '"><img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $items[$i]['icon'] . '.svg' ) . '"></div>';
-                    $i++;
-                } else {
-                    $output .= '<div class="custom-church-health-item"><img src="' . esc_attr( $plugin_base_url . '/assets/images/warning.svg' ) . '">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
-                }
-            }
+        foreach ( $items as $item ) {
+            $output .= '<div class="custom-church-health-item" title="' . esc_attr( $item['label'] ) . '"><img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ) . '"></div>';
         }
+
         echo $output;
     }
 
@@ -204,8 +109,8 @@ class Custom_Church_Health_Tile_Tile
                 $health_item_size = 75;
                 break;
 
-            case $item_count > 4 && $item_count <= 9:
-                $health_item_size = 70;
+            case $item_count > 4 && $item_count <= 8:
+                $health_item_size = 67.5;
                 break;
 
             case $item_count > 9:
