@@ -143,7 +143,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
                 foreach( $icons as $icon ) :
                     ?>
                     <tr>
-                        <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/' . $icon['icon'] . '.svg' ); ?>" width="35px" height="35px"></td>
+                        <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $icon['icon'] . '.svg' ); ?>" width="35px" height="35px"></td>
                         <td style="vertical-align:middle;"><?php echo esc_html( $icon['label'] ); ?></td>
                         <td style="vertical-align:middle;"><?php echo esc_html( $icon['description'] ); ?></td>
                         <td style="vertical-align:middle;">
@@ -197,13 +197,13 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" name="new_label">
+                        <input type="text" name="new_label" required>
                     </td>
                     <td>
-                        <input type="text" name="new_description">
+                        <input type="text" name="new_description" required>
                     </td>
                     <td>
-                        <input type="hidden" id="new_icon" name="new_icon">
+                        <input type="hidden" id="new_icon" name="new_icon" required>
                     </td>
                 </tr>
                 <tr>
@@ -276,7 +276,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
         foreach ( $icons as $icon ):
         ?>
         <div class="custom_icon" title="<?php esc_attr_e( $icon['name'] ); ?>" data-name="<?php esc_attr_e( $icon['file_name'] ); ?>">
-            <img src="<?php echo esc_attr( trailingslashit( $plugin_base_url ) ) . 'assets/' . esc_attr( $icon['file_name'] ) . '.svg'; ?>" class="image_icon">
+            <img src="<?php echo esc_attr( untrailingslashit( $plugin_base_url ) ) . '/assets/images/' . esc_attr( $icon['file_name'] ) . '.svg'; ?>" class="image_icon">
         </div>
         <?php
             endforeach;
@@ -294,15 +294,24 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
     }
 
     private function add_new_church_health_icons(){
+        $item_count = count( get_option( 'custom_church_health_icons', null ) );
         ?>
         <form method="post">
             <table>
                 <tr>
                     <td style="vertical-align: middle">
-                        <label for="tile-select"><?php esc_html_e( 'Create new Church Health Icon', 'disciple_tools' ) ?></label>
+                        <?php if ( $item_count < 12 ) : ?>
+                            <label for="tile-select"><?php esc_html_e( 'Create new Church Health Icon', 'disciple_tools' ) ?></label>
+                        <?php else: ?>
+                            <label for="tile-select"><i><?php esc_html_e( 'You can only create up to 12 custom church health icons', 'disciple_tools' ) ?></i></label>
+                        <?php endif; ?>
                     </td>
                     <td>
-                        <button type="submit" class="button" name="show_add_new_icon"><?php esc_html_e( 'Create', 'disciple_tools' ) ?></button>
+                        <?php if ( $item_count < 12 ) : ?>
+                            <button type="submit" class="button" name="show_add_new_icon"><?php esc_html_e( 'Create', 'disciple_tools' ) ?></button>
+                        <?php else: ?>
+                            <button class="button" name="show_add_new_icon" disabled><?php esc_html_e( 'Create', 'disciple_tools' ) ?></button>
+                        <?php endif; ?>
                     </td>
                 </tr>
             </table>
