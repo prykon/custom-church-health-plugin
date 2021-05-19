@@ -142,10 +142,10 @@ class Custom_Church_Health_Tile_Tile
                 $output .= '<div class="custom-church-health-item"></div>';
             } else if ( $grid_item === 1 ) {
                 if ( $items ) {
-                    $output .= '<div class="custom-church-health-item" title="' . esc_attr( $items[$i]['label'] ) . '"><img src="' . esc_attr( $plugin_base_url . '/assets/' . $items[$i]['icon'] . '.svg' ) . '"></div>';
+                    $output .= '<div class="custom-church-health-item" title="' . esc_attr( $items[$i]['label'] ) . '"><img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $items[$i]['icon'] . '.svg' ) . '"></div>';
                     $i++;
                 } else {
-                    $output .= '<div class="custom-church-health-item"><img src="' . esc_attr( $plugin_base_url . '/assets/warning.svg' ) . '">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
+                    $output .= '<div class="custom-church-health-item"><img src="' . esc_attr( $plugin_base_url . '/assets/images/warning.svg' ) . '">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
                 }
             }
         }
@@ -214,7 +214,7 @@ class Custom_Church_Health_Tile_Tile
                 } else {
                     echo '<div class="summary-icons" style="background-color: #b2c6d6" title="' . esc_html( trim( $item['description'] ) ) . '">';
                 }
-                echo '<img src="' . esc_attr( $plugin_base_url . '/assets/' . $item['icon'] . '.svg' ) .'">';
+                echo '<img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ) .'">';
                 echo '</div>';
                 echo '<div class="summary-label"><p>' . esc_html( trim( $item['label'] ) ) . '</p></div>';
                 echo '</div>';

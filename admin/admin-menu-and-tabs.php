@@ -143,7 +143,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
                 foreach( $icons as $icon ) :
                     ?>
                     <tr>
-                        <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/' . $icon['icon'] . '.svg' ); ?>" width="35px" height="35px"></td>
+                        <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $icon['icon'] . '.svg' ); ?>" width="35px" height="35px"></td>
                         <td style="vertical-align:middle;"><?php echo esc_html( $icon['label'] ); ?></td>
                         <td style="vertical-align:middle;"><?php echo esc_html( $icon['description'] ); ?></td>
                         <td style="vertical-align:middle;">
