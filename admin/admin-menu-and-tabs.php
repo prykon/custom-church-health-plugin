@@ -294,15 +294,24 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
     }
 
     private function add_new_church_health_icons(){
+        $item_count = count( get_option( 'custom_church_health_icons', null ) );
         ?>
         <form method="post">
             <table>
                 <tr>
                     <td style="vertical-align: middle">
-                        <label for="tile-select"><?php esc_html_e( 'Create new Church Health Icon', 'disciple_tools' ) ?></label>
+                        <?php if ( $item_count < 12 ) : ?>
+                            <label for="tile-select"><?php esc_html_e( 'Create new Church Health Icon', 'disciple_tools' ) ?></label>
+                        <?php else: ?>
+                            <label for="tile-select"><i><?php esc_html_e( 'You can only create up to 12 custom church health icons', 'disciple_tools' ) ?></i></label>
+                        <?php endif; ?>
                     </td>
                     <td>
-                        <button type="submit" class="button" name="show_add_new_icon"><?php esc_html_e( 'Create', 'disciple_tools' ) ?></button>
+                        <?php if ( $item_count < 12 ) : ?>
+                            <button type="submit" class="button" name="show_add_new_icon"><?php esc_html_e( 'Create', 'disciple_tools' ) ?></button>
+                        <?php else: ?>
+                            <button class="button" name="show_add_new_icon" disabled><?php esc_html_e( 'Create', 'disciple_tools' ) ?></button>
+                        <?php endif; ?>
                     </td>
                 </tr>
             </table>
