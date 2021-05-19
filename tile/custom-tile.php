@@ -206,29 +206,28 @@ class Custom_Church_Health_Tile_Tile
 
         $items = array_values( $items );
 
-        foreach ( $items as $item ) : ?>
+        foreach ( $items as $item  ) : ?>
             <div class="summary-tile">
-                <?php if ( in_array( $item, $practiced_items ) ) : ?>
-                    <div class="summary-icons" title="<?php esc_attr_e( $item['description'] ); ?>">
-                <?php else: ?>
-                    <div class="summary-icons" style= "opacity: 0.4;" title="<?php esc_attr_e( $item['description'] ); ?>">
-                <?php endif; ?>
-                    <img src="<?php echo esc_attr( $plugin_base_url . '/assets/' . $item['icon'] . '.svg' ); ?>" >
-                </div>
-                    <div class="summary-label"><?php esc_html_e( $item['label'] ); ?></div>
-            </div>
-        <?php endforeach;
+                <?php
+                if ( in_array( $item , $practiced_items ) ) {
+                    echo '<div class="summary-icons" title="' . esc_attr( $item['icon'] ) . '">';
+                } else {
+                    echo '<div class="summary-icons" style="background-color: #b2c6d6" title="' . esc_html( trim( $item['description'] ) ) . '">';
+                }
+                echo '<img src="' . esc_attr( $plugin_base_url . '/assets/' . $item['icon'] . '.svg' ) .'">';
+                echo '</div>';
+                echo '<div class="summary-label"><p>' . esc_html( trim( $item['label'] ) ) . '</p></div>';
+                echo '</div>';
+        endforeach;
     }
 
     public function dt_add_section( $section, $post_type ) {
         $items = get_option('custom_church_health_icons', null );
 
         if ( empty( $items ) ) {        
-            $item_padding = 0;
             $item_count = 0;
         } else {
             $item_count = count( $items );
-            $item_padding = 100 / $item_count;
         }
 
         $health_item_size = 50;
@@ -241,7 +240,7 @@ class Custom_Church_Health_Tile_Tile
             case $item_count > 4 && $item_count <= 9:
                 $health_item_size = 70;
                 break;
-                
+
             case $item_count > 9:
                 $health_item_size = 40;
                 break;
@@ -281,28 +280,33 @@ class Custom_Church_Health_Tile_Tile
                 <?php self::display_item_css(); ?>
             }
             .summary-tile {
-                display:inline-block;
-                text-align:center;
+                flex: 1 0 80px;
+                text-align: center;
             }
             .summary-icons {
-                height: 50px;
-                width: 50px;
+                cursor: pointer;
+                height: 60px;
+                width: 65px;
                 margin: auto;
                 display: grid;
-                grid-template-columns:auto auto auto;
                 text-align: center;
                 background-color: #3f729b;
-                color: darkgray;
+                border-radius: 5px;
             }
             .summary-icons img {
                 filter: invert(100%);
+                margin: auto;
+                height: 80%;
+                width: 80%;
             }
-            .summary-label{
+            .summary-label {
                 width:;
             }
             .summary-grid {
+                display: flex;
+                flex-wrap: wrap;
                 margin-top: 20px;
-                padding: <?php echo esc_attr( $item_padding ); ?>px;
+                /*grid-template-columns:auto auto;*/
             }
         </style>
         <div>
@@ -312,7 +316,7 @@ class Custom_Church_Health_Tile_Tile
                 </div>
             </div>
         </div>
-        <div class="summary-grid">
+        <div class="summary-grid" align="center">
             <?php self::display_item_overview(); ?>
         </div>
     <?php endif; ?>
