@@ -82,9 +82,8 @@ class Custom_Church_Health_Tile_Tile
                     break;
                 case 6:
                     $grid_template = [
-                        1,0,1,
-                        1,0,1,
-                        1,0,1,
+                        1,1,1,
+                        1,1,1,
                     ];
                     break;
                 case 7:
@@ -96,13 +95,36 @@ class Custom_Church_Health_Tile_Tile
                     break;
                 case 8:
                     $grid_template = [
-                        1,1,1,
-                        1,0,1,
-                        1,1,1,
+                        1,1,1,1,
+                        1,1,1,1,
                     ];
                     break;
                 case 9:
                     $grid_template = [
+                        1,1,1,
+                        1,1,1,
+                        1,1,1,
+                    ];
+                    break;
+                case 10:
+                    $grid_template = [
+                        1,1,1,
+                        1,1,1,
+                        1,1,1,
+                        0,1,0,
+                    ];
+                    break;
+                case 11:
+                    $grid_template = [
+                        1,1,1,
+                        1,1,1,
+                        1,1,1,
+                        1,0,1,
+                    ];
+                    break;
+                case 12:
+                    $grid_template = [
+                        1,1,1,
                         1,1,1,
                         1,1,1,
                         1,1,1,
@@ -156,7 +178,12 @@ class Custom_Church_Health_Tile_Tile
 
             case 4:
                 $output .= 'grid-template-columns:auto auto;';
-                break;            
+                break;
+
+
+            case 8:
+                $output .= 'grid-template-columns:auto auto auto auto;';
+                break;
 
             default:
                 $output .= 'grid-template-columns:auto auto auto;';
@@ -195,12 +222,31 @@ class Custom_Church_Health_Tile_Tile
 
     public function dt_add_section( $section, $post_type ) {
         $items = get_option('custom_church_health_icons', null );
-        
+
         if ( empty( $items ) ) {        
             $item_padding = 0;
+            $item_count = 0;
         } else {
-            $item_padding = 100 / count( $items );
+            $item_count = count( $items );
+            $item_padding = 100 / $item_count;
         }
+
+        $health_item_size = 50;
+        
+        switch ( $item_count) {
+            case $item_count <= 4:
+                $health_item_size = 75;
+                break;
+
+            case $item_count > 4 && $item_count <= 9:
+                $health_item_size = 70;
+                break;
+                
+            case $item_count > 9:
+                $health_item_size = 40;
+                break;
+        }
+
         if ( $section === 'custom_church_health_tile' ): ?>
         <style>
             .practicing {
@@ -209,8 +255,8 @@ class Custom_Church_Health_Tile_Tile
             .custom-church-health-item {
                 filter: opacity(0.35);
                 margin: auto;
-                height:65px;
-                width:65px;
+                height: <?php echo esc_attr( $health_item_size ); ?>px;
+                width: <?php echo esc_attr( $health_item_size ); ?>px;
                 border-radius: 100%;
                 font-size: 16px;
                 color: black;
@@ -252,7 +298,7 @@ class Custom_Church_Health_Tile_Tile
                 filter: invert(100%);
             }
             .summary-label{
-                width:20px;
+                width:;
             }
             .summary-grid {
                 margin-top: 20px;
