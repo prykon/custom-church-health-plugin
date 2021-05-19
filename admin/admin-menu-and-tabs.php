@@ -197,13 +197,13 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
                 </tr>
                 <tr>
                     <td>
-                        <input type="text" name="new_label">
+                        <input type="text" name="new_label" required>
                     </td>
                     <td>
-                        <input type="text" name="new_description">
+                        <input type="text" name="new_description" required>
                     </td>
                     <td>
-                        <input type="hidden" id="new_icon" name="new_icon">
+                        <input type="hidden" id="new_icon" name="new_icon" required>
                     </td>
                 </tr>
                 <tr>
