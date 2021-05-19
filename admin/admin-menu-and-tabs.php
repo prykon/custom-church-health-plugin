@@ -276,7 +276,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
         foreach ( $icons as $icon ):
         ?>
         <div class="custom_icon" title="<?php esc_attr_e( $icon['name'] ); ?>" data-name="<?php esc_attr_e( $icon['file_name'] ); ?>">
-            <img src="<?php echo esc_attr( trailingslashit( $plugin_base_url ) ) . 'assets/' . esc_attr( $icon['file_name'] ) . '.svg'; ?>" class="image_icon">
+            <img src="<?php echo esc_attr( untrailingslashit( $plugin_base_url ) ) . '/assets/images/' . esc_attr( $icon['file_name'] ) . '.svg'; ?>" class="image_icon">
         </div>
         <?php
             endforeach;
