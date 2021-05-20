@@ -40,4 +40,28 @@ function distributeItems() {
     });
 }
 
-distributeItems();
+jQuery(document).ready(function($) {
+    distributeItems();
+
+    let post_id        = window.detailsSettings.post_id
+    let post_type      = window.detailsSettings.post_type
+    let post           = window.detailsSettings.post_fields
+    let field_settings = window.detailsSettings.post_settings.fields
+
+    $('.summary-icons').on('click', function () {
+        let fieldId = $(this).attr('id')
+        $(this).css('background-color', '#3f729b');
+        let already_set = window.lodash.get(post, `custom_health_metrics`, []).includes(fieldId)
+        let update = {values:[{value:fieldId}]}
+        if ( already_set ){
+          update.values[0].delete = true;
+        }
+        API.update_post( post_type, post_id, {"health_metrics": update })
+          .then(groupData=>{
+            post = groupData
+            fillOutChurchHealthMetrics()
+          }).catch(err=>{
+            console.log(err)
+        })
+    })
+});
