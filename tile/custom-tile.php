@@ -16,6 +16,7 @@ class Custom_Church_Health_Tile_Tile
         add_action( "dt_details_additional_section", [ $this, "dt_add_section" ], 30, 2 );
     }
 
+
     /**
      * This function registers a new tile to a specific post type
      *
@@ -31,6 +32,20 @@ class Custom_Church_Health_Tile_Tile
             $tiles["custom_church_health_tile"] = [ "label" => __( "Custom Church Health Tile", 'disciple_tools' ) ];
         }
         return $tiles;
+    }
+
+    public function get_practiced_items( $post_id ) {
+        global $wpdb;
+
+        $practiced_items = $wpdb->get_col(
+            $wpdb->prepare( "
+                SELECT meta_value FROM $wpdb->postmeta
+                WHERE meta_key = 'health_metrics'
+                AND post_id = %s
+                ", $post_id )
+            );
+
+        return $practiced_items;
     }
 
     /**
@@ -51,7 +66,17 @@ class Custom_Church_Health_Tile_Tile
         $plugin_base_url = self::get_plugin_base_url();
 
         foreach ( $items as $item ) {
-            $output .= '<div class="custom-church-health-item" title="' . esc_attr( $item['label'] ) . '"><img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ) . '"></div>';
+
+            // Check if custom church health item is being practiced by groud
+            $item_opacity = 0.35;
+            
+            $practiced_items = self::get_practiced_items( 27 );
+
+            if ( !empty( $practiced_items ) && in_array( $item , $practiced_items ) ) {
+                $item_opacity = 1;
+            }
+
+            $output .= '<div class="custom-church-health-item" syle="filter: opacity(' . $item_opacity . ')" title="' . esc_attr( $item['label'] ) . '"><img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ) . '"></div>';
         }
 
         echo $output;
@@ -82,9 +107,9 @@ class Custom_Church_Health_Tile_Tile
             <div class="summary-tile">
                 <?php
                 if ( in_array( $item , $practiced_items ) ) {
-                    echo '<div class="summary-icons" title="' . esc_attr( $item['icon'] ) . '">';
+                    echo '<div class="summary-icons" id="' . esc_attr( $item['key'] ) . '" title="' . esc_attr( $item['description'] ) . '">';
                 } else {
-                    echo '<div class="summary-icons" style="background-color: #b2c6d6" title="' . esc_html( trim( $item['description'] ) ) . '">';
+                    echo '<div class="summary-icons" id="' . esc_attr( $item['key'] ) . '" title="' . esc_html( trim( $item['description'] ) ) . '" style="background-color: #b2c6d6">';
                 }
                 echo '<img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ) .'">';
                 echo '</div>';
@@ -124,7 +149,6 @@ class Custom_Church_Health_Tile_Tile
                 filter: none !important;
             }
             .custom-church-health-item {
-                filter: opacity(0.35);
                 margin: auto;
                 position: absolute;
                 height: <?php echo esc_attr( $health_item_size ); ?>px;

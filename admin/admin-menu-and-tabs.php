@@ -52,6 +52,15 @@ class Custom_Church_Health_Tile_Menu {
      */
     public function extensions_menu() {}
 
+    public static function get_plugin_base_url(){
+        // Remove '/admin/' subdirectory from plugin base url
+        $plugin_base_url = untrailingslashit( plugin_dir_url( __FILE__ ) );
+        $plugin_base_url = explode( '/', $plugin_base_url );
+        array_pop( $plugin_base_url );
+        $plugin_base_url = implode( '/', $plugin_base_url );
+        return $plugin_base_url;
+    }
+
     /**
      * Builds page contents
      * @since 0.1
@@ -74,8 +83,8 @@ class Custom_Church_Health_Tile_Menu {
         <div class="wrap">
             <h2>Custom Church Health Tile</h2>
             <h2 class="nav-tab-wrapper">
-                <a href="<?php echo esc_attr( $link ) . 'general' ?>"
-                   class="nav-tab <?php echo esc_html( ( $tab == 'general' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">General</a>
+                <a href="<?php echo esc_attr( $link ) . 'general' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'general' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">General</a>
+                <a href="<?php echo esc_attr( $link ) . 'templates' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'templates' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Templates</a>
                 <a href="<?php echo esc_attr( $link ) . 'help' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'help' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Help</a>
             </h2>
 
@@ -83,6 +92,10 @@ class Custom_Church_Health_Tile_Menu {
             switch ($tab) {
                 case "general":
                     $object = new Custom_Church_Health_Tile_Tab_General();
+                    $object->content();
+                    break;
+                case "templates":
+                    $object = new Custom_Church_Health_Tile_Tab_Templates();
                     $object->content();
                     break;
                 case "help":
@@ -143,7 +156,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
                 foreach( $icons as $icon ) :
                     ?>
                     <tr>
-                        <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $icon['icon'] . '.svg' ); ?>" width="35px" height="35px"></td>
+                        <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $icon['icon'] . '' ); ?>" width="35px" height="35px"></td>
                         <td style="vertical-align:middle;"><?php echo esc_html( $icon['label'] ); ?></td>
                         <td style="vertical-align:middle;"><?php echo esc_html( $icon['description'] ); ?></td>
                         <td style="vertical-align:middle;">
@@ -224,19 +237,23 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
         <?php
     }
 
-    private function get_plugin_base_url(){
-        // Remove '/admin/' subdirectory from plugin base url
-        $plugin_base_url = untrailingslashit( plugin_dir_url( __FILE__ ) );
-        $plugin_base_url = explode( '/', $plugin_base_url );
-        array_pop( $plugin_base_url );
-        $plugin_base_url = implode( '/', $plugin_base_url );
-        return $plugin_base_url;
-    }
-
     private function show_icons() {
         $plugin_base_url = self::get_plugin_base_url();        
 
         $icons = [
+            [ 'file_name' => 'twelve-attenders', 'name' => 'Attenders', ],
+            [ 'file_name' => 'twelve-baptism', 'name' => 'Baptism', ],
+            [ 'file_name' => 'twelve-give', 'name' => 'Give', ],
+            [ 'file_name' => 'twelve-gospel', 'name' => 'Gospel', ],
+            [ 'file_name' => 'twelve-holy-spirit', 'name' => 'Holy Spirit', ],
+            [ 'file_name' => 'twelve-lords-supper', 'name' => "Lord's Supper", ],
+            [ 'file_name' => 'twelve-love', 'name' => 'Love', ],
+            [ 'file_name' => 'twelve-make-disciples', 'name' => 'Make Disciples', ],
+            [ 'file_name' => 'twelve-prayer', 'name' => 'Prayer', ],
+            [ 'file_name' => 'twelve-repent', 'name' => 'Repent', ],
+            [ 'file_name' => 'twelve-signs-wonders', 'name' => 'Signs and Wonders', ],
+            [ 'file_name' => 'twelve-word', 'name' => 'Word', ],
+            [ 'file_name' => 'twelve-worship', 'name' => 'Worship', ],
             [ 'file_name' => 'baptism', 'name' => 'Baptism', ],
             [ 'file_name' => 'bible', 'name' => 'Bible', ],
             [ 'file_name' => 'candle', 'name' => 'Candle', ],
@@ -276,7 +293,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
         foreach ( $icons as $icon ):
         ?>
         <div class="custom_icon" title="<?php esc_attr_e( $icon['name'] ); ?>" data-name="<?php esc_attr_e( $icon['file_name'] ); ?>">
-            <img src="<?php echo esc_attr( untrailingslashit( $plugin_base_url ) ) . '/assets/images/' . esc_attr( $icon['file_name'] ) . '.svg'; ?>" class="image_icon">
+            <img src="<?php echo esc_attr( untrailingslashit( $plugin_base_url ) ) . '/assets/images/' . esc_attr( $icon['file_name'] ) . ''; ?>" class="image_icon">
         </div>
         <?php
             endforeach;
@@ -446,6 +463,320 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
     }
 }
 
+/**
+ * Class Custom_Church_Health_Tile_Tab_Templates
+ */
+class Custom_Church_Health_Tile_Tab_Templates {
+
+    private function set_template( $template_name ) {
+        $plugin_base_url = Custom_Church_Health_Tile_Menu::get_plugin_base_url();
+        $dt_template_health_items = [
+            0 => [
+                'key' => 'baptism',
+                'label' => __( 'Baptism', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'baptism'
+                ],
+            1 => [
+                'key' => 'bible_study',
+                'label' => __( 'Bible Study', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => esc_html( $plugin_base_url ). 'bible'
+                ],
+            2 => [
+                'key' => 'communion',
+                'label' => __( 'Communion', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => esc_html( $plugin_base_url ). 'communion'
+                ],
+            3 => [
+                'key' => 'fellowship',
+                'label' => __( 'Fellowship', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => esc_html( $plugin_base_url ). 'love'
+                ],
+            4 => [
+                    'key' => 'giving',
+                    'label' => __( 'Giving', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => esc_html( $plugin_base_url ). 'money'
+                ],
+            5 => [
+                    'key' => 'prayer',
+                    'label' => __( 'Prayer', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => esc_html( $plugin_base_url ). 'prayer'
+                ],
+            6 => [
+                    'key' => 'praise',
+                    'label' => __( 'Praise', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => esc_html( $plugin_base_url ). 'praise'
+                ],
+            7 => [
+                    'key' => 'sharing_gospel',
+                    'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => esc_html( $plugin_base_url ). 'gospel'
+                ],
+            8 => [
+                    'key' => 'leaders',
+                    'label' => __( 'Leaders', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => esc_html( $plugin_base_url ). 'happy'
+                ],
+            9 => [
+                    'key' => 'church_commitment',
+                    'label' => __( 'Church Commitment', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => esc_html( $plugin_base_url ). 'circle'
+                ]
+            ];
+
+        $twelve_practices_template_health_items = [
+            0 => [
+                'key' => 'sharing_gospel',
+                'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'twelve-gospel'
+                ],
+            1 => [
+                'key' => 'repentance',
+                'label' => __( 'Repentance', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'twelve-repent'
+                ],
+            2=> [
+                'key' => 'baptism',
+                'label' => __( 'Baptism', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'twelve-baptism'
+            ],
+            3=> [
+                'key' => 'holy_spirit',
+                'label' => __( 'Holy Spirit', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'twelve-holy-spirit'
+                ],
+            4=> [
+                'key' => 'word',
+                'label' => __( 'Word', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'twelve-word'
+                ],
+            5=> [
+                'key' => 'fellowship',
+                'label' => __( 'Fellowship', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'twelve-love'
+                ],
+            6=> [
+                'key' => 'communion',
+                'label' => __( 'Communion', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'twelve-lords-supper'
+                ],
+            7=> [
+                'key' => 'prayer',
+                'label' => __( 'Prayer', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'twelve-prayer'
+            ],
+            8=> [
+                'key' => 'signs_wonders',
+                'label' => __( 'Signs and Wonders', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'twelve-signs-wonders'
+            ],
+            9=> [
+                'key' => 'giving',
+                'label' => __( 'Giving', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'twelve-give'
+            ],
+            10=> [
+                'key' => 'worship',
+                'label' => __( 'Worship', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'twelve-worship'
+            ],
+            11=> [
+                'key' => 'making_disciples',
+                'label' => __( 'Making Disciples', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'twelve-make-disciples'
+            ],
+            12=> [
+                'key' => 'church_commitment',
+                'label' => __( 'Church Commitment', 'disciple_tools' ),
+                'description' => __( '', 'disciple_tools' ),
+                'icon' => 'church-commitment'
+            ]
+        ];
+
+        switch ( $template_name ) {
+            case 'dt_default_template':
+                update_option( 'custom_church_health_icons', $dt_template_health_items );
+                break;
+            
+            case 'twelve_practices_template':
+                update_option( 'custom_church_health_icons', $twelve_practices_template_health_items );
+                break;
+        }
+    }
+
+    public function content() {
+        ?>
+        <div class="wrap">
+            <div id="poststuff">
+                <div id="post-body" class="metabox-holder columns-2">
+                    <div id="post-body-content">
+                        <!-- Main Column -->
+
+                        <?php $this->main_column() ?>
+
+                        <!-- End Main Column -->
+                    </div><!-- end post-body-content -->
+                    <div id="postbox-container-1" class="postbox-container">
+                        <!-- Right Column -->
+
+                        <?php $this->right_column() ?>
+
+                        <!-- End Right Column -->
+                    </div><!-- postbox-container 1 -->
+                    <div id="postbox-container-2" class="postbox-container">
+                    </div><!-- postbox-container 2 -->
+                </div><!-- post-body meta box container -->
+            </div><!--poststuff end -->
+        </div><!-- wrap end -->
+        <?php
+    }
+
+    public function main_column() {
+        ?>
+        <!-- Box -->
+        <table class="widefat striped">
+            <thead>
+                <tr>
+                    <th>Templates</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Select from common Church health tracking methods
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form method="POST">
+                            <table class="widefat">
+                                <thead>
+                                    <tr>
+                                        <td>Template</td>
+                                        <td>Icon</td>
+                                        <td>Label</td>
+                                        <td>Action</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><b>Disciple.Tools Default</b></td>
+                                            <?php
+                                                $plugin_base_url = Custom_Church_Health_Tile_Menu::get_plugin_base_url();
+
+                                                $health_factors = [
+                                                    [ 'label' => __( 'Baptism', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/baptism.svg' ],
+                                                    [ 'label' => __( 'Bible Study', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/bible.svg' ],
+                                                    [ 'label' => __( 'Communion', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/communion.svg' ],
+                                                    [ 'label' => __( 'Fellowship', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/love.svg' ],
+                                                    [ 'label' => __( 'Giving', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/money.svg' ],
+                                                    [ 'label' => __( 'Prayer', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/prayer.svg' ],
+                                                    [ 'label' => __( 'Praise', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/praise.svg' ],
+                                                    [ 'label' => __( 'Sharing the Gospel', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/gospel.svg' ],
+                                                    [ 'label' => __( 'Leaders', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/happy.svg' ],
+                                                    [ 'label' => __( 'Church Commitment', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/circle.svg' ]
+                                                ];
+
+                                                foreach ( $health_factors as $health_factor ) {
+                                                    echo '<tr><td><img src="' . esc_attr( $health_factor['icon'] ) . '" width="25" height="25"></td><td>' . esc_html( $health_factor['label'] ) . '</td></tr>';
+                                                }
+                                            ?>
+                                        <td>
+                                            <button type="submit" class="button" name="set-template-dt" title="Set 'Disciple.Tools Default' as Church Health tile">Set</button>
+                                            <?php
+                                                if ( isset( $_POST['set-template-dt'] ) ) {
+                                                    self::set_template( 'dt_default_template' );
+                                                }
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Twelve Practices</b></td>
+                                            <?php
+                                            $health_factors = [
+                                                [ 'label' => __( 'Sharing the Gospel', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-gospel.svg' ) ],
+                                                [ 'label' => __( 'Repentance', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-repent.svg' ) ],
+                                                [ 'label' => __( 'Baptism', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-baptism.svg' ) ],
+                                                [ 'label' => __( 'Holy Spirit', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-holy-spirit.svg' ) ],
+                                                [ 'label' => __( 'Word', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-word.svg' ) ],
+                                                [ 'label' => __( 'Fellowship', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-love.svg' ) ],
+                                                [ 'label' => __( 'Communion', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-lords-supper.svg' ) ],
+                                                [ 'label' => __( 'Prayer', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-prayer.svg' ) ],
+                                                [ 'label' => __( 'Signs and Wonders', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-signs-wonders.svg' ) ],
+                                                [ 'label' => __( 'Giving', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-give.svg' ) ],
+                                                [ 'label' => __( 'Worship', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-worship.svg' ) ],
+                                                [ 'label' => __( 'Making Disciples', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-make-disciples.svg' ) ],
+                                                [ 'label' => __( 'Church Commitment', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/circle.svg' ]
+                                            ];
+
+                                            foreach ( $health_factors as $health_factor ) {
+                                                echo '<tr><td><img src="' . esc_attr( $health_factor['icon'] ) . '" width="25" height="25"></td><td>' . esc_html( $health_factor['label'] ) . '</td></tr>';
+                                                }
+                                            ?>
+                                        <td>
+                                            <button type="submit" class="button" name="set-twelve-practices" title="Set 'Twelve Practices' as Church Health tile">Set</button>
+                                            <?php
+                                                if ( isset( $_POST['set-template-dt'] ) ) {
+                                                    self::set_template( 'twelve_practices_template' );
+                                                }
+                                            ?>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <!-- End Box -->
+        <?php
+    }
+
+    public function right_column() {
+        ?>
+        <!-- Box -->
+        <table class="widefat striped">
+            <thead>
+                <tr>
+                    <th>Information</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    Content
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <!-- End Box -->
+        <?php
+    }
+}
 
 /**
  * Class Custom_Church_Health_Tile_Tab_Help
