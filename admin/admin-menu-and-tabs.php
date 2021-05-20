@@ -481,56 +481,50 @@ class Custom_Church_Health_Tile_Tab_Templates {
                 'key' => 'bible_study',
                 'label' => __( 'Bible Study', 'disciple_tools' ),
                 'description' => __( '', 'disciple_tools' ),
-                'icon' => esc_html( $plugin_base_url ). 'bible'
+                'icon' => 'bible'
                 ],
             2 => [
                 'key' => 'communion',
                 'label' => __( 'Communion', 'disciple_tools' ),
                 'description' => __( '', 'disciple_tools' ),
-                'icon' => esc_html( $plugin_base_url ). 'communion'
+                'icon' => 'communion'
                 ],
             3 => [
                 'key' => 'fellowship',
                 'label' => __( 'Fellowship', 'disciple_tools' ),
                 'description' => __( '', 'disciple_tools' ),
-                'icon' => esc_html( $plugin_base_url ). 'love'
+                'icon' => 'love'
                 ],
             4 => [
                     'key' => 'giving',
                     'label' => __( 'Giving', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
-                    'icon' => esc_html( $plugin_base_url ). 'money'
+                    'icon' => 'money'
                 ],
             5 => [
                     'key' => 'prayer',
                     'label' => __( 'Prayer', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
-                    'icon' => esc_html( $plugin_base_url ). 'prayer'
+                    'icon' => 'prayer'
                 ],
             6 => [
                     'key' => 'praise',
                     'label' => __( 'Praise', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
-                    'icon' => esc_html( $plugin_base_url ). 'praise'
+                    'icon' => 'praise'
                 ],
             7 => [
                     'key' => 'sharing_gospel',
                     'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
-                    'icon' => esc_html( $plugin_base_url ). 'gospel'
+                    'icon' => 'gospel'
                 ],
             8 => [
                     'key' => 'leaders',
                     'label' => __( 'Leaders', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
-                    'icon' => esc_html( $plugin_base_url ). 'happy'
+                    'icon' => 'happy'
                 ],
-            9 => [
-                    'key' => 'church_commitment',
-                    'label' => __( 'Church Commitment', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
-                    'icon' => esc_html( $plugin_base_url ). 'circle'
-                ]
             ];
 
         $twelve_practices_template_health_items = [
@@ -606,12 +600,6 @@ class Custom_Church_Health_Tile_Tab_Templates {
                 'description' => __( '', 'disciple_tools' ),
                 'icon' => 'twelve-make-disciples'
             ],
-            12=> [
-                'key' => 'church_commitment',
-                'label' => __( 'Church Commitment', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'church-commitment'
-            ]
         ];
 
         switch ( $template_name ) {
