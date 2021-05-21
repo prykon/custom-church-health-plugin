@@ -146,7 +146,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
     }
 
     private function show_tiles() {
-        $plugin_base_url = self::get_plugin_base_url();
+        $plugin_base_url = Custom_Church_Health_Tile_Menu::get_plugin_base_url();
         ?>
         <form method="post">
             <table>
@@ -156,7 +156,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
                 foreach( $icons as $icon ) :
                     ?>
                     <tr>
-                        <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $icon['icon'] . '' ); ?>" width="35px" height="35px"></td>
+                        <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $icon['icon'] . '.svg' ); ?>" width="35px" height="35px"></td>
                         <td style="vertical-align:middle;"><?php echo esc_html( $icon['label'] ); ?></td>
                         <td style="vertical-align:middle;"><?php echo esc_html( $icon['description'] ); ?></td>
                         <td style="vertical-align:middle;">
@@ -311,16 +311,22 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
     }
 
     private function add_new_church_health_icons(){
-        $item_count = count( get_option( 'custom_church_health_icons', null ) );
+        
+        $items = get_option( 'custom_church_health_icons', null );
+        if ( !empty( $items ) ) {
+            $item_count = count( $items );
+        } else {
+            $item_count = 0;
+        }
         ?>
         <form method="post">
             <table>
                 <tr>
                     <td style="vertical-align: middle">
                         <?php if ( $item_count < 12 ) : ?>
-                            <label for="tile-select"><?php esc_html_e( 'Create new Church Health Icon', 'disciple_tools' ) ?></label>
+                            <p for="tile-select"><?php esc_html_e( 'Create new Church Health Icon', 'disciple_tools' ) ?></p>
                         <?php else: ?>
-                            <label for="tile-select"><i><?php esc_html_e( 'You can only create up to 12 custom church health icons', 'disciple_tools' ) ?></i></label>
+                            <p for="tile-select"><i><?php esc_html_e( 'You can only create up to 12 custom church health icons', 'disciple_tools' ) ?></i></p>
                         <?php endif; ?>
                     </td>
                     <td>
