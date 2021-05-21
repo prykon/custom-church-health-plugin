@@ -57,7 +57,7 @@ class Custom_Church_Health_Tile_Tile
         $plugin_base_url = self::get_plugin_base_url();
         $items = get_option('custom_church_health_icons', null );
         if ( empty( $items ) ) {
-            echo '<div class="custom-church-health-item"><img src="' . esc_attr( $plugin_base_url . '/assets/images/warning.svg' ) . '">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
+            echo '<div class="custom-church-health-item" style="filter: opacity(0.35);"><img src="' . esc_attr( $plugin_base_url . '/assets/images/warning.svg' ) . '">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
             return;
         }
 
@@ -159,6 +159,11 @@ class Custom_Church_Health_Tile_Tile
                 text-align: center;
                 font-style: italic;
             }
+
+            .custom-church-health-item img {
+                height: <?php echo esc_attr( $health_item_size ); ?>px;
+                width: <?php echo esc_attr( $health_item_size ); ?>px;
+            }
             .custom-church-health-circle {
                 display: block;
                 margin:auto;
@@ -190,11 +195,12 @@ class Custom_Church_Health_Tile_Tile
                 background-color: #3f729b;
                 border-radius: 5px;
             }
+            
             .summary-icons img {
                 filter: invert(100%);
                 margin: auto;
-                height: 80%;
-                width: 80%;
+                height: 40px;
+                width: 50px;
             }
             .summary-label {
                 width:;

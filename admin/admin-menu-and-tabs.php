@@ -676,6 +676,8 @@ class Custom_Church_Health_Tile_Tab_Templates {
                                 <tbody>
                                     <tr>
                                         <td><b>Disciple.Tools Default</b></td>
+                                        <td colspan="3">
+                                    </tr>
                                             <?php
                                                 $plugin_base_url = Custom_Church_Health_Tile_Menu::get_plugin_base_url();
 
@@ -689,24 +691,30 @@ class Custom_Church_Health_Tile_Tab_Templates {
                                                     [ 'label' => __( 'Praise', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/praise.svg' ],
                                                     [ 'label' => __( 'Sharing the Gospel', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/gospel.svg' ],
                                                     [ 'label' => __( 'Leaders', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/happy.svg' ],
-                                                    [ 'label' => __( 'Church Commitment', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/circle.svg' ]
                                                 ];
 
                                                 foreach ( $health_factors as $health_factor ) {
-                                                    echo '<tr><td><img src="' . esc_attr( $health_factor['icon'] ) . '" width="25" height="25"></td><td>' . esc_html( $health_factor['label'] ) . '</td></tr>';
+                                                    echo '<tr><td></td><td><img src="' . esc_attr( $health_factor['icon'] ) . '" width="25" height="25"></td><td>' . esc_html( $health_factor['label'] ) . '</td><td></td></tr>';
                                                 }
                                             ?>
+                                    <tr>
+                                        <td colspan="3"></td>
                                         <td>
                                             <button type="submit" class="button" name="set-template-dt" title="Set 'Disciple.Tools Default' as Church Health tile">Set</button>
                                             <?php
+                                                // Check for template updates
                                                 if ( isset( $_POST['set-template-dt'] ) ) {
                                                     self::set_template( 'dt_default_template' );
+                                                } else if ( isset( $_POST['set-twelve-practices'] ) ) {
+                                                    self::set_template( 'twelve_practices_template');
                                                 }
                                             ?>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><b>Twelve Practices</b></td>
+                                        <td colspan="3"></td>
+                                    </tr>
                                             <?php
                                             $health_factors = [
                                                 [ 'label' => __( 'Sharing the Gospel', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-gospel.svg' ) ],
@@ -721,20 +729,16 @@ class Custom_Church_Health_Tile_Tab_Templates {
                                                 [ 'label' => __( 'Giving', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-give.svg' ) ],
                                                 [ 'label' => __( 'Worship', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-worship.svg' ) ],
                                                 [ 'label' => __( 'Making Disciples', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url . '/assets/images/twelve-make-disciples.svg' ) ],
-                                                [ 'label' => __( 'Church Commitment', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/circle.svg' ]
                                             ];
 
                                             foreach ( $health_factors as $health_factor ) {
-                                                echo '<tr><td><img src="' . esc_attr( $health_factor['icon'] ) . '" width="25" height="25"></td><td>' . esc_html( $health_factor['label'] ) . '</td></tr>';
+                                                echo '<tr><td></td><td><img src="' . esc_attr( $health_factor['icon'] ) . '" width="25" height="25"></td><td>' . esc_html( $health_factor['label'] ) . '</td><td></td></tr>';
                                                 }
                                             ?>
+                                    <tr>
+                                        <td colspan="3"></td>
                                         <td>
                                             <button type="submit" class="button" name="set-twelve-practices" title="Set 'Twelve Practices' as Church Health tile">Set</button>
-                                            <?php
-                                                if ( isset( $_POST['set-template-dt'] ) ) {
-                                                    self::set_template( 'twelve_practices_template' );
-                                                }
-                                            ?>
                                         </td>
                                     </tr>
                                 </tbody>
