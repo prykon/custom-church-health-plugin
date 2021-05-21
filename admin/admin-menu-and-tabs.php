@@ -238,7 +238,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
     }
 
     private function show_icons() {
-        $plugin_base_url = self::get_plugin_base_url();        
+        $plugin_base_url = Custom_Church_Health_Tile_Menu::get_plugin_base_url();        
 
         $icons = [
             [ 'file_name' => 'twelve-attenders', 'name' => 'Attenders', ],
@@ -293,7 +293,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
         foreach ( $icons as $icon ):
         ?>
         <div class="custom_icon" title="<?php esc_attr_e( $icon['name'] ); ?>" data-name="<?php esc_attr_e( $icon['file_name'] ); ?>">
-            <img src="<?php echo esc_attr( untrailingslashit( $plugin_base_url ) ) . '/assets/images/' . esc_attr( $icon['file_name'] ) . ''; ?>" class="image_icon">
+            <img src="<?php echo esc_attr( untrailingslashit( $plugin_base_url ) ) . '/assets/images/' . esc_attr( $icon['file_name'] ) . '.svg'; ?>" class="image_icon">
         </div>
         <?php
             endforeach;
