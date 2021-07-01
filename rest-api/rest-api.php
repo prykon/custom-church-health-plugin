@@ -31,9 +31,9 @@ class Custom_Church_Health_Tile_Endpoints
             ]
         );
         register_rest_route(
-            $namespace, '/public_endpoint', [
-                'methods'  => WP_REST_Server::CREATABLE,
-                'callback' => [ $this, 'public_endpoint' ],
+            $namespace, '/set_practice', [
+                'methods'  => 'POST',
+                'callback' => [ $this, 'set_practice' ],
                 'permission_callback' => '__return_true',
             ]
         );
@@ -47,9 +47,22 @@ class Custom_Church_Health_Tile_Endpoints
         return true;
     }
 
-    public function public_endpoint( WP_REST_Request $request ) {
+    public function set_practice( WP_REST_Request $request ) {
+        $params = $request->get_params();
+        $new_practice = esc_sql( $params['new_practice'] );
+        $group_id = esc_sql( $params['group_id'] );
+        $current_user_id = get_current_user_id();
 
-        // @todo run your function here
+        if ( empty( $practice ) ) {
+            return 'error: new group practice is missing';
+        }
+
+        if ( empty( $group_id ) ) {
+            return 'error: group id is missing';
+        }
+
+        $practices = get_option( 'custom_church_health_practices', null );
+        update_option( 'custom_church_health_practices', array_push( $practices, $new_practice ) );
 
         return true;
     }

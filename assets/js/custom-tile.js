@@ -40,57 +40,38 @@ function distributeItems() {
     });
 }
 
-function fillOutChurchHealthMetrics() {
-    if ( $("#health-metrics").length ) {
-      let svgItem = document.getElementById("church-svg-wrapper").contentDocument
-
-      let churchWheel = $(svgItem).find('svg')
-      health_keys.forEach(m=>{
-        if (post[`health_metrics`] && post.health_metrics.includes(m) ){
-          churchWheel.find(`#${m.replace("church_", "")}`).css("opacity", "1")
-          $(`#${m}`).css("opacity", "1")
-        } else {
-          churchWheel.find(`#${m.replace("church_", "")}`).css("opacity", ".1")
-          $(`#${m}`).css("opacity", ".4")
-        }
-      })
-      if ( !(post.health_metrics ||[]).includes("church_commitment") ){
-        churchWheel.find('#group').css("opacity", "1")
-        $(`#church_commitment`).css("opacity", ".4")
-      } else {
-        churchWheel.find('#group').css("opacity", ".1")
-        $(`#church_commitment`).css("opacity", "1")
-      }
-
-      $(".js-progress-bordered-box").removeClass("half-opacity")
-    }
-  }
-
+"use strict"
 jQuery(document).ready(function($) {
-    distributeItems();
+  distributeItems();
 
-    let post_id        = window.detailsSettings.post_id
-    let post_type      = window.detailsSettings.post_type
-    let post           = window.detailsSettings.post_fields
-    let field_settings = window.detailsSettings.post_settings.fields
+  let post_id        = window.detailsSettings.post_id;
+  let post_type      = window.detailsSettings.post_type;
+  let post           = window.detailsSettings.post_fields;
+  let field_settings = window.detailsSettings.post_settings.fields;
 
-    /* Church Metrics */
-    let health_keys = Object.keys(field_settings.custom_health_metrics.default)
-
-    $('.summary-icons').on('click', function () {
-        let fieldId = $(this).attr('id')
-        $(this).css('background-color', '#3f729b');
-        let already_set = window.lodash.get(post, `health_metrics`, []).includes(fieldId)
-        let update = {values:[{value:fieldId}]}
-        if ( already_set ){
-          update.values[0].delete = true;
-        }
-        API.update_post( post_type, post_id, {"health_metrics": update })
-          .then(groupData=>{
-            post = groupData
-            fillOutChurchHealthMetrics()
-          }).catch(err=>{
-            console.log(err)
-        })
+  $('.summary-icons').on('click', function () {
+    let fieldId = $(this).attr('id');
+    /* Toggle church commitment class */
+    if (fieldId == 'church_commitment') {
+      $( '#custom-church-health-items-container' ).toggleClass( 'committed' );
+    } else {
+      $( '#' + fieldId ).toggleClass("half-opacity");
+    }
+    
+    //$(this).css('opacity', "1");
+    let already_set = window.lodash.get(post, `health_metrics`, []).includes(fieldId)
+    let update = {values:[{value:fieldId}]}
+    if ( already_set ){
+      update.values[0].delete = true;
+    }
+    API.update_post( post_type, post_id, {"health_metrics": update })
+      .then(groupData=>{
+        console.log(groupData);
+        //post = groupData;
+        //fillOutChurchHealthMetrics()
+      }).catch(err=>{
+        console.log(err);
     })
+  })
+  /* end Church fields*/
 });
