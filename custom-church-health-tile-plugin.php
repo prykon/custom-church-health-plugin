@@ -57,7 +57,7 @@ function custom_church_health_tile() {
     /**
      * Load useful function from the theme
      */
-    if ( !defined( 'DT_FUNCTIONS_READY' ) ){
+    if ( !defined( 'DT_FUNCTIONS_READY' ) ) {
         require_once get_template_directory() . '/dt-core/global-functions.php';
     }
 
@@ -88,9 +88,9 @@ class Custom_Church_Health_Tile {
          * @todo Decide if you want to use the REST API example
          * To remove: delete this following line and remove the folder named /rest-api
          */
-        if ( $is_rest && strpos( dt_get_url_path(), 'custom_church_health_tile_template' ) !== false ) {
+        //if ( $is_rest && strpos( dt_get_url_path(), 'custom_church_health_tile_template' ) !== false ) {
             require_once( 'rest-api/rest-api.php' ); // adds starter rest api class
-        }
+        //}
 
         /**
          * @todo Decide if you want to create a custom site-to-site link
@@ -239,7 +239,6 @@ class Custom_Church_Health_Tile {
 // Register activation hook.
 register_activation_hook( __FILE__, [ 'Custom_Church_Health_Tile', 'activation' ] );
 register_deactivation_hook( __FILE__, [ 'Custom_Church_Health_Tile', 'deactivation' ] );
-
 
 if ( ! function_exists( 'custom_church_health_tile_hook_admin_notice' ) ) {
     function custom_church_health_tile_hook_admin_notice() {

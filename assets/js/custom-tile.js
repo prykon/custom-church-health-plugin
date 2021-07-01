@@ -44,34 +44,28 @@ function distributeItems() {
 jQuery(document).ready(function($) {
   distributeItems();
 
-  let post_id        = window.detailsSettings.post_id;
+  let group_id       = window.detailsSettings.post_id;
   let post_type      = window.detailsSettings.post_type;
   let post           = window.detailsSettings.post_fields;
   let field_settings = window.detailsSettings.post_settings.fields;
 
   $('.summary-icons').on('click', function () {
     let fieldId = $(this).attr('id');
-    /* Toggle church commitment class */
     if (fieldId == 'church_commitment') {
       $( '#custom-church-health-items-container' ).toggleClass( 'committed' );
     } else {
-      $( '#' + fieldId ).toggleClass("half-opacity");
+      $( '#' + fieldId ).toggleClass('half-opacity');
+      $( '#icon_' + fieldId ).toggleClass('half-opacity');
     }
-    
-    //$(this).css('opacity', "1");
-    let already_set = window.lodash.get(post, `health_metrics`, []).includes(fieldId)
-    let update = {values:[{value:fieldId}]}
-    if ( already_set ){
-      update.values[0].delete = true;
-    }
-    API.update_post( post_type, post_id, {"health_metrics": update })
-      .then(groupData=>{
-        console.log(groupData);
-        //post = groupData;
-        //fillOutChurchHealthMetrics()
-      }).catch(err=>{
-        console.log(err);
-    })
+
+    $.ajax( {
+      type: 'POST',
+      contentType: 'application/json; charset=utf-8',
+      dataType: "json",
+      url: window.wpApiShare.root + 'custom_church_health_tile/v1/update_practice/' + group_id + '/' + fieldId,
+      beforeSend: function(xhr) {
+          xhr.setRequestHeader('X-WP-Nonce', window.wpApiShare.nonce );
+          },
+      } )
   })
-  /* end Church fields*/
 });

@@ -31,40 +31,38 @@ class Custom_Church_Health_Tile_Endpoints
             ]
         );
         register_rest_route(
-            $namespace, '/set_practice', [
-                'methods'  => 'POST',
-                'callback' => [ $this, 'set_practice' ],
-                'permission_callback' => '__return_true',
+            $namespace, '/update_practice/(?P<group_id>\d+)/(?P<practice>\w+)', [
+                'methods'  => WP_REST_Server::CREATABLE,
+                'callback' => [ $this, 'update_practice' ],
+                'permission_callback' => function( WP_REST_Request $request ) {
+                    return $this->has_permission();
+                },
             ]
         );
     }
 
-
-    public function private_endpoint( WP_REST_Request $request ) {
-
-        // @todo run your function here
-
-        return true;
-    }
-
-    public function set_practice( WP_REST_Request $request ) {
+    public function update_practice( WP_REST_Request $request ) {
         $params = $request->get_params();
-        $new_practice = esc_sql( $params['new_practice'] );
+        $practice = esc_sql( $params['practice'] );
         $group_id = esc_sql( $params['group_id'] );
-        $current_user_id = get_current_user_id();
 
-        if ( empty( $practice ) ) {
-            return 'error: new group practice is missing';
+        //check if practice exists for that group_id and set it if it doesn't
+         $args = array(
+            'post_type'   => 'group',
+            'post_id' => $group_id,
+            'meta_key'     => 'health_metrics',
+            'meta_value'   => $practice,
+        );
+
+        $curr_health_metrics = get_post_meta( $group_id, 'health_metrics' );
+        
+        if ( in_array( $practice, $curr_health_metrics ) ) {
+            delete_post_meta( $group_id, 'health_metrics', $practice );
+            return "success: $practice deleted from group $group_id";
+        } else {
+            add_post_meta( $group_id, 'health_metrics', $practice );
+            return "success: $practice added to group $group_id";
         }
-
-        if ( empty( $group_id ) ) {
-            return 'error: group id is missing';
-        }
-
-        $practices = get_option( 'custom_church_health_practices', null );
-        update_option( 'custom_church_health_practices', array_push( $practices, $new_practice ) );
-
-        return true;
     }
 
     private static $_instance = null;

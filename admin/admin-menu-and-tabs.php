@@ -675,7 +675,8 @@ class Custom_Church_Health_Tile_Tab_Templates {
                 </tr>
                 <tr>
                     <td>
-                        <form method="POST">
+                        <form method="post">
+                            <?php wp_nonce_field( 'set_template', 'set_template_nonce'); ?> 
                             <table class="widefat">
                                 <thead>
                                     <tr>
@@ -716,6 +717,9 @@ class Custom_Church_Health_Tile_Tab_Templates {
                                             <?php
                                                 // Check for template updates
                                                 if ( isset( $_POST['set-template-dt'] ) ) {
+                                                    if ( !isset( $_POST['set_template_nonce'] ) || !wp_verify_nonce( $_POST['set_template_nonce'], 'set_template' ) ) {
+                                                        return;
+                                                    }
                                                     self::set_template( 'dt_default_template' );
                                                 } else if ( isset( $_POST['set-twelve-practices'] ) ) {
                                                     self::set_template( 'twelve_practices_template');
