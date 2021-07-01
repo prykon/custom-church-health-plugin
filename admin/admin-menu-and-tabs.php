@@ -149,6 +149,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
         $plugin_base_url = Custom_Church_Health_Tile_Menu::get_plugin_base_url();
         ?>
         <form method="post">
+            <?php wp_nonce_field( 'delete_key', 'delete_key_nonce' ); ?>
             <table>
         <?php
             $icons = get_option( 'custom_church_health_icons', null );
@@ -203,6 +204,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
             };
         </style>
         <form method="post">
+            <?php wp_nonce_field( 'create_icon', 'create_icon_nonce'); ?>
             <table>
                 <tr>
                     <th>Label</th>
@@ -320,6 +322,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
         }
         ?>
         <form method="post">
+            <?php wp_nonce_field('health_edit', 'health_edit_nonce'); ?>
             <table>
                 <tr>
                     <td style="vertical-align: middle">
@@ -343,6 +346,9 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
     }
 
     private function process_add_icon() {
+        if ( !isset( $_POST['create_icon_nonce'] ) || !wp_verify_nonce( $_POST['create_icon_nonce'], 'create_icon' ) ) {
+            return;
+        }
         if ( !empty( $_POST['new_icon'] ) ) {
             $new_icon = sanitize_text_field( wp_unslash( $_POST['new_icon'] ) );
         } else {
@@ -383,6 +389,10 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
 
     private function process_delete_icon() {
         if ( !empty( $_POST['delete_key'] ) ) {
+            if ( !isset( $_POST['delete_key_nonce'] ) || !wp_verify_nonce( $_POST['delete_key_nonce'], 'delete_key' ) ) {
+                return;
+            }
+
             $delete_key = sanitize_text_field( wp_unslash( $_POST['delete_key'] ) );
             $all_items = get_option( 'custom_church_health_icons', null );
             
@@ -422,9 +432,11 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
             
             // Show add tile module
             if ( isset( $_POST['show_add_new_icon'] ) ) {
-                $this->box( 'top', __( 'Create new item', 'disciple_tools' ) );
-                $this->create_new_icon();
-                $this->box( 'bottom' );
+                if ( isset( $_POST['health_edit_nonce'] ) && wp_verify_nonce( $_POST['health_edit_nonce'], 'health_edit' ) )  {
+                    $this->box( 'top', __( 'Create new item', 'disciple_tools' ) );
+                    $this->create_new_icon();
+                    $this->box( 'bottom' );
+                }
             }
             ?>
         </form>
