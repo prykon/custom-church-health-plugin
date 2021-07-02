@@ -40,4 +40,4 @@ system for git. For a more details on contribution see the
 
 ## Screenshots
 
-![screenshot](documentation/community/starter-banners/banner-blue-green.png)
+![screenshot](https://github.com/prykon/custom-church-health-plugin/raw/master/assets/screenshot.png)
