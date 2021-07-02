@@ -53,6 +53,7 @@ jQuery(document).ready(function($) {
     let fieldId = $(this).attr('id');
     if (fieldId == 'church_commitment') {
       $( '#custom-church-health-items-container' ).toggleClass( 'committed' );
+      $( this ).toggleClass('half-opacity');
     } else {
       $( '#' + fieldId ).toggleClass('half-opacity');
       $( '#icon_' + fieldId ).toggleClass('half-opacity');
