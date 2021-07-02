@@ -15,6 +15,8 @@ class Custom_Church_Health_Tile_Tile
         add_filter( 'dt_details_additional_tiles', [ $this, 'dt_details_additional_tiles' ], 20, 2 );
         add_action( 'dt_details_additional_section', [ $this, 'dt_add_section' ], 30, 2 );
         add_action( 'display_item_divs', [ $this, 'display_item_divs' ], 10, 4 );
+
+        $fields['health_metrics'] = '';
     }
 
 
@@ -59,7 +61,6 @@ class Custom_Church_Health_Tile_Tile
         $plugin_base_url = self::get_plugin_base_url();
 
         $practiced_items = get_post_meta( $post_id, 'health_metrics' );
-        dt_write_log($practiced_items);
         
         if ( empty( $practiced_items ) ) {
             $practiced_items = [];
