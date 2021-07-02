@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/DiscipleTools/custom-church-health-tile.svg?branch=master)](https://travis-ci.com/prykon/custom-church-health-tile)
 
-# Disciple.Tools - Custom Church Health Plugin
+# Disciple.Tools - Custom Church Health Plugin <img src="https://github.com/prykon/custom-church-health-plugin/raw/master/assets/logo.png" align="right" width="60">
 
 Customize your groups' church health. Select from popular church health templates or create your own!
 
