@@ -1,30 +1,23 @@
-[![Build Status](https://travis-ci.com/DiscipleTools/custom-church-health-tile.svg?branch=master)](https://travis-ci.com/DiscipleTools/custom-church-health-tile)
+[![Build Status](https://travis-ci.com/DiscipleTools/custom-church-health-tile.svg?branch=master)](https://travis-ci.com/prykon/custom-church-health-tile)
 
-# Disciple Tools - Name
+# Disciple.Tools - Custom Church Health Plugin
 
-Description Description Description Description Description Description Description
-Description Description Description Description Description Description Description
+Customize your groups' church health. Select from popular church health templates or create your own!
 
 ## Purpose
 
-Purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose
-Purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose
-
-Purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose
-Purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose
+There are many ways of measuring a group's health. With the Customizable Church Health Plugin you can now decide what to track!
 
 ## Usage
 
 #### Will Do
 
-- Item
-- Item
-- Item
+- Allow you to create your own church health elements
+- Select from a set of pre-built templates
 
 #### Will Not Do
 
-- Item
-- Item
+- Export your customized church health set
 
 ## Requirements
 
@@ -38,11 +31,11 @@ Purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose 
 ## Contribution
 
 Contributions welcome. You can report issues and bugs in the
-[Issues](https://github.com/DiscipleTools/custom-church-health-tile/issues) section of the repo. You can present ideas
-in the [Discussions](https://github.com/DiscipleTools/custom-church-health-tile/discussions) section of the repo. And
-code contributions are welcome using the [Pull Request](https://github.com/DiscipleTools/custom-church-health-tile/pulls)
+[Issues](https://github.com/prykon/custom-church-health-tile/issues) section of the repo. You can present ideas
+in the [Discussions](https://github.com/prykon/custom-church-health-tile/discussions) section of the repo. And
+code contributions are welcome using the [Pull Request](https://github.com/prykon/custom-church-health-tile/pulls)
 system for git. For a more details on contribution see the
-[contribution guidelines](https://github.com/DiscipleTools/custom-church-health-tile/blob/master/CONTRIBUTING.md).
+[contribution guidelines](https://github.com/prykon/custom-church-health-tile/blob/master/CONTRIBUTING.md).
 
 
 ## Screenshots
