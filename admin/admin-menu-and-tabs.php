@@ -374,7 +374,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
         $all_items = get_option( 'custom_church_health_icons', null );
 
         $new_item = array(
-            'key' => $new_key,
+            'key' => 'church_' . $new_key,
             'icon' => $new_icon,
             'label' => $new_label,
             'description' => $new_description
