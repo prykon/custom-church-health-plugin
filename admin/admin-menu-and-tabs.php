@@ -357,13 +357,13 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
         }
 
         if ( !empty( $_POST['new_label'] ) ) {
-            $new_label = sanitize_text_field( wp_unslash( strtolower( $_POST['new_label'] ) ) );
+            $new_label = sanitize_text_field( wp_unslash( $_POST['new_label'] ) );
         } else {
             self::admin_notice( __( 'Error: Item label missing. Item was not created', 'disciple_tools' ), 'error' );
         } 
 
         if ( !empty( $_POST['new_description'] ) ) {
-            $new_description = sanitize_text_field( wp_unslash( strtolower( $_POST['new_description'] ) ) );
+            $new_description = sanitize_text_field( wp_unslash( $_POST['new_description'] ) );
         } else {
             self::admin_notice( __( 'Error: Item description missing. Item was not created', 'disciple_tools' ), 'error' );
         } 

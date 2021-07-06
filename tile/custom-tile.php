@@ -80,7 +80,7 @@ class Custom_Church_Health_Tile_Tile
             if ( in_array( $item['key'], $practiced_items ) ) {
                 $item_opacity = '';
             }
-            $output .= '<div class="custom-church-health-item ' . $item_opacity . '" id="icon_' . strtolower( esc_attr( $item['key'] ) ) .'" title="' . esc_attr( $item['label'] ) . '"><img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ) . '"></div>';
+            $output .= '<div class="custom-church-health-item ' . $item_opacity . '" id="icon_' . strtolower( esc_attr( $item['key'] ) ) .'" title="' . esc_attr( $item['description'] ) . '"><img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ) . '"></div>';
         }
         echo $output;
     }
