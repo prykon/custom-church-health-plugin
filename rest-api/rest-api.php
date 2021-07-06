@@ -47,7 +47,7 @@ class Custom_Church_Health_Tile_Endpoints
         $group_id = esc_sql( $params['group_id'] );
 
         //check if practice exists for that group_id and set it if it doesn't
-         $args = array(
+        $args = array(
             'post_type'   => 'group',
             'post_id' => $group_id,
             'meta_key'     => 'health_metrics',
@@ -55,7 +55,7 @@ class Custom_Church_Health_Tile_Endpoints
         );
 
         $curr_health_metrics = get_post_meta( $group_id, 'health_metrics' );
-        
+
         if ( in_array( $practice, $curr_health_metrics ) ) {
             delete_post_meta( $group_id, 'health_metrics', $practice );
             return "success: $practice deleted from group $group_id";
