@@ -6,7 +6,7 @@ Customize your groups' church health. Select from popular church health template
 
 ## Purpose
 
-There are many ways of measuring a group's health. With the Customizable Church Health Plugin you can now decide what to track!
+There are many ways of measuring a group's health. With the Customizable Group Health Plugin you can now decide what to track!
 
 ## Usage
 

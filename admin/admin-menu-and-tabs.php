@@ -328,7 +328,7 @@ class Custom_Group_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu_
                 <tr>
                     <td style="vertical-align: middle">
                         <?php if ( $item_count < 12 ) : ?>
-                            <p for="tile-select"><?php esc_html_e( 'Create new Church Health Icon', 'disciple_tools' ) ?></p>
+                            <p for="tile-select"><?php esc_html_e( 'Create new Group Health Icon', 'disciple_tools' ) ?></p>
                         <?php else: ?>
                             <p for="tile-select"><i><?php esc_html_e( 'You can only create up to 12 custom church health icons', 'disciple_tools' ) ?></i></p>
                         <?php endif; ?>
@@ -427,7 +427,7 @@ class Custom_Group_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu_
                 $this->show_tiles();
                 $this->box( 'bottom' );
 
-                $this->box( 'top', __( 'Add new Church Health Icons' ) );
+                $this->box( 'top', __( 'Add new Group Health Icons' ) );
                 $this->add_new_church_health_icons();
                 $this->box( 'bottom' );
             
@@ -491,55 +491,55 @@ class Custom_Group_Health_Tile_Tab_Templates {
         $plugin_base_url = Custom_Group_Health_Tile_Menu::get_plugin_base_url();
         $dt_template_health_items = [
             0 => [
-                    'key' => 'baptism',
+                    'key' => 'church_baptism',
                     'label' => __( 'Baptism', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'baptism'
                 ],
             1 => [
-                    'key' => 'bible_study',
+                    'key' => 'church_bible',
                     'label' => __( 'Bible Study', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'bible'
                 ],
             2 => [
-                    'key' => 'communion',
+                    'key' => 'church_communion',
                     'label' => __( 'Communion', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'communion'
                 ],
             3 => [
-                    'key' => 'fellowship',
+                    'key' => 'church_fellowship',
                     'label' => __( 'Fellowship', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'love'
                 ],
             4 => [
-                    'key' => 'giving',
+                    'key' => 'church_giving',
                     'label' => __( 'Giving', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'money'
                 ],
             5 => [
-                    'key' => 'prayer',
+                    'key' => 'church_prayer',
                     'label' => __( 'Prayer', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'prayer'
                 ],
             6 => [
-                    'key' => 'praise',
+                    'key' => 'church_praise',
                     'label' => __( 'Praise', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'praise'
                 ],
             7 => [
-                    'key' => 'sharing_gospel',
+                    'key' => 'church_sharing',
                     'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'gospel'
                 ],
             8 => [
-                    'key' => 'leaders',
+                    'key' => 'church_leaders',
                     'label' => __( 'Leaders', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'happy'
@@ -548,73 +548,73 @@ class Custom_Group_Health_Tile_Tab_Templates {
 
         $twelve_practices_template_health_items = [
             0 => [
-                    'key' => 'sharing_gospel',
+                    'key' => 'church_sharing',
                     'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'twelve-gospel'
                 ],
             1 => [
-                    'key' => 'repentance',
+                    'key' => 'church_repentance',
                     'label' => __( 'Repentance', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'twelve-repent'
                 ],
             2=> [
-                    'key' => 'baptism',
+                    'key' => 'church_baptism',
                     'label' => __( 'Baptism', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'twelve-baptism'
             ],
             3=> [
-                    'key' => 'holy_spirit',
+                    'key' => 'church_holy_spirit',
                     'label' => __( 'Holy Spirit', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'twelve-holy-spirit'
                 ],
             4=> [
-                    'key' => 'word',
+                    'key' => 'church_bible',
                     'label' => __( 'Word', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'twelve-word'
                 ],
             5=> [
-                    'key' => 'fellowship',
+                    'key' => 'church_fellowship',
                     'label' => __( 'Fellowship', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'twelve-love'
                 ],
             6=> [
-                    'key' => 'communion',
+                    'key' => 'church_communion',
                     'label' => __( 'Communion', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'twelve-lords-supper'
                 ],
             7=> [
-                    'key' => 'prayer',
+                    'key' => 'church_prayer',
                     'label' => __( 'Prayer', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'twelve-prayer'
             ],
             8=> [
-                    'key' => 'signs_wonders',
+                    'key' => 'church_signs_wonders',
                     'label' => __( 'Signs and Wonders', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'twelve-signs-wonders'
             ],
             9=> [
-                    'key' => 'giving',
+                    'key' => 'church_giving',
                     'label' => __( 'Giving', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'twelve-give'
             ],
             10=> [
-                    'key' => 'worship',
+                    'key' => 'church_worship',
                     'label' => __( 'Worship', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'twelve-worship'
             ],
             11=> [
-                    'key' => 'making_disciples',
+                    'key' => 'church_making_disciples',
                     'label' => __( 'Making Disciples', 'disciple_tools' ),
                     'description' => __( '', 'disciple_tools' ),
                     'icon' => 'twelve-make-disciples'
@@ -714,7 +714,7 @@ class Custom_Group_Health_Tile_Tab_Templates {
                                     <tr>
                                         <td colspan="3"></td>
                                         <td>
-                                            <button type="submit" class="button" name="set-template-dt" title="Set 'Disciple.Tools Default' as Church Health tile">Set</button>
+                                            <button type="submit" class="button" name="set-template-dt" title="Set 'Disciple.Tools Default' as Group Health tile">Set</button>
                                             <?php
                                                 // Check for template updates
                                                 if ( isset( $_POST['set-template-dt'] ) ) {
@@ -755,7 +755,7 @@ class Custom_Group_Health_Tile_Tab_Templates {
                                     <tr>
                                         <td colspan="3"></td>
                                         <td>
-                                            <button type="submit" class="button" name="set-twelve-practices" title="Set 'Twelve Practices' as Church Health tile">Set</button>
+                                            <button type="submit" class="button" name="set-twelve-practices" title="Set 'Twelve Practices' as Group Health tile">Set</button>
                                         </td>
                                     </tr>
                                 </tbody>
