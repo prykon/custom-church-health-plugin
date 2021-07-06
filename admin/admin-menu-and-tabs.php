@@ -1,4 +1,5 @@
 <?php
+// @phpcs:disable
 if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
 
 /**
@@ -158,7 +159,7 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
                     ?>
                     <tr>
                         <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $icon['icon'] . '.svg' ); ?>" width="35px" height="35px"></td>
-                        <td style="vertical-align:middle;"><?php echo esc_html( $icon['label'] ); ?></td>
+                        <td style="vertical-align:middle;"><?php echo esc_html( str_replace( 'church_', '', $icon['label'] ) ); ?></td>
                         <td style="vertical-align:middle;"><?php echo esc_html( $icon['description'] ); ?></td>
                         <td style="vertical-align:middle;">
                             <button type="submit" class="button" name="delete_key" value="<?php echo esc_html( $icon['key'] ); ?>"><?php esc_html_e( 'Delete', 'disciple_tools' ) ?></button>
@@ -356,13 +357,13 @@ class Custom_Church_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu
         }
 
         if ( !empty( $_POST['new_label'] ) ) {
-            $new_label = sanitize_text_field( wp_unslash( $_POST['new_label'] ) );
+            $new_label = sanitize_text_field( wp_unslash( strtolower( $_POST['new_label'] ) ) );
         } else {
             self::admin_notice( __( 'Error: Item label missing. Item was not created', 'disciple_tools' ), 'error' );
         } 
 
         if ( !empty( $_POST['new_description'] ) ) {
-            $new_description = sanitize_text_field( wp_unslash( $_POST['new_description'] ) );
+            $new_description = sanitize_text_field( wp_unslash( strtolower( $_POST['new_description'] ) ) );
         } else {
             self::admin_notice( __( 'Error: Item description missing. Item was not created', 'disciple_tools' ), 'error' );
         } 
@@ -490,28 +491,28 @@ class Custom_Church_Health_Tile_Tab_Templates {
         $plugin_base_url = Custom_Church_Health_Tile_Menu::get_plugin_base_url();
         $dt_template_health_items = [
             0 => [
-                'key' => 'baptism',
-                'label' => __( 'Baptism', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'baptism'
+                    'key' => 'baptism',
+                    'label' => __( 'Baptism', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'baptism'
                 ],
             1 => [
-                'key' => 'bible_study',
-                'label' => __( 'Bible Study', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'bible'
+                    'key' => 'bible_study',
+                    'label' => __( 'Bible Study', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'bible'
                 ],
             2 => [
-                'key' => 'communion',
-                'label' => __( 'Communion', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'communion'
+                    'key' => 'communion',
+                    'label' => __( 'Communion', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'communion'
                 ],
             3 => [
-                'key' => 'fellowship',
-                'label' => __( 'Fellowship', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'love'
+                    'key' => 'fellowship',
+                    'label' => __( 'Fellowship', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'love'
                 ],
             4 => [
                     'key' => 'giving',
@@ -547,76 +548,76 @@ class Custom_Church_Health_Tile_Tab_Templates {
 
         $twelve_practices_template_health_items = [
             0 => [
-                'key' => 'sharing_gospel',
-                'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'twelve-gospel'
+                    'key' => 'sharing_gospel',
+                    'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'twelve-gospel'
                 ],
             1 => [
-                'key' => 'repentance',
-                'label' => __( 'Repentance', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'twelve-repent'
+                    'key' => 'repentance',
+                    'label' => __( 'Repentance', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'twelve-repent'
                 ],
             2=> [
-                'key' => 'baptism',
-                'label' => __( 'Baptism', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'twelve-baptism'
+                    'key' => 'baptism',
+                    'label' => __( 'Baptism', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'twelve-baptism'
             ],
             3=> [
-                'key' => 'holy_spirit',
-                'label' => __( 'Holy Spirit', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'twelve-holy-spirit'
+                    'key' => 'holy_spirit',
+                    'label' => __( 'Holy Spirit', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'twelve-holy-spirit'
                 ],
             4=> [
-                'key' => 'word',
-                'label' => __( 'Word', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'twelve-word'
+                    'key' => 'word',
+                    'label' => __( 'Word', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'twelve-word'
                 ],
             5=> [
-                'key' => 'fellowship',
-                'label' => __( 'Fellowship', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'twelve-love'
+                    'key' => 'fellowship',
+                    'label' => __( 'Fellowship', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'twelve-love'
                 ],
             6=> [
-                'key' => 'communion',
-                'label' => __( 'Communion', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'twelve-lords-supper'
+                    'key' => 'communion',
+                    'label' => __( 'Communion', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'twelve-lords-supper'
                 ],
             7=> [
-                'key' => 'prayer',
-                'label' => __( 'Prayer', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'twelve-prayer'
+                    'key' => 'prayer',
+                    'label' => __( 'Prayer', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'twelve-prayer'
             ],
             8=> [
-                'key' => 'signs_wonders',
-                'label' => __( 'Signs and Wonders', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'twelve-signs-wonders'
+                    'key' => 'signs_wonders',
+                    'label' => __( 'Signs and Wonders', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'twelve-signs-wonders'
             ],
             9=> [
-                'key' => 'giving',
-                'label' => __( 'Giving', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'twelve-give'
+                    'key' => 'giving',
+                    'label' => __( 'Giving', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'twelve-give'
             ],
             10=> [
-                'key' => 'worship',
-                'label' => __( 'Worship', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'twelve-worship'
+                    'key' => 'worship',
+                    'label' => __( 'Worship', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'twelve-worship'
             ],
             11=> [
-                'key' => 'making_disciples',
-                'label' => __( 'Making Disciples', 'disciple_tools' ),
-                'description' => __( '', 'disciple_tools' ),
-                'icon' => 'twelve-make-disciples'
+                    'key' => 'making_disciples',
+                    'label' => __( 'Making Disciples', 'disciple_tools' ),
+                    'description' => __( '', 'disciple_tools' ),
+                    'icon' => 'twelve-make-disciples'
             ],
         ];
 
@@ -868,3 +869,4 @@ class Custom_Church_Health_Tile_Tab_Help {
     }
 }
 
+// @phpcs:enable

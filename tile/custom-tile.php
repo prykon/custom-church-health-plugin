@@ -15,9 +15,8 @@ class Custom_Church_Health_Tile_Tile
         add_filter( 'dt_details_additional_tiles', [ $this, 'dt_details_additional_tiles' ], 20, 2 );
         add_action( 'dt_details_additional_section', [ $this, 'dt_add_section' ], 30, 2 );
         add_action( 'display_item_divs', [ $this, 'display_item_divs' ], 10, 4 );
-
-        $fields['health_metrics'] = '';
     }
+
 
 
 
@@ -33,7 +32,16 @@ class Custom_Church_Health_Tile_Tile
      */
     public function dt_details_additional_tiles( $tiles, $post_type = "" ) {
         if ( $post_type === "groups" ){
-            $tiles['custom-health-metrics'] = [ 'label' => __( 'Custom Church Health Tile', 'disciple_tools' ) ];
+            $new_tiles = [];
+            foreach ( $tiles as $index => $value ){
+                if( $index !== 'health-metrics') {
+                    $new_tiles[$index] = $value;
+                } else {
+                    $new_tiles['custom-health-metrics'] = [ 'label' => __( 'Custom Church Health Tile', 'disciple_tools' ) ];
+                }
+            }
+            $tiles = $new_tiles;
+            //$tiles['custom-health-metrics'] = [ 'label' => __( 'Custom Church Health Tile', 'disciple_tools' ) ];
         }
         return $tiles;
     }
@@ -67,6 +75,7 @@ class Custom_Church_Health_Tile_Tile
         }
         foreach ( $items as $item ) {
             // Check if custom church health item is being practiced by group
+            $item['label'] = str_replace( 'church_', '', $item['label'] );
             $item_opacity = 'half-opacity';
 
             if ( in_array( $item['key'], $practiced_items ) ) {
@@ -106,7 +115,8 @@ class Custom_Church_Health_Tile_Tile
             $practiced_items = [];
         }
 
-        foreach ( $items as $item  ) : ?>
+        foreach ( $items as $item  ) : 
+            $item['label'] = str_replace( 'church_', '', $item['label'] ); ?>
             <div class="summary-tile">
                 <?php
                 if ( in_array( $item['key'] , $practiced_items ) ) {
