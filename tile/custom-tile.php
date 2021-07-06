@@ -11,14 +11,17 @@ class Custom_Church_Health_Tile_Tile
         return self::$_instance;
     } // End instance()
 
+
     public function __construct(){
+        add_action( 'display_item_divs', [ $this, 'display_item_divs' ], 10, 4 );
         add_filter( 'dt_details_additional_tiles', [ $this, 'dt_details_additional_tiles' ], 20, 2 );
         add_action( 'dt_details_additional_section', [ $this, 'dt_add_section' ], 30, 2 );
-        add_action( 'display_item_divs', [ $this, 'display_item_divs' ], 10, 4 );
+        add_action( 'wp_enqueue_scripts', [ $this, 'load_tile_script' ], 99 );
     }
 
-
-
+    public function load_tile_script() {
+        wp_enqueue_script( 'custom-tile-js', self::get_plugin_base_url() . '/assets/js/custom-tile.js', 'jquery', filemtime( plugin_dir_path( __FILE__ ) . '../assets/js/custom-tile.js' ), false );
+    }
 
     /**
      * This function registers a new tile to a specific post type
@@ -69,15 +72,17 @@ class Custom_Church_Health_Tile_Tile
         }
         foreach ( $items as $item ) {
             // Check if custom church health item is being practiced by group
-            $item['label'] = str_replace( 'church_', '', $item['label'] );
-            $item_opacity = 'half-opacity';
+            $item['label'] = esc_html( str_replace( 'church_', '', $item['label'] ) );
 
             if ( in_array( $item['key'], $practiced_items ) ) {
                 $item_opacity = '';
+            } else {
+                $item_opacity = 'half-opacity';
             }
-            $output .= '<div class="custom-church-health-item ' . $item_opacity . '" id="icon_' . strtolower( esc_attr( $item['key'] ) ) .'" title="' . esc_attr( $item['description'] ) . '"><img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ) . '"></div>';
+            ?>
+            <div class="custom-church-health-item <?php echo esc_html( $item_opacity ?? '' ); ?>" id="icon_<?php echo esc_attr( strtolower( $item['key'] ) ) ?>" title="<?php echo esc_attr( $item['description'] ); ?>"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ); ?>"></div>
+            <?php
         }
-        echo $output;
     }
 
     private function get_plugin_base_url() {
@@ -126,9 +131,9 @@ class Custom_Church_Health_Tile_Tile
 
         echo '<div class="summary-tile">';
         if ( in_array( 'church_commitment', $practiced_items ) ) {
-                    echo '<div class="summary-icons" id="church_commitment" title="' . __( 'Group identifies itself as a Church', 'disciple_tools' ) . '">';
+                    echo '<div class="summary-icons" id="church_commitment">';
         } else {
-                    echo '<div class="summary-icons" id="church_commitment" title="' . __( 'Group identifies itself as a Church', 'disciple_tools' ) . '" style="background-color: #b2c6d6">';
+                    echo '<div class="summary-icons" id="church_commitment" style="background-color: #b2c6d6">';
         }
         echo '<img src="' . esc_attr( $plugin_base_url ) . '/assets/images/circle.svg">';
         echo '</div>';
@@ -247,19 +252,18 @@ class Custom_Church_Health_Tile_Tile
             }
         </style>
         <div>
-            <div class="custom-church-health-circle <?php echo $health_church_commitment; ?>" id="custom-church-health-items-container">
+            <div class="custom-church-health-circle <?php echo esc_attr( $health_church_commitment ); ?>" id="custom-church-health-items-container">
                 <div class="custom-church-health-grid">
                     <?php self::display_item_divs(); ?>
                 </div>
             </div>
         </div>
         <div class="summary-grid" align="center">
-            <?php self::display_item_overview(); ?>
-        </div>
             <?php
-                $plugin_base_url = self::get_plugin_base_url();
-                echo '<script src="' . esc_attr( $plugin_base_url ) . '/assets/js/custom-tile.js"></script>';
-                endif;
+                self::display_item_overview();
+            ?>
+        </div>
+    <?php endif;
     }
 }
 Custom_Church_Health_Tile_Tile::instance();
