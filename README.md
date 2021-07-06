@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.com/DiscipleTools/custom-church-health-tile.svg?branch=master)](https://travis-ci.com/prykon/custom-church-health-tile)
+[![Build Status](https://travis-ci.com/DiscipleTools/custom-group-health-tile.svg?branch=master)](https://travis-ci.com/prykon/custom-group-health-tile)
 
-# Disciple.Tools - Custom Church Health Plugin <img src="https://github.com/prykon/custom-church-health-plugin/raw/master/assets/logo.png" align="right" width="80">
+# Disciple.Tools - Custom Group Health Plugin <img src="https://github.com/prykon/custom-group-health-plugin/raw/master/assets/logo.png" align="right" width="80">
 
 Customize your groups' church health. Select from popular church health templates or create your own!
 
@@ -31,13 +31,13 @@ There are many ways of measuring a group's health. With the Customizable Church 
 ## Contribution
 
 Contributions welcome. You can report issues and bugs in the
-[Issues](https://github.com/prykon/custom-church-health-tile/issues) section of the repo. You can present ideas
-in the [Discussions](https://github.com/prykon/custom-church-health-tile/discussions) section of the repo. And
-code contributions are welcome using the [Pull Request](https://github.com/prykon/custom-church-health-tile/pulls)
+[Issues](https://github.com/prykon/custom-group-health-tile/issues) section of the repo. You can present ideas
+in the [Discussions](https://github.com/prykon/custom-group-health-tile/discussions) section of the repo. And
+code contributions are welcome using the [Pull Request](https://github.com/prykon/custom-group-health-tile/pulls)
 system for git. For a more details on contribution see the
-[contribution guidelines](https://github.com/prykon/custom-church-health-tile/blob/master/CONTRIBUTING.md).
+[contribution guidelines](https://github.com/prykon/custom-group-health-tile/blob/master/CONTRIBUTING.md).
 
 
 ## Screenshots
 
-![screenshot](https://github.com/prykon/custom-church-health-plugin/raw/master/assets/screenshot.png)
+![screenshot](https://github.com/prykon/custom-group-health-plugin/raw/master/assets/screenshot.png)

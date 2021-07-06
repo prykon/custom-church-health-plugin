@@ -1,7 +1,7 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Custom_Church_Health_Tile_Endpoints
+class Custom_Group_Health_Tile_Endpoints
 {
     /**
      * @todo Set the permissions your endpoint needs
@@ -19,7 +19,7 @@ class Custom_Church_Health_Tile_Endpoints
      */
     //See https://github.com/DiscipleTools/disciple-tools-theme/wiki/Site-to-Site-Link for outside of wordpress authentication
     public function add_api_routes() {
-        $namespace = 'custom_church_health_tile/v1';
+        $namespace = 'custom_group_health_tile/v1';
 
         register_rest_route(
             $namespace, '/endpoint', [
@@ -85,4 +85,4 @@ class Custom_Church_Health_Tile_Endpoints
         return $pass;
     }
 }
-Custom_Church_Health_Tile_Endpoints::instance();
+Custom_Group_Health_Tile_Endpoints::instance();

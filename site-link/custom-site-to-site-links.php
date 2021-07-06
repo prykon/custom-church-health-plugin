@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
  * Configures the site link system for the network reporting
  */
 
-class Custom_Church_Health_Tile_Site_Links {
-    public $type = 'custom_church_health_tile';
+class Custom_Group_Health_Tile_Site_Links {
+    public $type = 'custom_group_health_tile';
 
     private static $_instance = null;
     public static function instance() {
@@ -33,9 +33,9 @@ class Custom_Church_Health_Tile_Site_Links {
     }
 
     public function site_link_type( $type ) {
-        $type[$this->type] = __( 'Custom Church Health Tile' );
+        $type[$this->type] = __( 'Custom Group Health Tile' );
         return $type;
     }
 }
-Custom_Church_Health_Tile_Site_Links::instance();
+Custom_Group_Health_Tile_Site_Links::instance();
 

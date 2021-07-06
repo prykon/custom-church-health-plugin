@@ -1,7 +1,7 @@
 function distributeItems() {
     let radius = 75;
 
-    let items = $('.custom-church-health-item'), container = $('#custom-church-health-items-container'),
+    let items = $('.custom-group-health-item'), container = $('#custom-group-health-items-container'),
     	item_count = items.length;
         width = container.width(),
         height = container.height(),
@@ -52,7 +52,7 @@ jQuery(document).ready(function($) {
   $('.summary-icons').on('click', function () {
     let fieldId = $(this).attr('id');
     if (fieldId == 'church_commitment') {
-      $( '#custom-church-health-items-container' ).toggleClass( 'committed' );
+      $( '#custom-group-health-items-container' ).toggleClass( 'committed' );
       $( this ).toggleClass('half-opacity');
     } else {
       $( '#' + fieldId ).toggleClass('half-opacity');
@@ -63,7 +63,7 @@ jQuery(document).ready(function($) {
       type: 'POST',
       contentType: 'application/json; charset=utf-8',
       dataType: "json",
-      url: window.wpApiShare.root + 'custom_church_health_tile/v1/update_practice/' + group_id + '/' + fieldId,
+      url: window.wpApiShare.root + 'custom_group_health_tile/v1/update_practice/' + group_id + '/' + fieldId,
       beforeSend: function(xhr) {
           xhr.setRequestHeader('X-WP-Nonce', window.wpApiShare.nonce );
           },

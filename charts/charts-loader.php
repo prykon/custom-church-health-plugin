@@ -1,7 +1,7 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Custom_Church_Health_Tile_Charts
+class Custom_Group_Health_Tile_Charts
 {
     private static $_instance = null;
     public static function instance(){
@@ -14,7 +14,7 @@ class Custom_Church_Health_Tile_Charts
     public function __construct(){
 
         require_once( 'one-page-chart-template.php' );
-        new Custom_Church_Health_Tile_Chart_Template();
+        new Custom_Group_Health_Tile_Chart_Template();
 
         /**
          * @todo add other charts like the pattern above here
@@ -22,4 +22,4 @@ class Custom_Church_Health_Tile_Charts
 
     } // End __construct
 }
-Custom_Church_Health_Tile_Charts::instance();
+Custom_Group_Health_Tile_Charts::instance();

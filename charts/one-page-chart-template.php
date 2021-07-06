@@ -6,10 +6,10 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
  * @todo also rename in charts-loader.php
  */
 
-class Custom_Church_Health_Tile_Chart_Template extends DT_Metrics_Chart_Base
+class Custom_Group_Health_Tile_Chart_Template extends DT_Metrics_Chart_Base
 {
-    public $base_slug = 'custom-church-health-tile-metrics'; // lowercase
-    public $base_title = "Custom Church Health Tile Metrics";
+    public $base_slug = 'custom-group-health-tile-metrics'; // lowercase
+    public $base_title = "Custom Group Health Tile Metrics";
 
     public $title = 'Template';
     public $slug = 'template'; // lowercase

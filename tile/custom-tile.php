@@ -1,7 +1,7 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Custom_Church_Health_Tile_Tile
+class Custom_Group_Health_Tile_Tile
 {
     private static $_instance = null;
     public static function instance(){
@@ -40,7 +40,7 @@ class Custom_Church_Health_Tile_Tile
                 if ( $index !== 'health-metrics') {
                     $new_tiles[$index] = $value;
                 } else {
-                    $new_tiles['custom-health-metrics'] = [ 'label' => __( 'Custom Church Health Tile', 'disciple_tools' ) ];
+                    $new_tiles['custom-health-metrics'] = [ 'label' => __( 'Custom Group Health Tile', 'disciple_tools' ) ];
                 }
             }
             $tiles = $new_tiles;
@@ -55,9 +55,9 @@ class Custom_Church_Health_Tile_Tile
         }
 
         $plugin_base_url = self::get_plugin_base_url();
-        $items = get_option( 'custom_church_health_icons', null );
+        $items = get_option( 'custom_group_health_icons', null );
         if ( empty( $items ) ) {
-            echo '<div class="custom-church-health-item" id="health-metrics" style="filter: opacity(0.35);"><img src="' . esc_attr( $plugin_base_url . '/assets/images/warning.svg' ) . '">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
+            echo '<div class="custom-group-health-item" id="health-metrics" style="filter: opacity(0.35);"><img src="' . esc_attr( $plugin_base_url . '/assets/images/warning.svg' ) . '">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
             return;
         }
 
@@ -80,7 +80,7 @@ class Custom_Church_Health_Tile_Tile
                 $item_opacity = 'half-opacity';
             }
             ?>
-            <div class="custom-church-health-item <?php echo esc_html( $item_opacity ?? '' ); ?>" id="icon_<?php echo esc_attr( strtolower( $item['key'] ) ) ?>" title="<?php echo esc_attr( $item['description'] ); ?>"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ); ?>"></div>
+            <div class="custom-group-health-item <?php echo esc_html( $item_opacity ?? '' ); ?>" id="icon_<?php echo esc_attr( strtolower( $item['key'] ) ) ?>" title="<?php echo esc_attr( $item['description'] ); ?>"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ); ?>"></div>
             <?php
         }
     }
@@ -101,7 +101,7 @@ class Custom_Church_Health_Tile_Tile
         }
 
         $plugin_base_url = self::get_plugin_base_url();
-        $items = get_option( 'custom_church_health_icons', null );
+        $items = get_option( 'custom_group_health_icons', null );
 
         if ( empty( $items ) ) {
             return;
@@ -147,7 +147,7 @@ class Custom_Church_Health_Tile_Tile
             return;
         }
 
-        $items = get_option( 'custom_church_health_icons', null );
+        $items = get_option( 'custom_group_health_icons', null );
 
         if ( empty( $items ) ) {
             $item_count = 0;
@@ -183,7 +183,7 @@ class Custom_Church_Health_Tile_Tile
             .practicing {
                 filter: none !important;
             }
-            .custom-church-health-item {
+            .custom-group-health-item {
                 margin: auto;
                 position: absolute;
                 height: <?php echo esc_attr( $health_item_size ); ?>px;
@@ -203,11 +203,11 @@ class Custom_Church_Health_Tile_Tile
                 opacity: 0.4;
             }
 
-            .custom-church-health-item img {
+            .custom-group-health-item img {
                 height: <?php echo esc_attr( $health_item_size ); ?>px;
                 width: <?php echo esc_attr( $health_item_size ); ?>px;
             }
-            .custom-church-health-circle {
+            .custom-group-health-circle {
                 display: block;
                 margin:auto;
                 height:300px;
@@ -215,7 +215,7 @@ class Custom_Church_Health_Tile_Tile
                 border-radius:100%;
                 border: 3px darkgray dashed;
             }
-            .custom-church-health-grid {
+            .custom-group-health-grid {
                 display: inline-block;
                 position: relative;
                 height:75%;
@@ -252,8 +252,8 @@ class Custom_Church_Health_Tile_Tile
             }
         </style>
         <div>
-            <div class="custom-church-health-circle <?php echo esc_attr( $health_church_commitment ); ?>" id="custom-church-health-items-container">
-                <div class="custom-church-health-grid">
+            <div class="custom-group-health-circle <?php echo esc_attr( $health_church_commitment ); ?>" id="custom-group-health-items-container">
+                <div class="custom-group-health-grid">
                     <?php self::display_item_divs(); ?>
                 </div>
             </div>
@@ -266,4 +266,4 @@ class Custom_Church_Health_Tile_Tile
     <?php endif;
     }
 }
-Custom_Church_Health_Tile_Tile::instance();
+Custom_Group_Health_Tile_Tile::instance();
