@@ -66,7 +66,7 @@ jQuery(document).ready(function($) {
       type: 'POST',
       contentType: 'application/json; charset=utf-8',
       dataType: "json",
-      url: window.wpApiShare.root + 'custom_group_health_tile/v1/update_practice/' + group_id + '/' + fieldId,
+      url: window.wpApiShare.root + 'custom_group_health_plugin/v1/update_practice/' + group_id + '/' + fieldId,
       beforeSend: function(xhr) {
           xhr.setRequestHeader('X-WP-Nonce', window.wpApiShare.nonce );
           },

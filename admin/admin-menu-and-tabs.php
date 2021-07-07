@@ -3,22 +3,22 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
 
 /**
- * Class Custom_Group_Health_Tile_Menu
+ * Class Custom_Group_Health_Plugin_Menu
  */
-class Custom_Group_Health_Tile_Menu {
+class Custom_Group_Health_Plugin_Menu {
 
-    public $token = 'custom_group_health_tile';
+    public $token = 'custom_group_health_plugin';
 
     private static $_instance = null;
 
     /**
-     * Custom_Group_Health_Tile_Menu Instance
+     * Custom_Group_Health_Plugin_Menu Instance
      *
-     * Ensures only one instance of Custom_Group_Health_Tile_Menu is loaded or can be loaded.
+     * Ensures only one instance of Custom_Group_Health_Plugin_Menu is loaded or can be loaded.
      *
      * @since 0.1.0
      * @static
-     * @return Custom_Group_Health_Tile_Menu instance
+     * @return Custom_Group_Health_Plugin_Menu instance
      */
     public static function instance() {
         if ( is_null( self::$_instance ) ) {
@@ -45,7 +45,7 @@ class Custom_Group_Health_Tile_Menu {
      * @since 0.1
      */
     public function register_menu() {
-        add_submenu_page( 'dt_extensions', 'Custom Group Health Tile', 'Custom Group Health Tile', 'manage_dt', $this->token, [ $this, 'content' ] );
+        add_submenu_page( 'dt_extensions', 'Custom Group Health Plugin', 'Custom Group Health Plugin', 'manage_dt', $this->token, [ $this, 'content' ] );
     }
 
     /**
@@ -82,7 +82,7 @@ class Custom_Group_Health_Tile_Menu {
 
         ?>
         <div class="wrap">
-            <h2>Custom Group Health Tile</h2>
+            <h2>Custom Group Health Plugin</h2>
             <h2 class="nav-tab-wrapper">
                 <a href="<?php echo esc_attr( $link ) . 'general' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'general' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">General</a>
                 <a href="<?php echo esc_attr( $link ) . 'templates' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'templates' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Templates</a>
@@ -92,15 +92,15 @@ class Custom_Group_Health_Tile_Menu {
             <?php
             switch ($tab) {
                 case "general":
-                    $object = new Custom_Group_Health_Tile_Tab_General();
+                    $object = new Custom_Group_Health_Plugin_Tab_General();
                     $object->content();
                     break;
                 case "templates":
-                    $object = new Custom_Group_Health_Tile_Tab_Templates();
+                    $object = new Custom_Group_Health_Plugin_Tab_Templates();
                     $object->content();
                     break;
                 case "help":
-                    $object = new Custom_Group_Health_Tile_Tab_Help();
+                    $object = new Custom_Group_Health_Plugin_Tab_Help();
                     $object->content();
                     break;
                 default:
@@ -113,12 +113,12 @@ class Custom_Group_Health_Tile_Menu {
         <?php
     }
 }
-Custom_Group_Health_Tile_Menu::instance();
+Custom_Group_Health_Plugin_Menu::instance();
 
 /**
- * Class Custom_Group_Health_Tile_Tab_General
+ * Class Custom_Group_Health_Plugin_Tab_General
  */
-class Custom_Group_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu_Base {
+class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Menu_Base {
     public function content() {
         ?>
         <div class="wrap">
@@ -147,7 +147,7 @@ class Custom_Group_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu_
     }
 
     private function show_tiles() {
-        $plugin_base_url = Custom_Group_Health_Tile_Menu::get_plugin_base_url();
+        $plugin_base_url = Custom_Group_Health_Plugin_Menu::get_plugin_base_url();
         ?>
         <form method="post">
             <?php wp_nonce_field( 'delete_key', 'delete_key_nonce' ); ?>
@@ -241,7 +241,7 @@ class Custom_Group_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu_
     }
 
     private function show_icons() {
-        $plugin_base_url = Custom_Group_Health_Tile_Menu::get_plugin_base_url();        
+        $plugin_base_url = Custom_Group_Health_Plugin_Menu::get_plugin_base_url();        
 
         $icons = [
             [ 'file_name' => 'twelve-attenders', 'name' => 'Attenders', ],
@@ -423,7 +423,7 @@ class Custom_Group_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu_
         <form method="post">
             <?php
                 // Load tiles
-                $this->box( 'top', __( 'Manage Custom Group Health Tiles' ) );
+                $this->box( 'top', __( 'Manage Custom Group Health Plugins' ) );
                 $this->show_tiles();
                 $this->box( 'bottom' );
 
@@ -486,12 +486,12 @@ class Custom_Group_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu_
 }
 
 /**
- * Class Custom_Group_Health_Tile_Tab_Templates
+ * Class Custom_Group_Health_Plugin_Tab_Templates
  */
-class Custom_Group_Health_Tile_Tab_Templates {
+class Custom_Group_Health_Plugin_Tab_Templates {
 
     private function set_template( $template_name ) {
-        $plugin_base_url = Custom_Group_Health_Tile_Menu::get_plugin_base_url();
+        $plugin_base_url = Custom_Group_Health_Plugin_Menu::get_plugin_base_url();
         $dt_template_health_items = [
             0 => [
                     'key' => 'church_baptism',
@@ -696,7 +696,7 @@ class Custom_Group_Health_Tile_Tab_Templates {
                                         <td colspan="3">
                                     </tr>
                                             <?php
-                                                $plugin_base_url = Custom_Group_Health_Tile_Menu::get_plugin_base_url();
+                                                $plugin_base_url = Custom_Group_Health_Plugin_Menu::get_plugin_base_url();
 
                                                 $health_factors = [
                                                     [ 'label' => __( 'Baptism', 'disciple_tools' ), 'icon' => esc_html( $plugin_base_url ). '/assets/images/baptism.svg' ],
@@ -800,9 +800,9 @@ class Custom_Group_Health_Tile_Tab_Templates {
 }
 
 /**
- * Class Custom_Group_Health_Tile_Tab_Help
+ * Class Custom_Group_Health_Plugin_Tab_Help
  */
-class Custom_Group_Health_Tile_Tab_Help {
+class Custom_Group_Health_Plugin_Tab_Help {
     public function content() {
         ?>
         <div class="wrap">

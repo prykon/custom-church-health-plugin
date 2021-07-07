@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name: Disciple Tools - Custom Group Health Tile
- * Plugin URI: https://github.com/DiscipleTools/custom-group-health-tile
- * Description: Disciple Tools - Custom Group Health Tile is intended to help developers and integrator jumpstart their extension of the Disciple Tools system.
- * Text Domain: custom-group-health-tile
+ * Plugin Name: Disciple Tools - Custom Group Health Plugin
+ * Plugin URI: https://github.com/DiscipleTools/custom-group-health-plugin
+ * Description: Disciple Tools - Custom Group Health Plugin is intended to help developers and integrator jumpstart their extension of the Disciple Tools system.
+ * Text Domain: custom-group-health-plugin
  * Domain Path: /languages
  * Version:  0.1
  * Author URI: https://github.com/DiscipleTools
- * GitHub Plugin URI: https://github.com/DiscipleTools/custom-group-health-tile
+ * GitHub Plugin URI: https://github.com/DiscipleTools/custom-group-health-plugin
  * Requires at least: 4.7.0
  * (Requires 4.7+ because of the integration of the REST API at 4.7 and the security requirements of this milestone version.)
  * Tested up to: 5.6
@@ -20,8 +20,8 @@
 
 /**
  * Refactoring (renaming) this plugin as your own:
- * 1. @todo Refactor all occurrences of the name Custom_Group_Health_Tile, custom_group_health_tile, custom-group-health-tile, cgh_post_type, and "Custom Group Health Tile"
- * 2. @todo Rename the `custom-group-health-tile.php file.
+ * 1. @todo Refactor all occurrences of the name Custom_Group_Health_Plugin, custom_group_health_plugin, custom-group-health-plugin, cgh_post_type, and "Custom Group Health Plugin"
+ * 2. @todo Rename the `custom-group-health-plugin.php file.
  * 3. @todo Update the README.md and LICENSE
  * 4. @todo Update the default.pot file if you intend to make your plugin multilingual. Use a tool like POEdit
  */
@@ -31,14 +31,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Gets the instance of the `Custom_Group_Health_Tile` class.
+ * Gets the instance of the `Custom_Group_Health_Plugin` class.
  *
  * @since  0.1
  * @access public
  * @return object|bool
  */
-function custom_group_health_tile() {
-    $custom_group_health_tile_required_dt_theme_version = '1.0';
+function custom_group_health_plugin() {
+    $custom_group_health_plugin_required_dt_theme_version = '1.0';
     $wp_theme = wp_get_theme();
     $version = $wp_theme->version;
 
@@ -46,8 +46,8 @@ function custom_group_health_tile() {
      * Check if the Disciple.Tools theme is loaded and is the latest required version
      */
     $is_theme_dt = strpos( $wp_theme->get_template(), "disciple-tools-theme" ) !== false || $wp_theme->name === "Disciple Tools";
-    if ( $is_theme_dt && version_compare( $version, $custom_group_health_tile_required_dt_theme_version, "<" ) ) {
-        add_action( 'admin_notices', 'custom_group_health_tile_hook_admin_notice' );
+    if ( $is_theme_dt && version_compare( $version, $custom_group_health_plugin_required_dt_theme_version, "<" ) ) {
+        add_action( 'admin_notices', 'custom_group_health_plugin_hook_admin_notice' );
         add_action( 'wp_ajax_dismissed_notice_handler', 'dt_hook_ajax_notice_handler' );
         return false;
     }
@@ -61,10 +61,10 @@ function custom_group_health_tile() {
         require_once get_template_directory() . '/dt-core/global-functions.php';
     }
 
-    return Custom_Group_Health_Tile::instance();
+    return Custom_Group_Health_Plugin::instance();
 
 }
-add_action( 'after_setup_theme', 'custom_group_health_tile', 20 );
+add_action( 'after_setup_theme', 'custom_group_health_plugin', 20 );
 
 /**
  * Singleton class for setting up the plugin.
@@ -72,7 +72,7 @@ add_action( 'after_setup_theme', 'custom_group_health_tile', 20 );
  * @since  0.1
  * @access public
  */
-class Custom_Group_Health_Tile {
+class Custom_Group_Health_Plugin {
 
     private static $_instance = null;
     public static function instance() {
@@ -88,7 +88,7 @@ class Custom_Group_Health_Tile {
          * @todo Decide if you want to use the REST API example
          * To remove: delete this following line and remove the folder named /rest-api
          */
-        //if ( $is_rest && strpos( dt_get_url_path(), 'custom_group_health_tile_template' ) !== false ) {
+        //if ( $is_rest && strpos( dt_get_url_path(), 'custom_group_health_plugin_template' ) !== false ) {
             require_once( 'rest-api/rest-api.php' ); // adds starter rest api class
         //}
 
@@ -156,7 +156,7 @@ class Custom_Group_Health_Tile {
      */
     public static function deactivation() {
         // add functions here that need to happen on deactivation
-        delete_option( 'dismissed-custom-group-health-tile' );
+        delete_option( 'dismissed-custom-group-health-plugin' );
     }
 
     /**
@@ -167,7 +167,7 @@ class Custom_Group_Health_Tile {
      * @return void
      */
     public function i18n() {
-        $domain = 'custom-group-health-tile';
+        $domain = 'custom-group-health-plugin';
         load_plugin_textdomain( $domain, false, trailingslashit( dirname( plugin_basename( __FILE__ ) ) ). 'languages' );
     }
 
@@ -179,7 +179,7 @@ class Custom_Group_Health_Tile {
      * @return string
      */
     public function __toString() {
-        return 'custom-group-health-tile';
+        return 'custom-group-health-plugin';
     }
 
     /**
@@ -214,7 +214,7 @@ class Custom_Group_Health_Tile {
      * @access public
      */
     public function __call( $method = '', $args = array() ) {
-        _doing_it_wrong( "custom_group_health_tile::" . esc_html( $method ), 'Method does not exist.', '0.1' );
+        _doing_it_wrong( "custom_group_health_plugin::" . esc_html( $method ), 'Method does not exist.', '0.1' );
         unset( $method, $args );
         return null;
     }
@@ -222,31 +222,31 @@ class Custom_Group_Health_Tile {
 
 
 // Register activation hook.
-register_activation_hook( __FILE__, [ 'Custom_Group_Health_Tile', 'activation' ] );
-register_deactivation_hook( __FILE__, [ 'Custom_Group_Health_Tile', 'deactivation' ] );
+register_activation_hook( __FILE__, [ 'Custom_Group_Health_Plugin', 'activation' ] );
+register_deactivation_hook( __FILE__, [ 'Custom_Group_Health_Plugin', 'deactivation' ] );
 
-if ( ! function_exists( 'custom_group_health_tile_hook_admin_notice' ) ) {
-    function custom_group_health_tile_hook_admin_notice() {
-        global $custom_group_health_tile_required_dt_theme_version;
+if ( ! function_exists( 'custom_group_health_plugin_hook_admin_notice' ) ) {
+    function custom_group_health_plugin_hook_admin_notice() {
+        global $custom_group_health_plugin_required_dt_theme_version;
         $wp_theme = wp_get_theme();
         $current_version = $wp_theme->version;
-        $message = "'Disciple Tools - Custom Group Health Tile' plugin requires 'Disciple Tools' theme to work. Please activate 'Disciple Tools' theme or make sure it is latest version.";
+        $message = "'Disciple Tools - Custom Group Health Plugin' plugin requires 'Disciple Tools' theme to work. Please activate 'Disciple Tools' theme or make sure it is latest version.";
         if ( $wp_theme->get_template() === "disciple-tools-theme" ){
-            $message .= ' ' . sprintf( esc_html( 'Current Disciple Tools version: %1$s, required version: %2$s' ), esc_html( $current_version ), esc_html( $custom_group_health_tile_required_dt_theme_version ) );
+            $message .= ' ' . sprintf( esc_html( 'Current Disciple Tools version: %1$s, required version: %2$s' ), esc_html( $current_version ), esc_html( $custom_group_health_plugin_required_dt_theme_version ) );
         }
         // Check if it's been dismissed...
-        if ( ! get_option( 'dismissed-custom-group-health-tile', false ) ) { ?>
-            <div class="notice notice-error notice-custom-group-health-tile is-dismissible" data-notice="custom-group-health-tile">
+        if ( ! get_option( 'dismissed-custom-group-health-plugin', false ) ) { ?>
+            <div class="notice notice-error notice-custom-group-health-plugin is-dismissible" data-notice="custom-group-health-plugin">
                 <p><?php echo esc_html( $message );?></p>
             </div>
             <script>
                 jQuery(function($) {
-                    $( document ).on( 'click', '.notice-custom-group-health-tile .notice-dismiss', function () {
+                    $( document ).on( 'click', '.notice-custom-group-health-plugin .notice-dismiss', function () {
                         $.ajax( ajaxurl, {
                             type: 'POST',
                             data: {
                                 action: 'dismissed_notice_handler',
-                                type: 'custom-group-health-tile',
+                                type: 'custom-group-health-plugin',
                                 security: '<?php echo esc_html( wp_create_nonce( 'wp_rest_dismiss' ) ) ?>'
                             }
                         })
@@ -278,7 +278,7 @@ if ( ! function_exists( "dt_hook_ajax_notice_handler" )){
  * This section runs the remote plugin updating service, so you can issue distributed updates to your plugin
  *
  * @note See the instructions for version updating to understand the steps involved.
- * @link https://github.com/DiscipleTools/custom-group-health-tile/wiki/Configuring-Remote-Updating-System
+ * @link https://github.com/DiscipleTools/custom-group-health-plugin/wiki/Configuring-Remote-Updating-System
  *
  * @todo Enable this section with your own hosted file
  * @todo An example of this file can be found in (version-control.json)
@@ -303,9 +303,9 @@ if ( ! function_exists( "dt_hook_ajax_notice_handler" )){
 //        }
 //        if ( class_exists( 'Puc_v4_Factory' ) ){
 //            Puc_v4_Factory::buildUpdateChecker(
-//                'https://raw.githubusercontent.com/DiscipleTools/custom-group-health-tile/master/version-control.json',
+//                'https://raw.githubusercontent.com/DiscipleTools/custom-group-health-plugin/master/version-control.json',
 //                __FILE__,
-//                'custom-group-health-tile'
+//                'custom-group-health-plugin'
 //            );
 //
 //        }

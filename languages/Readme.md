@@ -2,4 +2,4 @@
 {translation-domain}-{localisation}.po
 
 ex:
-custom-group-health-tile-fr_FR.po
+custom-group-health-plugin-fr_FR.po

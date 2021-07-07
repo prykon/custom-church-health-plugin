@@ -1,7 +1,7 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Custom_Group_Health_Tile_Tile
+class Custom_Group_Health_Plugin_Tile
 {
     private static $_instance = null;
     public static function instance(){
@@ -275,4 +275,4 @@ class Custom_Group_Health_Tile_Tile
     <?php endif;
     }
 }
-Custom_Group_Health_Tile_Tile::instance();
+Custom_Group_Health_Plugin_Tile::instance();
