@@ -20,7 +20,9 @@ class Custom_Group_Health_Tile_Tile
     }
 
     public function load_tile_script() {
-        wp_enqueue_script( 'custom-tile-js', self::get_plugin_base_url() . '/assets/js/custom-tile.js', 'jquery', filemtime( plugin_dir_path( __FILE__ ) . '../assets/js/custom-tile.js' ), false );
+        if ( is_singular( 'groups' ) && get_the_ID() && DT_Posts::can_view( 'groups', get_the_ID() ) ){
+            wp_enqueue_script( 'custom-tile-js', self::get_plugin_base_url() . '/assets/js/custom-tile.js', 'jquery', filemtime( plugin_dir_path( __FILE__ ) . '../assets/js/custom-tile.js' ), false );
+        }
     }
 
     /**
@@ -33,8 +35,8 @@ class Custom_Group_Health_Tile_Tile
      * @param string $post_type
      * @return mixed
      */
-    public function dt_details_additional_tiles( $tiles, $post_type = "" ) {
-        if ( $post_type === "groups" ){
+    public function dt_details_additional_tiles( $tiles, $post_type = '' ) {
+        if ( $post_type === 'groups' ){
             $new_tiles = [];
             foreach ( $tiles as $index => $value ) {
                 if ( $index !== 'health-metrics') {
