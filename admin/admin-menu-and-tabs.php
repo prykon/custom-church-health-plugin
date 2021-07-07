@@ -458,7 +458,10 @@ class Custom_Group_Health_Tile_Tab_General extends Disciple_Tools_Abstract_Menu_
             <tbody>
             <tr>
                 <td>
-                    Content
+                    Create new icons to help you track your group's spiritual health or delete existing icons.
+                    <br>
+                    <br>
+                    <b>Note:</b> If you re-create a deleted icon with the same label, groups that formerly had that item selected will once again display it as active.
                 </td>
             </tr>
             </tbody>
@@ -782,7 +785,10 @@ class Custom_Group_Health_Tile_Tab_Templates {
             <tbody>
             <tr>
                 <td>
-                    Content
+                    Select between Disciple.Tools' default health items or common Twelve Practices template.
+                    <br>
+                    <br>
+                    You can go back and edit them later from the 'General' tab.
                 </td>
             </tr>
             </tbody>
@@ -801,7 +807,7 @@ class Custom_Group_Health_Tile_Tab_Help {
         ?>
         <div class="wrap">
             <div id="poststuff">
-                <div id="post-body" class="metabox-holder columns-2">
+                <div id="post-body" class="metabox-holder columns-3">
                     <div id="post-body-content">
                         <!-- Main Column -->
 
@@ -809,15 +815,6 @@ class Custom_Group_Health_Tile_Tab_Help {
 
                         <!-- End Main Column -->
                     </div><!-- end post-body-content -->
-                    <div id="postbox-container-1" class="postbox-container">
-                        <!-- Right Column -->
-
-                        <?php $this->right_column() ?>
-
-                        <!-- End Right Column -->
-                    </div><!-- postbox-container 1 -->
-                    <div id="postbox-container-2" class="postbox-container">
-                    </div><!-- postbox-container 2 -->
                 </div><!-- post-body meta box container -->
             </div><!--poststuff end -->
         </div><!-- wrap end -->
@@ -836,31 +833,9 @@ class Custom_Group_Health_Tile_Tab_Help {
             <tbody>
                 <tr>
                     <td>
-                        In order to bla bla bla
+                        <a href="https://github.com/prykon/custom-group-health-plugin#readme" target="_blank">Full documentation available here</a>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-        <br>
-        <!-- End Box -->
-        <?php
-    }
-
-    public function right_column() {
-        ?>
-        <!-- Box -->
-        <table class="widefat striped">
-            <thead>
-                <tr>
-                    <th>Information</th>
-                </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    Content
-                </td>
-            </tr>
             </tbody>
         </table>
         <br>
