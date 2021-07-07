@@ -3,6 +3,7 @@ function distributeItems() {
 
     let items = $('.custom-group-health-item'), container = $('#custom-group-health-items-container'),
     	item_count = items.length;
+      fade_delay = 45,
         width = container.width(),
         height = container.height(),
         angle = 0,
@@ -34,9 +35,11 @@ function distributeItems() {
         }
         $(this).css({
             left: X + 'px',
-            top: y + 'px'
+            top: y + 'px',
         });
+        $(this).delay(fade_delay).fadeIn(1000,'linear');
         angle += step;
+        fade_delay += 45;
     });
 }
 

@@ -183,7 +183,9 @@ class Custom_Group_Health_Tile_Tile
             .practicing {
                 filter: none !important;
             }
+
             .custom-group-health-item {
+                display: none;
                 margin: auto;
                 position: absolute;
                 height: <?php echo esc_attr( $health_item_size ); ?>px;
@@ -207,6 +209,7 @@ class Custom_Group_Health_Tile_Tile
                 height: <?php echo esc_attr( $health_item_size ); ?>px;
                 width: <?php echo esc_attr( $health_item_size ); ?>px;
             }
+
             .custom-group-health-circle {
                 display: block;
                 margin:auto;
@@ -215,6 +218,7 @@ class Custom_Group_Health_Tile_Tile
                 border-radius:100%;
                 border: 3px darkgray dashed;
             }
+
             .custom-group-health-grid {
                 display: inline-block;
                 position: relative;
@@ -224,10 +228,12 @@ class Custom_Group_Health_Tile_Tile
                 margin-left: auto;
                 margin-right: auto;
             }
+
             .summary-tile {
                 flex: 1 0 80px;
                 text-align: center;
             }
+
             .summary-icons {
                 cursor: pointer;
                 height: 60px;
@@ -245,6 +251,7 @@ class Custom_Group_Health_Tile_Tile
                 height: 40px;
                 width: 50px;
             }
+
             .summary-grid {
                 display: flex;
                 flex-wrap: wrap;
