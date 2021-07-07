@@ -40,7 +40,7 @@ class Custom_Group_Health_Tile_Tile
                 if ( $index !== 'health-metrics') {
                     $new_tiles[$index] = $value;
                 } else {
-                    $new_tiles['custom-health-metrics'] = [ 'label' => __( 'Custom Group Health Tile', 'disciple_tools' ) ];
+                    $new_tiles['custom-health-metrics'] = [ 'label' => __( 'Group Health', 'disciple_tools' ) ];
                 }
             }
             $tiles = $new_tiles;
