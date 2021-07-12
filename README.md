@@ -2,7 +2,7 @@
 
 # Disciple.Tools - Custom Group Health Plugin <img src="https://github.com/prykon/custom-group-health-plugin/raw/master/assets/logo.png" align="right" width="80">
 
-Customize your groups' church health. Select from popular church health templates or create your own!
+Customize the way you track your groups' health. Select from popular church health templates or create your own.
 
 ## Purpose
 
