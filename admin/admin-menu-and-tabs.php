@@ -1,5 +1,4 @@
 <?php
-// @phpcs:disable
 if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
 
 /**
@@ -37,8 +36,27 @@ class Custom_Group_Health_Plugin_Menu {
 
         add_action( "admin_menu", array( $this, "register_menu" ) );
 
+        self::check_default_template();
+
     } // End __construct()
 
+
+    /**
+     * Method that checks if there's no selected
+     * custom group health icons and if so sets the default DT template
+     * @access public
+     * @since 1.1
+     */
+    public static function check_default_template() {
+        $icons = get_option( 'custom_group_health_icons', null );
+        if ( empty( $icons ) ) {
+            Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'No custom icons detected. Setting DT default template', 'disciple_tools' ), 'warning' );
+            $object = new Custom_Group_Health_Plugin_Tab_Templates();
+            $object->set_template( 'dt_default_template' );
+
+        }
+        return;
+    }
 
     /**
      * Loads the subnav page
@@ -153,29 +171,29 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
             <?php wp_nonce_field( 'delete_key', 'delete_key_nonce' ); ?>
             <table>
         <?php
-            $icons = get_option( 'custom_group_health_icons', null );
-            if ( !empty( $icons ) ) {
-                foreach( $icons as $icon ) :
-                    ?>
-                    <tr>
-                        <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $icon['icon'] . '.svg' ); ?>" width="35px" height="35px"></td>
-                        <td style="vertical-align:middle;"><?php echo esc_html( str_replace( 'church_', '', $icon['label'] ) ); ?></td>
-                        <td style="vertical-align:middle;"><?php echo esc_html( $icon['description'] ); ?></td>
-                        <td style="vertical-align:middle;">
-                            <button type="submit" class="button" name="delete_key" value="<?php echo esc_html( $icon['key'] ); ?>"><?php esc_html_e( 'Delete', 'disciple_tools' ) ?></button>
-                        </td>
-                    </tr>
+        $icons = get_option( 'custom_group_health_icons', null );
+        if ( !empty( $icons ) ) {
+            foreach ( $icons as $icon ) :
+                ?>
+                <tr>
+                    <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $icon['icon'] . '.svg' ); ?>" width="35px" height="35px"></td>
+                    <td style="vertical-align:middle;"><?php echo esc_html( str_replace( 'church_', '', $icon['label'] ) ); ?></td>
+                    <td style="vertical-align:middle;"><?php echo esc_html( $icon['description'] ); ?></td>
+                    <td style="vertical-align:middle;">
+                        <button type="submit" class="button" name="delete_key" value="<?php echo esc_html( $icon['key'] ); ?>"><?php esc_html_e( 'Delete', 'disciple_tools' ) ?></button>
+                    </td>
+                </tr>
                     <?php
                 endforeach;
-            } else {
-                ?>
+        } else {
+            ?>
                 <tr>
                     <td align="center">
                         <i><?php esc_html_e( 'No custom items yet...', 'disciple_tools' ); ?></i>
                     </td>
                 </tr>
                 <?php
-            }
+        }
         ?>
             </table>
         </form>
@@ -205,7 +223,7 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
             };
         </style>
         <form method="post">
-            <?php wp_nonce_field( 'create_icon', 'create_icon_nonce'); ?>
+            <?php wp_nonce_field( 'create_icon', 'create_icon_nonce' ); ?>
             <table>
                 <tr>
                     <th>Label</th>
@@ -241,7 +259,7 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
     }
 
     private function show_icons() {
-        $plugin_base_url = Custom_Group_Health_Plugin_Menu::get_plugin_base_url();        
+        $plugin_base_url = Custom_Group_Health_Plugin_Menu::get_plugin_base_url();
 
         $icons = [
             [ 'file_name' => 'twelve-attenders', 'name' => 'Attenders', ],
@@ -294,11 +312,11 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
         ];
 
         foreach ( $icons as $icon ):
-        ?>
-        <div class="custom_icon" title="<?php esc_attr_e( $icon['name'] ); ?>" data-name="<?php esc_attr_e( $icon['file_name'] ); ?>">
+            ?>
+        <div class="custom_icon" title="<?php echo esc_attr( $icon['name'] ); ?>" data-name="<?php echo esc_attr( $icon['file_name'] ); ?>">
             <img src="<?php echo esc_attr( untrailingslashit( $plugin_base_url ) ) . '/assets/images/' . esc_attr( $icon['file_name'] ) . '.svg'; ?>" class="image_icon">
         </div>
-        <?php
+            <?php
             endforeach;
         ?>
         <script type="text/javascript">
@@ -314,7 +332,6 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
     }
 
     private function add_new_church_health_icons(){
-        
         $items = get_option( 'custom_group_health_icons', null );
         if ( !empty( $items ) ) {
             $item_count = count( $items );
@@ -323,20 +340,20 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
         }
         ?>
         <form method="post">
-            <?php wp_nonce_field('health_edit', 'health_edit_nonce'); ?>
+            <?php wp_nonce_field( 'health_edit', 'health_edit_nonce' ); ?>
             <table>
                 <tr>
                     <td style="vertical-align: middle">
                         <?php if ( $item_count < 12 ) : ?>
                             <p for="tile-select"><?php esc_html_e( 'Create new Group Health Icon', 'disciple_tools' ) ?></p>
-                        <?php else: ?>
+                        <?php else : ?>
                             <p for="tile-select"><i><?php esc_html_e( 'You can only create up to 12 custom church health icons', 'disciple_tools' ) ?></i></p>
                         <?php endif; ?>
                     </td>
                     <td>
                         <?php if ( $item_count < 12 ) : ?>
                             <button type="submit" class="button" name="show_add_new_icon"><?php esc_html_e( 'Create', 'disciple_tools' ) ?></button>
-                        <?php else: ?>
+                        <?php else : ?>
                             <button class="button" name="show_add_new_icon" disabled><?php esc_html_e( 'Create', 'disciple_tools' ) ?></button>
                         <?php endif; ?>
                     </td>
@@ -347,26 +364,26 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
     }
 
     private function process_add_icon() {
-        if ( !isset( $_POST['create_icon_nonce'] ) || !wp_verify_nonce( $_POST['create_icon_nonce'], 'create_icon' ) ) {
+        if ( !isset( $_POST['create_icon_nonce'] ) || !wp_verify_nonce( sanitize_key( $_POST['create_icon_nonce'] ), 'create_icon' ) ) {
             return;
         }
         if ( !empty( $_POST['new_icon'] ) ) {
             $new_icon = sanitize_text_field( wp_unslash( $_POST['new_icon'] ) );
         } else {
-            self::admin_notice( __( 'Error: Item image missing. Item was not created', 'disciple_tools' ), 'error' );    
+            self::admin_notice( __( 'Error: Item image missing. Item was not created', 'disciple_tools' ), 'error' );
         }
 
         if ( !empty( $_POST['new_label'] ) ) {
             $new_label = sanitize_text_field( wp_unslash( $_POST['new_label'] ) );
         } else {
             self::admin_notice( __( 'Error: Item label missing. Item was not created', 'disciple_tools' ), 'error' );
-        } 
+        }
 
         if ( !empty( $_POST['new_description'] ) ) {
             $new_description = sanitize_text_field( wp_unslash( $_POST['new_description'] ) );
         } else {
             self::admin_notice( __( 'Error: Item description missing. Item was not created', 'disciple_tools' ), 'error' );
-        } 
+        }
 
         $new_key = sanitize_key( strtolower( str_replace( ' ', '_', $new_label ) ) );
 
@@ -383,27 +400,30 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
         $all_items[] = $new_item;
 
         update_option( 'custom_group_health_icons', $all_items );
-        
+
         self::admin_notice( __( 'Icon created successfully', 'disciple_tools' ), 'success' );
     }
 
 
     private function process_delete_icon() {
         if ( !empty( $_POST['delete_key'] ) ) {
-            if ( !isset( $_POST['delete_key_nonce'] ) || !wp_verify_nonce( $_POST['delete_key_nonce'], 'delete_key' ) ) {
+            if ( !isset( $_POST['delete_key_nonce'] ) || !wp_verify_nonce( sanitize_key( $_POST['delete_key_nonce'] ), 'delete_key' ) ) {
                 return;
             }
 
             $delete_key = sanitize_text_field( wp_unslash( $_POST['delete_key'] ) );
             $all_items = get_option( 'custom_group_health_icons', null );
-            
+
             if ( is_array( $all_items ) ) {
                 foreach ( $all_items as $item ) {
                     if ( $item['key'] == $delete_key ) {
-                        $delete_index = array_search( $item, $all_items);
+                        $delete_index = array_search( $item, $all_items );
                         unset( $all_items[$delete_index] );
                         update_option( 'custom_group_health_icons', $all_items );
                         self::admin_notice( __( 'Icon deleted successfully', 'disciple_tools' ), 'success' );
+
+                        // If no custom icons remain, add default DT group health template
+                        Custom_Group_Health_Plugin_Menu::check_default_template();
                     }
                 }
             }
@@ -430,10 +450,10 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
                 $this->box( 'top', __( 'Add new Group Health Icons' ) );
                 $this->add_new_church_health_icons();
                 $this->box( 'bottom' );
-            
+
             // Show add tile module
             if ( isset( $_POST['show_add_new_icon'] ) ) {
-                if ( isset( $_POST['health_edit_nonce'] ) && wp_verify_nonce( $_POST['health_edit_nonce'], 'health_edit' ) )  {
+                if ( isset( $_POST['health_edit_nonce'] ) && wp_verify_nonce( sanitize_key( $_POST['health_edit_nonce'] ), 'health_edit' ) ) {
                     $this->box( 'top', __( 'Create new item', 'disciple_tools' ) );
                     $this->create_new_icon();
                     $this->box( 'bottom' );
@@ -490,61 +510,61 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
  */
 class Custom_Group_Health_Plugin_Tab_Templates {
 
-    private function set_template( $template_name ) {
+    public function set_template( $template_name ) {
         $plugin_base_url = Custom_Group_Health_Plugin_Menu::get_plugin_base_url();
         $dt_template_health_items = [
             0 => [
                     'key' => 'church_baptism',
                     'label' => __( 'Baptism', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is baptising.', 'disciple_tools' ),
                     'icon' => 'baptism'
                 ],
             1 => [
                     'key' => 'church_bible',
                     'label' => __( 'Bible Study', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is studying the bible.', 'disciple_tools' ),
                     'icon' => 'bible'
                 ],
             2 => [
                     'key' => 'church_communion',
                     'label' => __( 'Communion', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is practicing communion.', 'disciple_tools' ),
                     'icon' => 'communion'
                 ],
             3 => [
                     'key' => 'church_fellowship',
                     'label' => __( 'Fellowship', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is fellowshiping.', 'disciple_tools' ),
                     'icon' => 'love'
                 ],
             4 => [
                     'key' => 'church_giving',
                     'label' => __( 'Giving', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is giving.', 'disciple_tools' ),
                     'icon' => 'money'
                 ],
             5 => [
                     'key' => 'church_prayer',
                     'label' => __( 'Prayer', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is praying.', 'disciple_tools' ),
                     'icon' => 'prayer'
                 ],
             6 => [
                     'key' => 'church_praise',
                     'label' => __( 'Praise', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is praising.', 'disciple_tools' ),
                     'icon' => 'praise'
                 ],
             7 => [
                     'key' => 'church_sharing',
                     'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is sharing the gospel.', 'disciple_tools' ),
                     'icon' => 'gospel'
                 ],
             8 => [
                     'key' => 'church_leaders',
                     'label' => __( 'Leaders', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group has leaders.', 'disciple_tools' ),
                     'icon' => 'happy'
                 ],
             ];
@@ -553,73 +573,73 @@ class Custom_Group_Health_Plugin_Tab_Templates {
             0 => [
                     'key' => 'church_sharing',
                     'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is sharing the gospel.', 'disciple_tools' ),
                     'icon' => 'twelve-gospel'
                 ],
             1 => [
                     'key' => 'church_repentance',
                     'label' => __( 'Repentance', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is practicing repentance.', 'disciple_tools' ),
                     'icon' => 'twelve-repent'
                 ],
-            2=> [
+            2 => [
                     'key' => 'church_baptism',
                     'label' => __( 'Baptism', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is baptising.', 'disciple_tools' ),
                     'icon' => 'twelve-baptism'
             ],
-            3=> [
+            3 => [
                     'key' => 'church_holy_spirit',
                     'label' => __( 'Holy Spirit', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is moving in the Holy Spirit.', 'disciple_tools' ),
                     'icon' => 'twelve-holy-spirit'
                 ],
-            4=> [
+            4 => [
                     'key' => 'church_bible',
                     'label' => __( 'Word', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is studying the bible.', 'disciple_tools' ),
                     'icon' => 'twelve-word'
                 ],
-            5=> [
+            5 => [
                     'key' => 'church_fellowship',
                     'label' => __( 'Fellowship', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The groupd is fellowshiping', 'disciple_tools' ),
                     'icon' => 'twelve-love'
                 ],
-            6=> [
+            6 => [
                     'key' => 'church_communion',
                     'label' => __( 'Communion', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is practicing communion.', 'disciple_tools' ),
                     'icon' => 'twelve-lords-supper'
                 ],
-            7=> [
+            7 => [
                     'key' => 'church_prayer',
                     'label' => __( 'Prayer', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is praying.', 'disciple_tools' ),
                     'icon' => 'twelve-prayer'
             ],
-            8=> [
+            8 => [
                     'key' => 'church_signs_wonders',
                     'label' => __( 'Signs and Wonders', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is experiencing signs and wonders.', 'disciple_tools' ),
                     'icon' => 'twelve-signs-wonders'
             ],
-            9=> [
+            9 => [
                     'key' => 'church_giving',
                     'label' => __( 'Giving', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is giving.', 'disciple_tools' ),
                     'icon' => 'twelve-give'
             ],
-            10=> [
+            10 => [
                     'key' => 'church_worship',
                     'label' => __( 'Worship', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is worshipping.', 'disciple_tools' ),
                     'icon' => 'twelve-worship'
             ],
-            11=> [
+            11 => [
                     'key' => 'church_making_disciples',
                     'label' => __( 'Making Disciples', 'disciple_tools' ),
-                    'description' => __( '', 'disciple_tools' ),
+                    'description' => __( 'The group is making disciples.', 'disciple_tools' ),
                     'icon' => 'twelve-make-disciples'
             ],
         ];
@@ -627,10 +647,12 @@ class Custom_Group_Health_Plugin_Tab_Templates {
         switch ( $template_name ) {
             case 'dt_default_template':
                 update_option( 'custom_group_health_icons', $dt_template_health_items );
+                Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'Template switched successfully.', 'disciple_tools' ), 'success' );
                 break;
-            
+
             case 'twelve_practices_template':
                 update_option( 'custom_group_health_icons', $twelve_practices_template_health_items );
+                Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'Template switched successfully.', 'disciple_tools' ), 'success' );
                 break;
         }
     }
@@ -680,7 +702,7 @@ class Custom_Group_Health_Plugin_Tab_Templates {
                 <tr>
                     <td>
                         <form method="post">
-                            <?php wp_nonce_field( 'set_template', 'set_template_nonce'); ?> 
+                            <?php wp_nonce_field( 'set_template', 'set_template_nonce' ); ?>
                             <table class="widefat">
                                 <thead>
                                     <tr>
@@ -713,21 +735,21 @@ class Custom_Group_Health_Plugin_Tab_Templates {
                                                 foreach ( $health_factors as $health_factor ) {
                                                     echo '<tr><td></td><td><img src="' . esc_attr( $health_factor['icon'] ) . '" width="25" height="25"></td><td>' . esc_html( $health_factor['label'] ) . '</td><td></td></tr>';
                                                 }
-                                            ?>
+                                                ?>
                                     <tr>
                                         <td colspan="3"></td>
                                         <td>
                                             <button type="submit" class="button" name="set-template-dt" title="Set 'Disciple.Tools Default' as Group Health tile">Set</button>
                                             <?php
-                                                // Check for template updates
-                                                if ( isset( $_POST['set-template-dt'] ) ) {
-                                                    if ( !isset( $_POST['set_template_nonce'] ) || !wp_verify_nonce( $_POST['set_template_nonce'], 'set_template' ) ) {
-                                                        return;
-                                                    }
-                                                    self::set_template( 'dt_default_template' );
-                                                } else if ( isset( $_POST['set-twelve-practices'] ) ) {
-                                                    self::set_template( 'twelve_practices_template');
+                                            // Check for template updates
+                                            if ( isset( $_POST['set-template-dt'] ) ) {
+                                                if ( !isset( $_POST['set_template_nonce'] ) || !wp_verify_nonce( sanitize_key( $_POST['set_template_nonce'] ), 'set_template' ) ) {
+                                                    return;
                                                 }
+                                                self::set_template( 'dt_default_template' );
+                                            } else if ( isset( $_POST['set-twelve-practices'] ) ) {
+                                                self::set_template( 'twelve_practices_template' );
+                                            }
                                             ?>
                                         </td>
                                     </tr>
@@ -753,7 +775,7 @@ class Custom_Group_Health_Plugin_Tab_Templates {
 
                                             foreach ( $health_factors as $health_factor ) {
                                                 echo '<tr><td></td><td><img src="' . esc_attr( $health_factor['icon'] ) . '" width="25" height="25"></td><td>' . esc_html( $health_factor['label'] ) . '</td><td></td></tr>';
-                                                }
+                                            }
                                             ?>
                                     <tr>
                                         <td colspan="3"></td>
