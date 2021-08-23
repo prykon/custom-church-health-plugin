@@ -22,15 +22,6 @@ class Custom_Group_Health_Plugin_Endpoints
         $namespace = 'custom_group_health_plugin/v1';
 
         register_rest_route(
-            $namespace, '/endpoint', [
-                'methods'  => WP_REST_Server::CREATABLE,
-                'callback' => [ $this, 'private_endpoint' ],
-                'permission_callback' => function( WP_REST_Request $request ) {
-                    return $this->has_permission();
-                },
-            ]
-        );
-        register_rest_route(
             $namespace, '/update_practice/(?P<group_id>\d+)/(?P<practice>\w+)', [
                 'methods'  => WP_REST_Server::CREATABLE,
                 'callback' => [ $this, 'update_practice' ],
