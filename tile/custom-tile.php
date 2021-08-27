@@ -23,6 +23,13 @@ class Custom_Group_Health_Plugin_Tile
         if ( is_singular( 'groups' ) && get_the_ID() && DT_Posts::can_view( 'groups', get_the_ID() ) ){
             wp_enqueue_script( 'custom-tile-js', self::get_plugin_base_url() . '/assets/js/custom-tile.js', 'jquery', filemtime( plugin_dir_path( __FILE__ ) . '../assets/js/custom-tile.js' ), false );
         }
+
+        // $custom_health_fields['health_metrics']['default'][ 'prykon' ] = 'foo';
+        // wp_enqueue_script( 'dt_groups', get_template_directory_uri() . '/dt-groups/groups.js', [
+        //         'jquery',
+        //         'details'
+        //     ] );
+        // wp_localize_script( 'dt_groups', 'post_type_fields', $custom_health_fields );
     }
 
     /**
@@ -57,8 +64,8 @@ class Custom_Group_Health_Plugin_Tile
         }
 
         $plugin_base_url = self::get_plugin_base_url();
-        $items = get_option( 'custom_group_health_icons', null );
-        if ( empty( $items ) ) {
+        $custom_field_options = dt_get_option( 'dt_field_customizations' );
+        if ( empty( $custom_field_options ) ) {
             echo '<div class="custom-group-health-item" id="health-metrics" style="filter: opacity(0.35);"><img src="' . esc_attr( $plugin_base_url . '/assets/images/warning.svg' ) . '">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
             return;
         }
@@ -72,17 +79,17 @@ class Custom_Group_Health_Plugin_Tile
         if ( empty( $practiced_items ) ) {
             $practiced_items = [];
         }
-        foreach ( $items as $item ) {
+        foreach ( $custom_field_options['groups']['health_metrics']['default'] as $key => $value ) {
             // Check if custom church health item is being practiced by group
-            $item['label'] = esc_html( str_replace( 'church_', '', $item['label'] ) );
+            $value['label'] = esc_html( str_replace( 'church_', '', $value['label'] ) );
 
-            if ( in_array( $item['key'], $practiced_items ) ) {
+            if ( in_array( $key, $practiced_items ) ) {
                 $item_opacity = '';
             } else {
                 $item_opacity = 'half-opacity';
             }
             ?>
-            <div class="custom-group-health-item <?php echo esc_html( $item_opacity ?? '' ); ?>" id="icon_<?php echo esc_attr( strtolower( $item['key'] ) ) ?>" title="<?php echo esc_attr( $item['description'] ); ?>"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ); ?>"></div>
+            <div class="custom-group-health-item <?php echo esc_html( $item_opacity ?? '' ); ?>" id="icon_<?php echo esc_attr( strtolower( $key ) ) ?>" title="<?php echo esc_attr( $value['description'] ); ?>"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $value['image'] . '.svg' ); ?>"></div>
             <?php
         }
     }
@@ -103,12 +110,10 @@ class Custom_Group_Health_Plugin_Tile
         }
 
         $plugin_base_url = self::get_plugin_base_url();
-        $items = get_option( 'custom_group_health_icons', null );
+        $custom_field_options = dt_get_option( 'dt_field_customizations' );
 
-        if ( empty( $items ) ) {
+        if ( empty( $custom_field_options['groups']['health_metrics']['default'] ) ) {
             return;
-        } else {
-            $items = array_values( $items );
         }
 
         $practiced_items = get_post_meta( $post_id, 'health_metrics' );
@@ -116,18 +121,18 @@ class Custom_Group_Health_Plugin_Tile
             $practiced_items = [];
         }
 
-        foreach ( $items as $item ) :
-            $item['label'] = str_replace( 'church_', '', $item['label'] ); ?>
+        foreach ( $custom_field_options['groups']['health_metrics']['default'] as $key => $value ) :
+            $value['label'] = str_replace( 'church_', '', $value['label'] ); ?>
             <div class="summary-tile">
                 <?php
-                if ( in_array( $item['key'], $practiced_items ) ) {
-                    echo '<div class="summary-icons" id="' . esc_attr( $item['key'] ) . '" title="' . esc_attr( $item['description'] ) . '">';
+                if ( in_array( $key, $practiced_items ) ) {
+                    echo '<div class="summary-icons" id="' . esc_attr( $key ) . '" title="' . esc_attr( $value['description'] ) . '">';
                 } else {
-                    echo '<div class="summary-icons half-opacity" id="' . esc_attr( $item['key'] ) . '" title="' . esc_attr( $item['description'] ) . '">';
+                    echo '<div class="summary-icons half-opacity" id="' . esc_attr( $key ) . '" title="' . esc_attr( $value['description'] ) . '">';
                 }
-                echo '<img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ) .'">';
+                echo '<img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $value['image'] . '.svg' ) .'">';
                 echo '</div>';
-                echo '<div class="summary-label"><p>' . esc_html( $item['label'] ) . '</p></div>';
+                echo '<div class="summary-label"><p>' . esc_html( $value['label'] ) . '</p></div>';
                 echo '</div>';
         endforeach;
 
@@ -149,12 +154,12 @@ class Custom_Group_Health_Plugin_Tile
             return;
         }
 
-        $items = get_option( 'custom_group_health_icons', null );
+        $custom_field_options = dt_get_option( 'dt_field_customizations' );
 
-        if ( empty( $items ) ) {
+        if ( empty( $custom_field_options['groups']['health_metrics']['default'] ) ) {
             $item_count = 0;
         } else {
-            $item_count = count( $items );
+            $item_count = count( $custom_field_options['groups']['health_metrics']['default'] );
         }
 
         $health_item_size = 50;

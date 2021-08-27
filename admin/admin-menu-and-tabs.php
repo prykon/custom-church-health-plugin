@@ -48,7 +48,7 @@ class Custom_Group_Health_Plugin_Menu {
      * @since 1.1
      */
     public static function check_default_template() {
-        $icons = get_option( 'custom_group_health_icons', null );
+        $icons = dt_get_option( 'dt_field_customizations' );
         if ( empty( $icons ) ) {
             Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'No custom icons detected. Setting DT default template', 'disciple_tools' ), 'warning' );
             $object = new Custom_Group_Health_Plugin_Tab_Templates();
@@ -171,16 +171,16 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
             <?php wp_nonce_field( 'delete_key', 'delete_key_nonce' ); ?>
             <table>
         <?php
-        $icons = get_option( 'custom_group_health_icons', null );
-        if ( !empty( $icons ) ) {
-            foreach ( $icons as $icon ) :
+        $custom_field_options = dt_get_option( 'dt_field_customizations' );
+        if ( !empty( $custom_field_options['groups']['health_metrics']['default'] ) ) {
+            foreach ( $custom_field_options['groups']['health_metrics']['default'] as $key => $value ) :
                 ?>
                 <tr>
-                    <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $icon['icon'] . '.svg' ); ?>" width="35px" height="35px"></td>
-                    <td style="vertical-align:middle;"><?php echo esc_html( str_replace( 'church_', '', $icon['label'] ) ); ?></td>
-                    <td style="vertical-align:middle;"><?php echo esc_html( $icon['description'] ); ?></td>
+                    <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $value['image'] . '.svg' ); ?>" width="35px" height="35px"></td>
+                    <td style="vertical-align:middle;"><?php echo esc_html( str_replace( 'church_', '', $value['label'] ) ); ?></td>
+                    <td style="vertical-align:middle;"><?php echo esc_html( $value['description'] ); ?></td>
                     <td style="vertical-align:middle;">
-                        <button type="submit" class="button" name="delete_key" value="<?php echo esc_html( $icon['key'] ); ?>"><?php esc_html_e( 'Delete', 'disciple_tools' ) ?></button>
+                        <button type="submit" class="button" name="delete_key" value="<?php echo esc_html( $key ); ?>"><?php esc_html_e( 'Delete', 'disciple_tools' ) ?></button>
                     </td>
                 </tr>
                     <?php
@@ -254,6 +254,19 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
                     </td>
                 </tr>
             </table>
+        </form>
+        <hr>
+        <form>
+            <?php wp_nonce_field( 'add_custom_icon', 'add_custom_icon_nonce' ); ?>
+                <table>
+                    <tr>
+                        <td style="vertical-align: middle;">Upload custom icon</td>
+                        <td>
+                            <input type="hidden" id="upload_icon" name="upload_icon" required>
+                            <button type="submit" class="button" name="add_icon"><?php esc_html_e( 'Upload', 'disciple_tools' ); ?></button>
+                        </td>
+                    </tr>
+                </table>
         </form>
         <?php
     }
@@ -332,9 +345,9 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
     }
 
     private function add_new_church_health_icons(){
-        $items = get_option( 'custom_group_health_icons', null );
-        if ( !empty( $items ) ) {
-            $item_count = count( $items );
+        $custom_field_options = dt_get_option( 'dt_field_customizations' );
+        if ( !empty( $custom_field_options['groups']['health_metrics']['default'] ) ) {
+            $item_count = count( $custom_field_options['groups']['health_metrics']['default'] );
         } else {
             $item_count = 0;
         }
@@ -385,45 +398,49 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
             self::admin_notice( __( 'Error: Item description missing. Item was not created', 'disciple_tools' ), 'error' );
         }
 
-        $new_key = sanitize_key( strtolower( str_replace( ' ', '_', $new_label ) ) );
+        $new_key = dt_create_field_key( $new_label );
 
         //add option
-        $all_items = get_option( 'custom_group_health_icons', null );
+        $custom_field_options = dt_get_option( 'dt_field_customizations' );
 
-        $new_item = array(
-            'key' => 'church_' . $new_key,
-            'icon' => $new_icon,
+        if ( ! isset( $custom_field_options ) ) {
+            update_option( 'dt_field_customizations', [], true );
+            $custom_field_options = dt_get_option( 'dt_field_customizations' );
+        }
+
+        // Check if custom fields aren't empty and if so create an empty array
+        if ( empty( $custom_field_options['groups'] ) ) {
+            update_option( 'dt_field_customizations', [], true );
+            $custom_field_options = dt_get_option( 'dt_field_customizations' );
+        }
+
+        $custom_field_options['groups']['health_metrics']['default'][ $new_key ] = [
             'label' => $new_label,
-            'description' => $new_description
-        );
+            'image' => $new_icon,
+            'description' => $new_description,
+        ];
 
-        $all_items[] = $new_item;
-
-        update_option( 'custom_group_health_icons', $all_items );
+        update_option( 'dt_field_customizations', $custom_field_options );
 
         self::admin_notice( __( 'Icon created successfully', 'disciple_tools' ), 'success' );
     }
 
 
     private function process_delete_icon() {
-        if ( !empty( $_POST['delete_key'] ) ) {
-            if ( !isset( $_POST['delete_key_nonce'] ) || !wp_verify_nonce( sanitize_key( $_POST['delete_key_nonce'] ), 'delete_key' ) ) {
+        if ( ! empty( $_POST['delete_key'] ) ) {
+            if ( ! isset( $_POST['delete_key_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['delete_key_nonce'] ), 'delete_key' ) ) {
                 return;
             }
 
             $delete_key = sanitize_text_field( wp_unslash( $_POST['delete_key'] ) );
-            $all_items = get_option( 'custom_group_health_icons', null );
+            $custom_field_options = dt_get_option( 'dt_field_customizations' );
 
-            if ( is_array( $all_items ) ) {
-                foreach ( $all_items as $item ) {
-                    if ( $item['key'] == $delete_key ) {
-                        $delete_index = array_search( $item, $all_items );
-                        unset( $all_items[$delete_index] );
-                        update_option( 'custom_group_health_icons', $all_items );
+            if ( is_array( $custom_field_options ) ) {
+                foreach ( $custom_field_options['groups']['health_metrics']['default'] as $key => $value ) {
+                    if ( $key == $delete_key ) {
+                        unset( $custom_field_options['groups']['health_metrics']['default'][ $delete_key ] );
+                        update_option( 'dt_field_customizations', $custom_field_options );
                         self::admin_notice( __( 'Icon deleted successfully', 'disciple_tools' ), 'success' );
-
-                        // If no custom icons remain, add default DT group health template
-                        Custom_Group_Health_Plugin_Menu::check_default_template();
                     }
                 }
             }
@@ -513,146 +530,161 @@ class Custom_Group_Health_Plugin_Tab_Templates {
     public function set_template( $template_name ) {
         $plugin_base_url = Custom_Group_Health_Plugin_Menu::get_plugin_base_url();
         $dt_template_health_items = [
-            0 => [
-                    'key' => 'church_baptism',
+
+            'church_baptism' => [
                     'label' => __( 'Baptism', 'disciple_tools' ),
                     'description' => __( 'The group is baptising.', 'disciple_tools' ),
-                    'icon' => 'baptism'
+                    'image' => 'baptism'
                 ],
-            1 => [
-                    'key' => 'church_bible',
+
+            'church_bible' => [
                     'label' => __( 'Bible Study', 'disciple_tools' ),
                     'description' => __( 'The group is studying the bible.', 'disciple_tools' ),
-                    'icon' => 'bible'
+                    'image' => 'bible'
                 ],
-            2 => [
-                    'key' => 'church_communion',
+
+            'church_communion' => [
                     'label' => __( 'Communion', 'disciple_tools' ),
                     'description' => __( 'The group is practicing communion.', 'disciple_tools' ),
-                    'icon' => 'communion'
+                    'image' => 'communion'
                 ],
-            3 => [
-                    'key' => 'church_fellowship',
+
+            'church_fellowship' => [
                     'label' => __( 'Fellowship', 'disciple_tools' ),
                     'description' => __( 'The group is fellowshiping.', 'disciple_tools' ),
-                    'icon' => 'love'
+                    'image' => 'love'
                 ],
-            4 => [
-                    'key' => 'church_giving',
+
+            'church_giving' => [
                     'label' => __( 'Giving', 'disciple_tools' ),
                     'description' => __( 'The group is giving.', 'disciple_tools' ),
-                    'icon' => 'money'
+                    'image' => 'money'
                 ],
-            5 => [
-                    'key' => 'church_prayer',
+
+            'church_prayer' => [
                     'label' => __( 'Prayer', 'disciple_tools' ),
                     'description' => __( 'The group is praying.', 'disciple_tools' ),
-                    'icon' => 'prayer'
+                    'image' => 'prayer'
                 ],
-            6 => [
-                    'key' => 'church_praise',
+
+            'church_praise' => [
                     'label' => __( 'Praise', 'disciple_tools' ),
                     'description' => __( 'The group is praising.', 'disciple_tools' ),
-                    'icon' => 'praise'
+                    'image' => 'praise'
                 ],
-            7 => [
-                    'key' => 'church_sharing',
+
+            'church_sharing' => [
                     'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
                     'description' => __( 'The group is sharing the gospel.', 'disciple_tools' ),
-                    'icon' => 'gospel'
+                    'image' => 'gospel'
                 ],
-            8 => [
-                    'key' => 'church_leaders',
+
+            'church_leaders' => [
                     'label' => __( 'Leaders', 'disciple_tools' ),
                     'description' => __( 'The group has leaders.', 'disciple_tools' ),
-                    'icon' => 'happy'
+                    'image' => 'happy'
                 ],
             ];
 
         $twelve_practices_template_health_items = [
-            0 => [
-                    'key' => 'church_sharing',
+
+            'church_sharing' => [
                     'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
                     'description' => __( 'The group is sharing the gospel.', 'disciple_tools' ),
-                    'icon' => 'twelve-gospel'
+                    'image' => 'twelve-gospel'
                 ],
-            1 => [
-                    'key' => 'church_repentance',
+
+            'church_repentance' => [
                     'label' => __( 'Repentance', 'disciple_tools' ),
                     'description' => __( 'The group is practicing repentance.', 'disciple_tools' ),
-                    'icon' => 'twelve-repent'
+                    'image' => 'twelve-repent'
                 ],
-            2 => [
-                    'key' => 'church_baptism',
+
+            'church_baptism' => [
                     'label' => __( 'Baptism', 'disciple_tools' ),
                     'description' => __( 'The group is baptising.', 'disciple_tools' ),
-                    'icon' => 'twelve-baptism'
+                    'image' => 'twelve-baptism'
             ],
-            3 => [
-                    'key' => 'church_holy_spirit',
+
+            'church_holy_spirit' => [
                     'label' => __( 'Holy Spirit', 'disciple_tools' ),
                     'description' => __( 'The group is moving in the Holy Spirit.', 'disciple_tools' ),
-                    'icon' => 'twelve-holy-spirit'
+                    'image' => 'twelve-holy-spirit'
                 ],
-            4 => [
-                    'key' => 'church_bible',
+
+            'church_bible' => [
                     'label' => __( 'Word', 'disciple_tools' ),
                     'description' => __( 'The group is studying the bible.', 'disciple_tools' ),
-                    'icon' => 'twelve-word'
+                    'image' => 'twelve-word'
                 ],
-            5 => [
-                    'key' => 'church_fellowship',
+
+            'church_fellowship' => [
                     'label' => __( 'Fellowship', 'disciple_tools' ),
                     'description' => __( 'The groupd is fellowshiping', 'disciple_tools' ),
-                    'icon' => 'twelve-love'
+                    'image' => 'twelve-love'
                 ],
-            6 => [
-                    'key' => 'church_communion',
+
+            'church_communion' => [
                     'label' => __( 'Communion', 'disciple_tools' ),
                     'description' => __( 'The group is practicing communion.', 'disciple_tools' ),
-                    'icon' => 'twelve-lords-supper'
+                    'image' => 'twelve-lords-supper'
                 ],
-            7 => [
-                    'key' => 'church_prayer',
+
+            'church_prayer' => [
                     'label' => __( 'Prayer', 'disciple_tools' ),
                     'description' => __( 'The group is praying.', 'disciple_tools' ),
-                    'icon' => 'twelve-prayer'
+                    'image' => 'twelve-prayer'
             ],
-            8 => [
-                    'key' => 'church_signs_wonders',
+
+            'church_signs_wonders' => [
                     'label' => __( 'Signs and Wonders', 'disciple_tools' ),
                     'description' => __( 'The group is experiencing signs and wonders.', 'disciple_tools' ),
-                    'icon' => 'twelve-signs-wonders'
+                    'image' => 'twelve-signs-wonders'
             ],
-            9 => [
-                    'key' => 'church_giving',
+
+            'church_giving' => [
                     'label' => __( 'Giving', 'disciple_tools' ),
                     'description' => __( 'The group is giving.', 'disciple_tools' ),
-                    'icon' => 'twelve-give'
+                    'image' => 'twelve-give'
             ],
-            10 => [
-                    'key' => 'church_worship',
+
+            'church_worship' => [
                     'label' => __( 'Worship', 'disciple_tools' ),
                     'description' => __( 'The group is worshipping.', 'disciple_tools' ),
-                    'icon' => 'twelve-worship'
+                    'image' => 'twelve-worship'
             ],
-            11 => [
-                    'key' => 'church_making_disciples',
+
+            'church_making_disciples' => [
                     'label' => __( 'Making Disciples', 'disciple_tools' ),
                     'description' => __( 'The group is making disciples.', 'disciple_tools' ),
-                    'icon' => 'twelve-make-disciples'
+                    'image' => 'twelve-make-disciples'
             ],
         ];
 
+        $custom_field_options = dt_get_option( 'dt_field_customizations' );
+
+        if ( ! isset( $custom_field_options ) ) {
+            update_option( 'dt_field_customizations', [], true );
+            $custom_field_options = dt_get_option( 'dt_field_customizations' );
+        }
+
+        // Check if custom fields aren't empty and if so create an empty array
+        if ( empty( $custom_field_options['groups']['health_metrics'] ) ) {
+            update_option( 'dt_field_customizations', [], true );
+            $custom_field_options = dt_get_option( 'dt_field_customizations' );
+        }
+
         switch ( $template_name ) {
             case 'dt_default_template':
-                update_option( 'custom_group_health_icons', $dt_template_health_items );
-                Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'Template switched successfully.', 'disciple_tools' ), 'success' );
+                $custom_field_options['groups']['health_metrics']['default'] = $dt_template_health_items;
+                update_option( 'dt_field_customizations', $custom_field_options );
+                Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'Template set successfully.', 'disciple_tools' ), 'success' );
                 break;
 
             case 'twelve_practices_template':
-                update_option( 'custom_group_health_icons', $twelve_practices_template_health_items );
-                Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'Template switched successfully.', 'disciple_tools' ), 'success' );
+                $custom_field_options['groups']['health_metrics']['default'] = $twelve_practices_template_health_items;
+                update_option( 'dt_field_customizations', $custom_field_options );
+                Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'Template set successfully.', 'disciple_tools' ), 'success' );
                 break;
         }
     }

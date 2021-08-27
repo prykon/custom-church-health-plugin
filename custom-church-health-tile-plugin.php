@@ -92,33 +92,18 @@ class Custom_Group_Health_Plugin {
             require_once( 'rest-api/rest-api.php' ); // adds starter rest api class
         //}
 
-        /**
-         * @todo Decide if you want to add a custom tile
-         * To remove: delete the line below and remove the folder named /tile
-         */
         require_once( 'tile/custom-tile.php' ); // add custom tile
 
-        /**
-         * @todo Decide if you want to add a custom admin page in the admin area
-         * To remove: delete the 3 lines below and remove the folder named /admin
-         */
         if ( is_admin() ) {
             require_once( 'admin/admin-menu-and-tabs.php' ); // adds starter admin page and section for plugin
         }
 
-        /**
-         * @todo Decide if you want to support localization of your plugin
-         * To remove: delete the line below and remove the folder named /languages
-         */
         $this->i18n();
 
-        /**
-         * @todo Decide if you want to customize links for your plugin in the plugin admin area
-         * To remove: delete the lines below and remove the function named
-         */
         if ( is_admin() ) { // adds links to the plugin description area in the plugin admin list.
             add_filter( 'plugin_row_meta', [ $this, 'plugin_description_links' ], 10, 4 );
         }
+
     }
 
     /**

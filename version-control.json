@@ -1,7 +1,7 @@
 {
 
   "name": "Disciple Tools - Custom Group Health Plugin",
-  "version": "1.1",
+  "version": "1.2",
   "last_updated": "2021-08",
   "author": "prykon",
   "author_homepage": "https://github.com/prykon",
@@ -25,6 +25,6 @@
   "sections": {
     "description": "Customize the way you track your groups' health. Select from popular church health templates or create your own.",
     "installation": "(Required) You must have Disciple.Tools Theme installed before using this plugin. Once Disciple.Tools is installed, you can use the normal Plugin system to install the plugin.",
-    "changelog": "If a user has no custom group health icons created, the default Disciple.Tools template icons are selected."
+    "changelog": "Custom group health items are now stored in the same way as legacy Disciple.Tools health metrics."
   }
 }
