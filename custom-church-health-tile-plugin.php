@@ -140,8 +140,15 @@ class Custom_Group_Health_Plugin {
      * @return void
      */
     public static function deactivation() {
-        // add functions here that need to happen on deactivation
-        delete_option( 'dismissed-custom-group-health-plugin' );
+        /**
+         * Remove custom health elements on deactivation
+         * so they won't show up in the DT legacy Group Health tile
+         */
+        $custom_field_options = dt_get_option( 'dt_field_customizations' );
+        if ( !empty( $custom_field_options['groups']['health_metrics'] ) ) {
+            unset( $custom_field_options['groups']['health_metrics']['default'] );
+        }
+        update_option( 'dt_field_customizations', $custom_field_options );
     }
 
     /**

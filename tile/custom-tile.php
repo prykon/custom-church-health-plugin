@@ -65,7 +65,7 @@ class Custom_Group_Health_Plugin_Tile
 
         $plugin_base_url = self::get_plugin_base_url();
         $custom_field_options = dt_get_option( 'dt_field_customizations' );
-        if ( empty( $custom_field_options ) ) {
+        if ( empty( $custom_field_options['groups']['health_metrics']['default'] ) ) {
             echo '<div class="custom-group-health-item" id="health-metrics" style="filter: opacity(0.35);"><img src="' . esc_attr( $plugin_base_url . '/assets/images/warning.svg' ) . '">' . esc_html( 'Empty', 'disciple_tools' ) . '</div>';
             return;
         }
@@ -79,6 +79,7 @@ class Custom_Group_Health_Plugin_Tile
         if ( empty( $practiced_items ) ) {
             $practiced_items = [];
         }
+
         foreach ( $custom_field_options['groups']['health_metrics']['default'] as $key => $value ) {
             // Check if custom church health item is being practiced by group
             $value['label'] = esc_html( str_replace( 'church_', '', $value['label'] ) );
