@@ -409,7 +409,7 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
         }
 
         // Check if custom fields aren't empty and if so create an empty array
-        if ( empty( $custom_field_options['groups'] ) ) {
+        if ( empty( $custom_field_options['groups']['health_metrics']['default'] ) ) {
             update_option( 'dt_field_customizations', [], true );
             $custom_field_options = dt_get_option( 'dt_field_customizations' );
         }
