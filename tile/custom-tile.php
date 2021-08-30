@@ -90,7 +90,7 @@ class Custom_Group_Health_Plugin_Tile
                 $item_opacity = 'half-opacity';
             }
             ?>
-            <div class="custom-group-health-item <?php echo esc_html( $item_opacity ?? '' ); ?>" id="icon_<?php echo esc_attr( strtolower( $key ) ) ?>" title="<?php echo esc_attr( $value['description'] ); ?>"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $value['image'] . '.svg' ); ?>"></div>
+            <div class="custom-group-health-item <?php echo esc_html( $item_opacity ?? '' ); ?>" id="icon_<?php echo esc_attr( strtolower( $key ) ) ?>" title="<?php echo esc_attr( $value['description'] ); ?>"><img src="<?php echo esc_attr( $value['image'] ); ?>"></div>
             <?php
         }
     }
@@ -131,7 +131,7 @@ class Custom_Group_Health_Plugin_Tile
                 } else {
                     echo '<div class="summary-icons half-opacity" id="' . esc_attr( $key ) . '" title="' . esc_attr( $value['description'] ) . '">';
                 }
-                echo '<img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $value['image'] . '.svg' ) .'">';
+                echo '<img src="' . esc_attr( $value['image'] ) . '">';
                 echo '</div>';
                 echo '<div class="summary-label"><p>' . esc_html( $value['label'] ) . '</p></div>';
                 echo '</div>';

@@ -176,7 +176,7 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
             foreach ( $custom_field_options['groups']['health_metrics']['default'] as $key => $value ) :
                 ?>
                 <tr>
-                    <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $value['image'] . '.svg' ); ?>" width="35px" height="35px"></td>
+                    <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $value['image'] ); ?>" width="35px" height="35px"></td>
                     <td style="vertical-align:middle;"><?php echo esc_html( str_replace( 'church_', '', $value['label'] ) ); ?></td>
                     <td style="vertical-align:middle;"><?php echo esc_html( $value['description'] ); ?></td>
                     <td style="vertical-align:middle;">
@@ -338,7 +338,7 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
                     jQuery(v).removeClass( 'selected' );
                 });
                 jQuery( this ).addClass( 'selected' );
-                jQuery( '#new_icon' ).val( jQuery( this ).data( 'name' ) );
+                jQuery( '#new_icon' ).val( '<?php echo esc_attr( untrailingslashit( $plugin_base_url ) ) . '/assets/images/'; ?>' + jQuery( this ).data( 'name' ) + '.svg' );
             });
         </script>
         <?php
@@ -534,55 +534,55 @@ class Custom_Group_Health_Plugin_Tab_Templates {
             'church_baptism' => [
                     'label' => __( 'Baptism', 'disciple_tools' ),
                     'description' => __( 'The group is baptising.', 'disciple_tools' ),
-                    'image' => 'baptism'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/baptism.svg'
                 ],
 
             'church_bible' => [
                     'label' => __( 'Bible Study', 'disciple_tools' ),
                     'description' => __( 'The group is studying the bible.', 'disciple_tools' ),
-                    'image' => 'bible'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/bible.svg'
                 ],
 
             'church_communion' => [
                     'label' => __( 'Communion', 'disciple_tools' ),
                     'description' => __( 'The group is practicing communion.', 'disciple_tools' ),
-                    'image' => 'communion'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/communion.svg'
                 ],
 
             'church_fellowship' => [
                     'label' => __( 'Fellowship', 'disciple_tools' ),
                     'description' => __( 'The group is fellowshiping.', 'disciple_tools' ),
-                    'image' => 'love'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/love.svg'
                 ],
 
             'church_giving' => [
                     'label' => __( 'Giving', 'disciple_tools' ),
                     'description' => __( 'The group is giving.', 'disciple_tools' ),
-                    'image' => 'money'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/money.svg'
                 ],
 
             'church_prayer' => [
                     'label' => __( 'Prayer', 'disciple_tools' ),
                     'description' => __( 'The group is praying.', 'disciple_tools' ),
-                    'image' => 'prayer'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/prayer.svg'
                 ],
 
             'church_praise' => [
                     'label' => __( 'Praise', 'disciple_tools' ),
                     'description' => __( 'The group is praising.', 'disciple_tools' ),
-                    'image' => 'praise'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/praise.svg'
                 ],
 
             'church_sharing' => [
                     'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
                     'description' => __( 'The group is sharing the gospel.', 'disciple_tools' ),
-                    'image' => 'gospel'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/gospel.svg'
                 ],
 
             'church_leaders' => [
                     'label' => __( 'Leaders', 'disciple_tools' ),
                     'description' => __( 'The group has leaders.', 'disciple_tools' ),
-                    'image' => 'happy'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/happy.svg'
                 ],
             ];
 
@@ -591,73 +591,73 @@ class Custom_Group_Health_Plugin_Tab_Templates {
             'church_sharing' => [
                     'label' => __( 'Sharing the Gospel', 'disciple_tools' ),
                     'description' => __( 'The group is sharing the gospel.', 'disciple_tools' ),
-                    'image' => 'twelve-gospel'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/twelve-gospel.svg'
                 ],
 
             'church_repentance' => [
                     'label' => __( 'Repentance', 'disciple_tools' ),
                     'description' => __( 'The group is practicing repentance.', 'disciple_tools' ),
-                    'image' => 'twelve-repent'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/twelve-repent.svg'
                 ],
 
             'church_baptism' => [
                     'label' => __( 'Baptism', 'disciple_tools' ),
                     'description' => __( 'The group is baptising.', 'disciple_tools' ),
-                    'image' => 'twelve-baptism'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/twelve-baptism.svg'
             ],
 
             'church_holy_spirit' => [
                     'label' => __( 'Holy Spirit', 'disciple_tools' ),
                     'description' => __( 'The group is moving in the Holy Spirit.', 'disciple_tools' ),
-                    'image' => 'twelve-holy-spirit'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/twelve-holy-spirit.svg'
                 ],
 
             'church_bible' => [
                     'label' => __( 'Word', 'disciple_tools' ),
                     'description' => __( 'The group is studying the bible.', 'disciple_tools' ),
-                    'image' => 'twelve-word'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/twelve-word.svg'
                 ],
 
             'church_fellowship' => [
                     'label' => __( 'Fellowship', 'disciple_tools' ),
                     'description' => __( 'The groupd is fellowshiping', 'disciple_tools' ),
-                    'image' => 'twelve-love'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/twelve-love.svg'
                 ],
 
             'church_communion' => [
                     'label' => __( 'Communion', 'disciple_tools' ),
                     'description' => __( 'The group is practicing communion.', 'disciple_tools' ),
-                    'image' => 'twelve-lords-supper'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/twelve-lords-supper.svg'
                 ],
 
             'church_prayer' => [
                     'label' => __( 'Prayer', 'disciple_tools' ),
                     'description' => __( 'The group is praying.', 'disciple_tools' ),
-                    'image' => 'twelve-prayer'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/twelve-prayer.svg'
             ],
 
             'church_signs_wonders' => [
                     'label' => __( 'Signs and Wonders', 'disciple_tools' ),
                     'description' => __( 'The group is experiencing signs and wonders.', 'disciple_tools' ),
-                    'image' => 'twelve-signs-wonders'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/twelve-signs-wonders.svg'
             ],
 
             'church_giving' => [
                     'label' => __( 'Giving', 'disciple_tools' ),
                     'description' => __( 'The group is giving.', 'disciple_tools' ),
-                    'image' => 'twelve-give'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/twelve-give.svg'
             ],
 
             'church_worship' => [
                     'label' => __( 'Worship', 'disciple_tools' ),
                     'description' => __( 'The group is worshipping.', 'disciple_tools' ),
-                    'image' => 'twelve-worship'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/twelve-worship.svg'
             ],
 
             'church_making_disciples' => [
                     'label' => __( 'Making Disciples', 'disciple_tools' ),
                     'description' => __( 'The group is making disciples.', 'disciple_tools' ),
-                    'image' => 'twelve-make-disciples'
+                    'image' => esc_html( $plugin_base_url ). '/assets/images/twelve-make-disciples.svg'
             ],
         ];
 
