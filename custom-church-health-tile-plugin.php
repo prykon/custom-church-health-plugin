@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Disciple Tools - Custom Group Health Plugin
+ *Plugin Name: Disciple.Tools - Custom Group Health Plugin
  * Plugin URI: https://github.com/DiscipleTools/custom-group-health-plugin
  * Description: Disciple Tools - Custom Group Health Plugin is intended to help developers and integrator jumpstart their extension of the Disciple Tools system.
  * Text Domain: custom-group-health-plugin
