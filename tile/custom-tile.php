@@ -73,7 +73,8 @@ class Custom_Group_Health_Plugin_Tile
             $practiced_items = [];
         }
         foreach ( $items as $item ) {
-            // Check if custom church health item is being practiced by group
+            $item['icon'] = self::get_item_url_path( $item['key'], $item['icon'] );
+            // Check if health item is being practiced by group
             $item['label'] = esc_html( str_replace( 'church_', '', $item['label'] ) );
 
             if ( in_array( $item['key'], $practiced_items ) ) {
@@ -82,9 +83,21 @@ class Custom_Group_Health_Plugin_Tile
                 $item_opacity = 'half-opacity';
             }
             ?>
-            <div class="custom-group-health-item <?php echo esc_html( $item_opacity ?? '' ); ?>" id="icon_<?php echo esc_attr( strtolower( $item['key'] ) ) ?>" title="<?php echo esc_attr( $item['description'] ); ?>"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ); ?>"></div>
+            <div class="custom-group-health-item <?php echo esc_html( $item_opacity ?? '' ); ?>" id="icon_<?php echo esc_attr( strtolower( $item['key'] ) ) ?>" title="<?php echo esc_attr( $item['description'] ); ?>">
+                <img src="<?php echo esc_attr( $item['icon'] ); ?>">
+            </div>
             <?php
         }
+    }
+
+    // Create blog URL path if icon is not uploaded by user
+    private function get_item_url_path( $item_key, $item_icon ) {
+        $plugin_base_url = self::get_plugin_base_url();
+        $item_path = $item_icon;
+        if ( substr( $item_key, 0, strlen( 'church_custom_' ) ) !== 'church_custom_' ) {
+            $item_path = $plugin_base_url . '/assets/images/' . $item_icon . '.svg';
+        }
+        return $item_path;
     }
 
     private function get_plugin_base_url() {
@@ -117,7 +130,8 @@ class Custom_Group_Health_Plugin_Tile
         }
 
         foreach ( $items as $item ) :
-            $item['label'] = str_replace( 'church_', '', $item['label'] ); ?>
+            $item['icon'] = self::get_item_url_path( $item['key'], $item['icon'] );
+            ?>
             <div class="summary-tile">
                 <?php
                 if ( in_array( $item['key'], $practiced_items ) ) {
@@ -125,7 +139,7 @@ class Custom_Group_Health_Plugin_Tile
                 } else {
                     echo '<div class="summary-icons half-opacity" id="' . esc_attr( $item['key'] ) . '" title="' . esc_attr( $item['description'] ) . '">';
                 }
-                echo '<img src="' . esc_attr( $plugin_base_url . '/assets/images/' . $item['icon'] . '.svg' ) .'">';
+                echo '<img src="' . esc_attr( $item['icon'] ) .'">';
                 echo '</div>';
                 echo '<div class="summary-label"><p>' . esc_html( $item['label'] ) . '</p></div>';
                 echo '</div>';

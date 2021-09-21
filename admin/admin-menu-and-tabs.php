@@ -174,9 +174,13 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
         $icons = get_option( 'custom_group_health_icons', null );
         if ( !empty( $icons ) ) {
             foreach ( $icons as $icon ) :
+                // If it's not a custom icon, create the URL path
+                if ( substr( $icon['key'], 0, strlen( 'church_custom_' ) ) !== 'church_custom_' ) {
+                    $icon['icon'] = $plugin_base_url . '/assets/images/' . $icon['icon'] . '.svg';
+                }
                 ?>
                 <tr>
-                    <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $plugin_base_url . '/assets/images/' . $icon['icon'] . '.svg' ); ?>" width="35px" height="35px"></td>
+                    <td style="vertical-align:middle;"><img src="<?php echo esc_attr( $icon['icon'] ); ?>" width="35px"></td>
                     <td style="vertical-align:middle;"><?php echo esc_html( str_replace( 'church_', '', $icon['label'] ) ); ?></td>
                     <td style="vertical-align:middle;"><?php echo esc_html( $icon['description'] ); ?></td>
                     <td style="vertical-align:middle;">
@@ -256,6 +260,82 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
             </table>
         </form>
         <?php
+    }
+
+    private function upload_icon() {
+        ?>
+        <form method="post">
+            <?php wp_nonce_field( 'add_custom_icon', 'add_custom_icon_nonce' ); ?>
+            <table>
+                <tr>
+                    <td style="vertical-align: middle;">Custom Label:</td>
+                    <td>
+                        <input type="text" name="new_custom_label" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: middle;">Custom Description:</td>
+                    <td>
+                        <input type="text" name="new_custom_description" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: middle;">Custom URL:</td>
+                    <td>
+                        <input type="text" name="new_custom_url" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" class="button" name="add_icon"><?php esc_html_e( 'Create', 'disciple_tools' ); ?></button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <?php
+    }
+
+    private function process_add_custom_icon() {
+        if ( ! isset( $_POST['add_custom_icon_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['add_custom_icon_nonce'] ), 'add_custom_icon' ) ) {
+            return;
+        }
+
+        // Sanitize new custom icon label
+        if ( ! isset( $_POST['new_custom_label'] ) ) {
+            self::admin_notice( __( 'Error: Custom icon label not set.', 'disciple_tools' ), 'error' );
+            return;
+        }
+
+        // Sanitize new custom icon description
+        if ( ! isset( $_POST['new_custom_description'] ) ) {
+            self::admin_notice( __( 'Error: Custom icon description not set.', 'disciple_tools' ), 'error' );
+            return;
+        }
+
+        // Sanitize new custom icon URL
+        if ( ! isset( $_POST['new_custom_url'] ) ) {
+            self::admin_notice( __( 'Error: Custom icon URL not set.', 'disciple_tools' ), 'error' );
+            return;
+        }
+
+        $new_custom_label = sanitize_text_field( wp_unslash( $_POST['new_custom_label'] ) );
+        $new_custom_description = sanitize_text_field( wp_unslash( $_POST['new_custom_description'] ) );
+        $new_custom_key = sanitize_key( strtolower( str_replace( ' ', '_', $new_custom_label ) ) );
+        $new_custom_icon = esc_url_raw( wp_unslash( $_POST['new_custom_url'] ) );
+
+        // Upload the icon
+        $all_items = get_option( 'custom_group_health_icons', null );
+        $new_item = array(
+            'key' => 'church_custom_' . $new_custom_key,
+            'label' => $new_custom_label,
+            'description' => $new_custom_description,
+            'icon' => $new_custom_icon
+        );
+
+        $all_items[] = $new_item;
+
+        update_option( 'custom_group_health_icons', $all_items );
+        self::admin_notice( __( 'Custom icon created successfully', 'disciple_tools' ), 'success' );
     }
 
     private function show_icons() {
@@ -345,7 +425,7 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
                 <tr>
                     <td style="vertical-align: middle">
                         <?php if ( $item_count < 12 ) : ?>
-                            <p for="tile-select"><?php esc_html_e( 'Create new Group Health Icon', 'disciple_tools' ) ?></p>
+                            <p for="tile-select"><?php esc_html_e( 'Create New Group Health Icon', 'disciple_tools' ) ?></p>
                         <?php else : ?>
                             <p for="tile-select"><i><?php esc_html_e( 'You can only create up to 12 custom church health icons', 'disciple_tools' ) ?></i></p>
                         <?php endif; ?>
@@ -431,8 +511,12 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
     }
 
     public function main_column() {
-        if ( isset( $_POST['add_icon'] ) ) {
+        if ( isset( $_POST['add_icon'] ) && ! empty( $_POST['add_icon'] ) ) {
             self::process_add_icon();
+        }
+
+        else if ( isset( $_POST['add_custom_icon_nonce'] ) ) {
+            self::process_add_custom_icon();
         }
 
         else if ( isset( $_POST['delete_key'] ) ) {
@@ -442,20 +526,26 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
         <!-- Box -->
         <form method="post">
             <?php
-                // Load tiles
-                $this->box( 'top', __( 'Manage Custom Group Health Plugins' ) );
-                $this->show_tiles();
-                $this->box( 'bottom' );
+            // Load tiles
+            $this->box( 'top', __( 'Manage Custom Group Health Plugins' ) );
+            $this->show_tiles();
+            $this->box( 'bottom' );
 
-                $this->box( 'top', __( 'Add new Group Health Icons' ) );
+            if ( ! isset( $_POST['show_add_new_icon'] ) ) {
+                $this->box( 'top', __( 'Add New Group Health Icons' ) );
                 $this->add_new_church_health_icons();
                 $this->box( 'bottom' );
+            }
 
             // Show add tile module
             if ( isset( $_POST['show_add_new_icon'] ) ) {
                 if ( isset( $_POST['health_edit_nonce'] ) && wp_verify_nonce( sanitize_key( $_POST['health_edit_nonce'] ), 'health_edit' ) ) {
                     $this->box( 'top', __( 'Create new item', 'disciple_tools' ) );
                     $this->create_new_icon();
+                    $this->box( 'bottom' );
+
+                    $this->box( 'top', __( 'Upload icon', 'disciple_tools' ) );
+                    $this->upload_icon();
                     $this->box( 'bottom' );
                 }
             }
