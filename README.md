@@ -22,7 +22,7 @@ There are many ways of measuring a group's health. With the Customizable Group H
 
 ## Requirements
 
-- Disciple Tools Theme installed on a Wordpress Server
+- Disciple.Tools Theme installed on a Wordpress Server
 
 ## Installing
 
