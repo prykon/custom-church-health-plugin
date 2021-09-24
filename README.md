@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/DiscipleTools/custom-group-health-plugin.svg?branch=master)](https://travis-ci.com/prykon/custom-group-health-plugin)
 
-![Custom Group Health](https://raw.githubusercontent.com/prykon/custom-group-health-plugin/master/assets/banner.png)
+![Plugin Banner](https://raw.githubusercontent.com/prykon/custom-group-health-plugin/master/assets/banner.png)
 # Disciple.Tools - Custom Group Health Plugin <img src="https://github.com/prykon/custom-group-health-plugin/raw/master/assets/logo.png" align="right" width="80">
 
 Customize the way you track your groups' health. Select from popular church health templates or create your own.
