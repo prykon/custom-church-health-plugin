@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Disciple Tools - Custom Group Health Plugin
+ *Plugin Name: Disciple.Tools - Custom Group Health Plugin
  * Plugin URI: https://github.com/DiscipleTools/custom-group-health-plugin
- * Description: Disciple Tools - Custom Group Health Plugin is intended to help developers and integrator jumpstart their extension of the Disciple Tools system.
+ * Description: Disciple.Tools - Custom Group Health Plugin is intended to help developers and integrator jumpstart their extension of the Disciple.Tools system.
  * Text Domain: custom-group-health-plugin
  * Domain Path: /languages
  * Version:  1.1
@@ -230,9 +230,9 @@ if ( ! function_exists( 'custom_group_health_plugin_hook_admin_notice' ) ) {
         global $custom_group_health_plugin_required_dt_theme_version;
         $wp_theme = wp_get_theme();
         $current_version = $wp_theme->version;
-        $message = "'Disciple Tools - Custom Group Health Plugin' plugin requires 'Disciple Tools' theme to work. Please activate 'Disciple Tools' theme or make sure it is latest version.";
+        $message = "'Disciple.Tools - Custom Group Health Plugin' plugin requires 'Disciple.Tools' theme to work. Please activate 'Disciple.Tools' theme or make sure it is latest version.";
         if ( $wp_theme->get_template() === "disciple-tools-theme" ){
-            $message .= ' ' . sprintf( esc_html( 'Current Disciple Tools version: %1$s, required version: %2$s' ), esc_html( $current_version ), esc_html( $custom_group_health_plugin_required_dt_theme_version ) );
+            $message .= ' ' . sprintf( esc_html( 'Current Disciple.Tools version: %1$s, required version: %2$s' ), esc_html( $current_version ), esc_html( $custom_group_health_plugin_required_dt_theme_version ) );
         }
         // Check if it's been dismissed...
         if ( ! get_option( 'dismissed-custom-group-health-plugin', false ) ) { ?>
