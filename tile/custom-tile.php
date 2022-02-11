@@ -37,12 +37,27 @@ class Custom_Group_Health_Plugin_Tile
      */
     public function dt_details_additional_tiles( $tiles, $post_type = '' ) {
         if ( $post_type === 'groups' ){
+
+            $items = get_option( 'custom_group_health_icons', null );
+
+            $help_text = '';
+
+            if ( ! empty( $items ) ) {
+                foreach ( $items as $item ) {
+                    $help_text .= '- ' . esc_html( $item['label'] ) . ": " . esc_html( $item['description'] ) . "\n";
+
+                }
+            }
+
             $new_tiles = [];
             foreach ( $tiles as $index => $value ) {
                 if ( $index !== 'health-metrics') {
                     $new_tiles[$index] = $value;
                 } else {
-                    $new_tiles['custom-health-metrics'] = [ 'label' => __( 'Group Health', 'disciple_tools' ) ];
+                    $new_tiles['custom-health-metrics'] = [
+                        'label' => __( 'Group Health', 'disciple_tools' ),
+                        'description' => "Track the progress and health of a group/church.\n\n" . $help_text,
+                    ];
                 }
             }
             $tiles = $new_tiles;
