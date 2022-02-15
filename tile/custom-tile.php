@@ -56,7 +56,7 @@ class Custom_Group_Health_Plugin_Tile
                 } else {
                     $new_tiles['custom-health-metrics'] = [
                         'label' => __( 'Group Health', 'disciple_tools' ),
-                        'description' => "Track the progress and health of a group/church.\n\n" . $help_text,
+                        'description' => _x( "Track the progress and health of a group/church.", 'Optional Documentation', 'disciple_tools' ) . "\n\n" . $help_text,
                     ];
                 }
             }

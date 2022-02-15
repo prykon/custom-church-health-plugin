@@ -50,7 +50,7 @@ class Custom_Group_Health_Plugin_Menu {
     public static function check_default_template() {
         $icons = get_option( 'custom_group_health_icons', null );
         if ( empty( $icons ) ) {
-            Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'No custom icons detected. Setting DT default template', 'disciple_tools' ), 'warning' );
+            Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'No custom icons detected. Setting DT default template', 'custom_group_health' ), 'warning' );
             $object = new Custom_Group_Health_Plugin_Tab_Templates();
             $object->set_template( 'dt_default_template' );
 
@@ -100,11 +100,11 @@ class Custom_Group_Health_Plugin_Menu {
 
         ?>
         <div class="wrap">
-            <h2>Custom Group Health Plugin</h2>
+            <h2><?php esc_html_e( 'Custom Group Health Plugin', 'custom_group_health'); ?></h2>
             <h2 class="nav-tab-wrapper">
-                <a href="<?php echo esc_attr( $link ) . 'general' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'general' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">General</a>
-                <a href="<?php echo esc_attr( $link ) . 'templates' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'templates' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Templates</a>
-                <a href="<?php echo esc_attr( $link ) . 'help' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'help' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">Help</a>
+                <a href="<?php echo esc_attr( $link ) . 'general' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'general' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>"><?php esc_html_e( 'General', 'custom_group_health' ) ?></a>
+                <a href="<?php echo esc_attr( $link ) . 'templates' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'templates' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>"><?php esc_html_e( 'Templates', 'custom_group_health' ) ?></a>
+                <a href="<?php echo esc_attr( $link ) . 'help' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'help' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>"><?php esc_html_e( 'Help', 'disciple_tools' ) ?></a>
             </h2>
 
             <?php
@@ -189,7 +189,7 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
             ?>
                 <tr>
                     <td align="center">
-                        <i><?php esc_html_e( 'No custom items yet...', 'disciple_tools' ); ?></i>
+                        <i><?php esc_html_e( 'No custom items yet...', 'custom_group_health' ); ?></i>
                     </td>
                 </tr>
                 <?php
@@ -226,8 +226,8 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
             <?php wp_nonce_field( 'create_icon', 'create_icon_nonce' ); ?>
             <table>
                 <tr>
-                    <th>Label</th>
-                    <th>Description</th>
+                    <th><?php esc_html_e( 'Label', 'custom_group_health'); ?></th>
+                    <th><?php esc_html_e( 'Description', 'custom_group_health'); ?></th>
                 </tr>
                 <tr>
                     <td>
@@ -241,7 +241,7 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
                     </td>
                 </tr>
                 <tr>
-                    <th>Icon</th>
+                    <th><?php esc_html_e( 'Icon', 'custom_group_health'); ?></th>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -443,11 +443,11 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
         <form method="post">
             <?php
                 // Load tiles
-                $this->box( 'top', __( 'Manage Custom Group Health Plugins' ) );
+                $this->box( 'top', __( 'Manage Custom Group Health Plugins', 'custom_group_health' ) );
                 $this->show_tiles();
                 $this->box( 'bottom' );
 
-                $this->box( 'top', __( 'Add new Group Health Icons' ) );
+                $this->box( 'top', __( 'Add new Group Health Icons', 'custom_group_health' ) );
                 $this->add_new_church_health_icons();
                 $this->box( 'bottom' );
 
@@ -472,16 +472,18 @@ class Custom_Group_Health_Plugin_Tab_General extends Disciple_Tools_Abstract_Men
         <table class="widefat striped">
             <thead>
                 <tr>
-                    <th>Information</th>
+                    <th><?php esc_html_e( 'Information', 'custom_group_health'); ?></th>
                 </tr>
             </thead>
             <tbody>
             <tr>
                 <td>
-                    Create new icons to help you track your group's spiritual health or delete existing icons.
+                    <?php esc_html_e( "Create new icons to help you track your group's spiritual health or delete existing icons.", 'custom_group_health' ); ?>
+                    
                     <br>
                     <br>
-                    <b>Note:</b> If you re-create a deleted icon with the same label, groups that formerly had that item selected will once again display it as active.
+                    <b><?php esc_html_e( 'Note', 'custom_group_health'); ?>:</b> 
+                    <?php esc_html_e( 'If you re-create a deleted icon with the same label, groups that formerly had that item selected will once again display it as active.', 'custom_group_health' ); ?>
                 </td>
             </tr>
             </tbody>
@@ -647,12 +649,12 @@ class Custom_Group_Health_Plugin_Tab_Templates {
         switch ( $template_name ) {
             case 'dt_default_template':
                 update_option( 'custom_group_health_icons', $dt_template_health_items );
-                Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'Template switched successfully.', 'disciple_tools' ), 'success' );
+                Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'Template switched successfully.', 'custom_group_health' ), 'success' );
                 break;
 
             case 'twelve_practices_template':
                 update_option( 'custom_group_health_icons', $twelve_practices_template_health_items );
-                Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'Template switched successfully.', 'disciple_tools' ), 'success' );
+                Custom_Group_Health_Plugin_Tab_General::admin_notice( __( 'Template switched successfully.', 'custom_group_health' ), 'success' );
                 break;
         }
     }
@@ -690,13 +692,13 @@ class Custom_Group_Health_Plugin_Tab_Templates {
         <table class="widefat striped">
             <thead>
                 <tr>
-                    <th>Templates</th>
+                    <th><?php esc_html_e( 'Templates', 'custom_group_health' ); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>
-                        Select from common Church health tracking methods
+                        <?php esc_html_e( 'Select from common Church health tracking methods', 'custom_group_health' ); ?>
                     </td>
                 </tr>
                 <tr>
@@ -706,15 +708,15 @@ class Custom_Group_Health_Plugin_Tab_Templates {
                             <table class="widefat">
                                 <thead>
                                     <tr>
-                                        <td>Template</td>
-                                        <td>Icon</td>
-                                        <td>Label</td>
-                                        <td>Action</td>
+                                        <td><?php esc_html_e( 'Template', 'custom_group_health' ); ?></td>
+                                        <td><?php esc_html_e( 'Icon', 'custom_group_health' ); ?></td>
+                                        <td><?php esc_html_e( 'Label', 'custom_group_health' ); ?></td>
+                                        <td><?php esc_html_e( 'Action', 'custom_group_health' ); ?></td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><b>Disciple.Tools Default</b></td>
+                                        <td><b><?php esc_html_e( 'Disciple.Tools Default', 'custom_group_health' ); ?></b></td>
                                         <td colspan="3">
                                     </tr>
                                             <?php
@@ -739,7 +741,7 @@ class Custom_Group_Health_Plugin_Tab_Templates {
                                     <tr>
                                         <td colspan="3"></td>
                                         <td>
-                                            <button type="submit" class="button" name="set-template-dt" title="Set 'Disciple.Tools Default' as Group Health tile">Set</button>
+                                            <button type="submit" class="button" name="set-template-dt" title="Set 'Disciple.Tools Default' as Group Health tile"><?php esc_html_e( 'Set', 'custom_group_health'); ?></button>
                                             <?php
                                             // Check for template updates
                                             if ( isset( $_POST['set-template-dt'] ) ) {
@@ -754,7 +756,7 @@ class Custom_Group_Health_Plugin_Tab_Templates {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><b>Twelve Practices</b></td>
+                                        <td><b><?php esc_html_e( 'Twelve Practices', 'custom_group_health'); ?></b></td>
                                         <td colspan="3"></td>
                                     </tr>
                                             <?php
@@ -780,7 +782,7 @@ class Custom_Group_Health_Plugin_Tab_Templates {
                                     <tr>
                                         <td colspan="3"></td>
                                         <td>
-                                            <button type="submit" class="button" name="set-twelve-practices" title="Set 'Twelve Practices' as Group Health tile">Set</button>
+                                            <button type="submit" class="button" name="set-twelve-practices" title="Set 'Twelve Practices' as Group Health tile"><?php esc_html_e( 'Set', 'custom_group_health'); ?></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -801,16 +803,16 @@ class Custom_Group_Health_Plugin_Tab_Templates {
         <table class="widefat striped">
             <thead>
                 <tr>
-                    <th>Information</th>
+                    <th><?php esc_html_e( 'Information', 'custom_group_health'); ?></th>
                 </tr>
             </thead>
             <tbody>
             <tr>
                 <td>
-                    Select between Disciple.Tools' default health items or common Twelve Practices template.
+                    <?php esc_html_e( "Select between Disciple.Tools' default health items or common Twelve Practices template.", 'custom_group_health'); ?>
                     <br>
                     <br>
-                    You can go back and edit them later from the 'General' tab.
+                    <?php esc_html_e( "You can go back and edit them later from the 'General' tab.", 'custom_group_health'); ?>
                 </td>
             </tr>
             </tbody>
@@ -849,13 +851,13 @@ class Custom_Group_Health_Plugin_Tab_Help {
         <table class="widefat striped">
             <thead>
                 <tr>
-                    <th>Help</th>
+                    <th><?php esc_html_e( 'Help', 'disciple_tools'); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>
-                        <a href="https://github.com/prykon/custom-group-health-plugin#readme" target="_blank">Full documentation available here</a>
+                        <a href="https://github.com/prykon/custom-group-health-plugin#readme" target="_blank"><?php esc_html_e( 'Full documentation available here', 'custom_group_health'); ?></a>
                     </td>
                 </tr>
             </tbody>
