@@ -1,323 +1,332 @@
-#, fuzzy
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Disciple Tools - Custom Group Health Plugin\n"
-"POT-Creation-Date: 2022-02-16 11:03-0300\n"
-"PO-Revision-Date: 2018-01-29 05:53-0700\n"
+"POT-Creation-Date: 2022-02-16 13:10-0300\n"
+"PO-Revision-Date: 2022-02-16 13:15-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: custom-group-health-plugin.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;"
-"esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;"
-"__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: admin/admin-menu-and-tabs.php:53
 msgid "No custom icons detected. Setting DT default template"
-msgstr ""
+msgstr "No hay íconos personalizados. Asignando la plantilla por defecto de DT"
 
 #: admin/admin-menu-and-tabs.php:103
 msgid "Custom Group Health Plugin"
-msgstr ""
+msgstr "Plugin de Salud de Grupo Personalizada"
 
 #: admin/admin-menu-and-tabs.php:105
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: admin/admin-menu-and-tabs.php:106 admin/admin-menu-and-tabs.php:695
 msgid "Templates"
-msgstr ""
+msgstr "Plantillas"
 
 #: admin/admin-menu-and-tabs.php:107 admin/admin-menu-and-tabs.php:854
 msgid "Help"
-msgstr ""
+msgstr "Ayuda"
 
 #: admin/admin-menu-and-tabs.php:183
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #: admin/admin-menu-and-tabs.php:192
 msgid "No custom items yet..."
-msgstr ""
+msgstr "No hay elementos personalizados aún…"
 
 #: admin/admin-menu-and-tabs.php:229 admin/admin-menu-and-tabs.php:713
 msgid "Label"
-msgstr ""
+msgstr "Etiqueta"
 
 #: admin/admin-menu-and-tabs.php:230
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #: admin/admin-menu-and-tabs.php:244 admin/admin-menu-and-tabs.php:712
 msgid "Icon"
-msgstr ""
+msgstr "Ícono"
 
 #: admin/admin-menu-and-tabs.php:253
 msgid "Add"
-msgstr ""
+msgstr "Agregar"
 
 #: admin/admin-menu-and-tabs.php:348
 msgid "Create new Group Health Icon"
-msgstr ""
+msgstr "Crear nuevo ícono de Salud de Grupo"
 
 #: admin/admin-menu-and-tabs.php:350
-msgid "You can only create up to 12 custom church health icons"
-msgstr ""
+msgid "You can only create up to 12 custom group health icons"
+msgstr "Sólo puedes crear hasta 12 íconos personalizados de salud de grupo"
 
 #: admin/admin-menu-and-tabs.php:355 admin/admin-menu-and-tabs.php:357
 msgid "Create"
-msgstr ""
+msgstr "Crear"
 
 #: admin/admin-menu-and-tabs.php:373
 msgid "Error: Item image missing. Item was not created"
-msgstr ""
+msgstr "Error: Falta la imagen del ítem. El ítem no fue creado"
 
 #: admin/admin-menu-and-tabs.php:379
 msgid "Error: Item label missing. Item was not created"
-msgstr ""
+msgstr "Error: Falta la etiqueta del ítem. El ítem no fue creado"
 
 #: admin/admin-menu-and-tabs.php:385
 msgid "Error: Item description missing. Item was not created"
-msgstr ""
+msgstr "Error: Falta la descripción del ítem. El ítem no fue creado"
 
 #: admin/admin-menu-and-tabs.php:404
 msgid "Icon created successfully"
-msgstr ""
+msgstr "Ícono creado exitosamente"
 
 #: admin/admin-menu-and-tabs.php:423
 msgid "Icon deleted successfully"
-msgstr ""
+msgstr "Ícono eliminado exitosamente"
 
 #: admin/admin-menu-and-tabs.php:446
-msgid "Manage Custom Group Health Plugins"
-msgstr ""
+msgid "Manage Custom Group Health Plugin"
+msgstr "Administrar Plugin de Salud de Grupo Personalizada"
 
 #: admin/admin-menu-and-tabs.php:450
 msgid "Add new Group Health Icons"
-msgstr ""
+msgstr "Agregar nuevos íconos de Salud de Grupo"
 
 #: admin/admin-menu-and-tabs.php:457
 msgid "Create new item"
-msgstr ""
+msgstr "Crear nuevo ítem"
 
 #: admin/admin-menu-and-tabs.php:475 admin/admin-menu-and-tabs.php:806
 msgid "Information"
-msgstr ""
+msgstr "Información"
 
 #: admin/admin-menu-and-tabs.php:481
 msgid ""
-"Create new icons to help you track your group's spiritual health or delete existing "
-"icons."
+"Create new icons to help you track your group's spiritual health or delete "
+"existing icons."
 msgstr ""
+"Crea nuevos íconos para ayudarte a hacerle seguimiento a la salud espiritual "
+"de tus grupos o elimina ícenos existentes."
 
 #: admin/admin-menu-and-tabs.php:485
 msgid "Note"
-msgstr ""
+msgstr "Nota"
 
 #: admin/admin-menu-and-tabs.php:486
 msgid ""
-"If you re-create a deleted icon with the same label, groups that formerly had that item "
-"selected will once again display it as active."
+"If you re-create a deleted item with the same label, groups that formerly "
+"had that item selected will once again display it as active."
 msgstr ""
+"Si vuelves a crear un ítem eliminado con la misma etiqueta, los grupos que "
+"solían tener ese ítem seleccionado volverán a mostrarlo como activo."
 
 #: admin/admin-menu-and-tabs.php:520 admin/admin-menu-and-tabs.php:589
 #: admin/admin-menu-and-tabs.php:726 admin/admin-menu-and-tabs.php:766
 msgid "Baptism"
-msgstr ""
+msgstr "Bautismo"
 
 #: admin/admin-menu-and-tabs.php:521 admin/admin-menu-and-tabs.php:590
 msgid "The group is baptising."
-msgstr ""
+msgstr "El grupo está bautizando."
 
 #: admin/admin-menu-and-tabs.php:526 admin/admin-menu-and-tabs.php:727
 msgid "Bible Study"
-msgstr ""
+msgstr "Estudio Bíblico"
 
 #: admin/admin-menu-and-tabs.php:527 admin/admin-menu-and-tabs.php:602
 msgid "The group is studying the bible."
-msgstr ""
+msgstr "El grupo está estudiando la biblia."
 
 #: admin/admin-menu-and-tabs.php:532 admin/admin-menu-and-tabs.php:613
 #: admin/admin-menu-and-tabs.php:728 admin/admin-menu-and-tabs.php:770
 msgid "Communion"
-msgstr ""
+msgstr "Cena del Señor"
 
 #: admin/admin-menu-and-tabs.php:533 admin/admin-menu-and-tabs.php:614
 msgid "The group is practicing communion."
-msgstr ""
+msgstr "El grupo está practicando la Cena del Señor."
 
 #: admin/admin-menu-and-tabs.php:538 admin/admin-menu-and-tabs.php:607
 #: admin/admin-menu-and-tabs.php:729 admin/admin-menu-and-tabs.php:769
 msgid "Fellowship"
-msgstr ""
+msgstr "Comunión"
 
-#: admin/admin-menu-and-tabs.php:539
+#: admin/admin-menu-and-tabs.php:539 admin/admin-menu-and-tabs.php:608
 msgid "The group is fellowshiping."
-msgstr ""
+msgstr "El grupo tiene comunión entre sí."
 
 #: admin/admin-menu-and-tabs.php:544 admin/admin-menu-and-tabs.php:631
 #: admin/admin-menu-and-tabs.php:730 admin/admin-menu-and-tabs.php:773
 msgid "Giving"
-msgstr ""
+msgstr "Ofrenda"
 
 #: admin/admin-menu-and-tabs.php:545 admin/admin-menu-and-tabs.php:632
 msgid "The group is giving."
-msgstr ""
+msgstr "El grupo está ofrendando."
 
 #: admin/admin-menu-and-tabs.php:550 admin/admin-menu-and-tabs.php:619
 #: admin/admin-menu-and-tabs.php:731 admin/admin-menu-and-tabs.php:771
 msgid "Prayer"
-msgstr ""
+msgstr "Oración"
 
 #: admin/admin-menu-and-tabs.php:551 admin/admin-menu-and-tabs.php:620
 msgid "The group is praying."
-msgstr ""
+msgstr "El grupo está orando."
 
 #: admin/admin-menu-and-tabs.php:556 admin/admin-menu-and-tabs.php:732
 msgid "Praise"
-msgstr ""
+msgstr "Alabanza"
 
 #: admin/admin-menu-and-tabs.php:557
 msgid "The group is praising."
-msgstr ""
+msgstr "El grupo está alabando."
 
 #: admin/admin-menu-and-tabs.php:562 admin/admin-menu-and-tabs.php:577
 #: admin/admin-menu-and-tabs.php:733 admin/admin-menu-and-tabs.php:764
 msgid "Sharing the Gospel"
-msgstr ""
+msgstr "Compartir el Evangelio"
 
 #: admin/admin-menu-and-tabs.php:563 admin/admin-menu-and-tabs.php:578
 msgid "The group is sharing the gospel."
-msgstr ""
+msgstr "El grupo está compartiendo el evangelio."
 
 #: admin/admin-menu-and-tabs.php:568 admin/admin-menu-and-tabs.php:734
 msgid "Leaders"
-msgstr ""
+msgstr "Líderes"
 
 #: admin/admin-menu-and-tabs.php:569
 msgid "The group has leaders."
-msgstr ""
+msgstr "El grupo tiene líderes."
 
 #: admin/admin-menu-and-tabs.php:583 admin/admin-menu-and-tabs.php:765
 msgid "Repentance"
-msgstr ""
+msgstr "Arrepentimiento"
 
 #: admin/admin-menu-and-tabs.php:584
 msgid "The group is practicing repentance."
-msgstr ""
+msgstr "El grupo está practicando arrepentimiento."
 
 #: admin/admin-menu-and-tabs.php:595 admin/admin-menu-and-tabs.php:767
 msgid "Holy Spirit"
-msgstr ""
+msgstr "Espíritu Santo"
 
 #: admin/admin-menu-and-tabs.php:596
 msgid "The group is moving in the Holy Spirit."
-msgstr ""
+msgstr "El grupo se está moviendo en el Espíritu Santo."
 
 #: admin/admin-menu-and-tabs.php:601 admin/admin-menu-and-tabs.php:768
 msgid "Word"
-msgstr ""
-
-#: admin/admin-menu-and-tabs.php:608
-msgid "The groupd is fellowshiping"
-msgstr ""
+msgstr "Palabra"
 
 #: admin/admin-menu-and-tabs.php:625 admin/admin-menu-and-tabs.php:772
 msgid "Signs and Wonders"
-msgstr ""
+msgstr "Señales y Maravillas"
 
 #: admin/admin-menu-and-tabs.php:626
 msgid "The group is experiencing signs and wonders."
-msgstr ""
+msgstr "El grupo está experimentando señales y maravillas."
 
 #: admin/admin-menu-and-tabs.php:637 admin/admin-menu-and-tabs.php:774
 msgid "Worship"
-msgstr ""
+msgstr "Adoración"
 
 #: admin/admin-menu-and-tabs.php:638
 msgid "The group is worshipping."
-msgstr ""
+msgstr "El grupo está adorando."
 
 #: admin/admin-menu-and-tabs.php:643 admin/admin-menu-and-tabs.php:775
 msgid "Making Disciples"
-msgstr ""
+msgstr "Haciendo Discípulos"
 
 #: admin/admin-menu-and-tabs.php:644
 msgid "The group is making disciples."
-msgstr ""
+msgstr "El grupo está haciendo discípulos."
 
 #: admin/admin-menu-and-tabs.php:652 admin/admin-menu-and-tabs.php:657
 msgid "Template switched successfully."
-msgstr ""
+msgstr "Plantilla modificada exitosamente."
 
 #: admin/admin-menu-and-tabs.php:701
-msgid "Select from common Church health tracking methods"
-msgstr ""
+msgid "Select from common group health tracking methods"
+msgstr "Seleccione entre métodos comunes de seguimiento de salud de grupos"
 
 #: admin/admin-menu-and-tabs.php:711
 msgid "Template"
-msgstr ""
+msgstr "Plantilla"
 
 #: admin/admin-menu-and-tabs.php:714
 msgid "Action"
-msgstr ""
+msgstr "Acción"
 
 #: admin/admin-menu-and-tabs.php:719
 msgid "Disciple.Tools Default"
-msgstr ""
+msgstr "Defecto de Disciple.Tools"
 
 #: admin/admin-menu-and-tabs.php:744 admin/admin-menu-and-tabs.php:785
 msgid "Set"
-msgstr ""
+msgstr "Asignar"
 
 #: admin/admin-menu-and-tabs.php:759
 msgid "Twelve Practices"
-msgstr ""
+msgstr "Doce Prácticas"
 
 #: admin/admin-menu-and-tabs.php:812
 msgid ""
-"Select between Disciple.Tools' default health items or common Twelve Practices template."
+"Select between Disciple.Tools' default health items or common Twelve "
+"Practices template."
 msgstr ""
+"Seleccione entre la plantilla defecto de ítems de salud de Disciple.Tools o "
+"la plantilla de Doce Prácticas."
 
 #: admin/admin-menu-and-tabs.php:815
 msgid "You can go back and edit them later from the 'General' tab."
-msgstr ""
+msgstr "Puedes volver y editarlas luego desde la solapa ‘General’."
 
 #: admin/admin-menu-and-tabs.php:860
 msgid "Full documentation available here"
-msgstr ""
+msgstr "Documentación completa disponible aquí"
 
 #: tile/custom-tile.php:58
 msgid "Group Health"
-msgstr ""
+msgstr "Salud del Grupo"
 
 #: tile/custom-tile.php:59
 msgctxt "Optional Documentation"
 msgid "Track the progress and health of a group/church."
-msgstr ""
+msgstr "Hazle seguimiento al progreso y a la salud de un grupo/iglesia."
 
 #. Plugin Name of the plugin/theme
 msgid "Disciple.Tools - Custom Group Health Plugin"
-msgstr ""
+msgstr "Disciple.Tools - Plugin de Salud de Grupo Personalizada"
 
 #. Plugin URI of the plugin/theme
 msgid "https://github.com/DiscipleTools/custom-group-health-plugin"
-msgstr ""
+msgstr "https://github.com/DiscipleTools/custom-group-health-plugin"
 
 #. Description of the plugin/theme
 msgid ""
-"Disciple.Tools - Custom Group Health Plugin is intended to help developers and "
-"integrator jumpstart their extension of the Disciple.Tools system."
+"Disciple.Tools - Custom Group Health Plugin is intended to help DT users "
+"track the health of their groups and churches in a customized way."
 msgstr ""
+"Disciple.Tools - Plugin de Salud de Grupo Personalizada tiene la intención "
+"de ayudar a los usuarios de DT a hacerle seguimiento a la salud de sus "
+"grupos e iglesias de manera personalizada."
 
 #. Author URI of the plugin/theme
 msgid "https://github.com/DiscipleTools"
-msgstr ""
+msgstr "https://github.com/DiscipleTools"
+
+#~ msgid "The group is fellowshiping"
+#~ msgstr "El grupo tiene comunión."
