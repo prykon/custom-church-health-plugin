@@ -2,7 +2,7 @@
 /**
  *Plugin Name: Disciple.Tools - Custom Group Health Plugin
  * Plugin URI: https://github.com/DiscipleTools/custom-group-health-plugin
- * Description: Disciple.Tools - Custom Group Health Plugin is intended to help developers and integrator jumpstart their extension of the Disciple.Tools system.
+ * Description: Disciple.Tools - Custom Group Health Plugin is intended to help DT users track the health of their groups and churches in a customized way.
  * Text Domain: custom-group-health-plugin
  * Domain Path: /languages
  * Version:  1.1

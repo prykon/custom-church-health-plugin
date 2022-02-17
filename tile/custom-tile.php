@@ -44,7 +44,7 @@ class Custom_Group_Health_Plugin_Tile
 
             if ( ! empty( $items ) ) {
                 foreach ( $items as $item ) {
-                    $help_text .= '- ' . esc_html( $item['label'] ) . ": " . esc_html( $item['description'] ) . "\n";
+                    $help_text .= '- ' . esc_html__( $item['label'], 'custom-group-health-plugin' ) . ": " . esc_html__( $item['description'], 'custom-group-health-plugin' ) . "\n";
 
                 }
             }
@@ -55,8 +55,8 @@ class Custom_Group_Health_Plugin_Tile
                     $new_tiles[$index] = $value;
                 } else {
                     $new_tiles['custom-health-metrics'] = [
-                        'label' => __( 'Group Health', 'disciple_tools' ),
-                        'description' => "Track the progress and health of a group/church.\n\n" . $help_text,
+                        'label' => __( 'Group Health', 'custom-group-health-plugin' ),
+                        'description' => _x( "Track the progress and health of a group/church.", 'Optional Documentation', 'custom-group-health-plugin' ) . "\n\n" . $help_text,
                     ];
                 }
             }
